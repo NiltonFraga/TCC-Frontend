@@ -1,0 +1,41 @@
+.content{
+  margin-top: 10vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sector-nova-consulta{
+  width: 100%;
+  height: auto;
+}
+
+.area-lista-vazia{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 55vh;
+}
+
+.btFiltrar{
+  height: 100%;
+  font-size: 12px;
+}
+
+.col-lista-consulta{
+  --ion-grid-column-padding: 0 !important;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.col-lista-consulta-dia{
+  --ion-grid-column-padding: 0 !important;
+}
+
+.listaTipo{
+  --placeholder-opacity: 0.5;
+}

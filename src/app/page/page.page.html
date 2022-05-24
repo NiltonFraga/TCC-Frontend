@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <div style="display: flex; justify-content: space-between; padding-right: 10px;">
+    <ion-title>
+      <span *ngIf="rotaAtual === '/page/home'">Adote</span>
+      <span *ngIf="rotaAtual === '/page/clinicas'">Forum</span>
+      <span *ngIf="rotaAtual === '/page/medicamentos'">Minha Área</span>
+      <span *ngIf="rotaAtual === '/page/exames'">Serviços</span>
+      <span *ngIf="rotaAtual === '/page/consultas'">Dicas</span>
+      <span *ngIf="rotaAtual === '/page/adotar'">Adotar</span>
+      <span *ngIf="rotaAtual === '/page/editar-pet'">Editar Pet</span>
+      <span *ngIf="rotaAtual === '/page/criar-exame'">Criar Seriços</span>
+    </ion-title>
+    <ion-button (click)="logout()" color="danger">Sair</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+
+    <ion-tab-button tab="home">
+      <ion-icon name="paw-outline"></ion-icon>
+      <ion-label *ngIf="rotaAtual === '/page/home' || rotaAtual === '/page/adotar'">Adote</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="clinicas">
+      <ion-icon name="book-outline"></ion-icon>
+      <ion-label *ngIf="rotaAtual === '/page/clinicas'">Forum</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="medicamentos">
+      <ion-icon name="footsteps-outline"></ion-icon>
+      <ion-label *ngIf="rotaAtual === '/page/medicamentos' || rotaAtual === '/page/editar-pet'">Minha Área</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="exames">
+      <ion-icon name="briefcase-outline"></ion-icon>
+      <!-- <ion-icon name="desktop-outline"></ion-icon> -->
+      <ion-label *ngIf="rotaAtual === '/page/exames' || rotaAtual === '/page/criar-exame'">Serviços</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="consultas">
+      <ion-icon name="sparkles-outline"></ion-icon>
+      <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+      <ion-label *ngIf="rotaAtual === '/page/consultas'">Dicas</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>

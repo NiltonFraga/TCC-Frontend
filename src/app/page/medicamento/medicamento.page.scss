@@ -1,0 +1,79 @@
+.content{
+  margin-top: 7vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-content{
+  padding-top: 2vh;
+  width: 100%;
+  position: fixed;
+  background-color: #ffffff;
+  z-index: 99;
+}
+
+.perfil{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.iconi-pet{
+  width: 25px;
+  height: 25px;
+  fill: rgb(7, 167, 10);
+  color: rgb(7, 167, 10);
+}
+
+.texto-pet{
+  margin-left: 8px;
+  font-size: 14px;
+  color: rgb(96, 96, 96);
+}
+
+.borda{
+  border: 1px solid black;
+}
+
+.grid-animais{
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2vh;
+}
+
+.card-animal{
+  padding: 0;
+}
+
+.bloco-card{
+  padding: 0;
+  margin: 0;
+}
+
+.animal{
+  padding: 0px;
+  margin: 0;
+}
+
+.imagem-animal{
+  min-height: 10%;
+  height: 20%;
+}
+
+.local{
+  font-size: 14px;
+  padding: 8px 4px;
+  margin: 0;
+}
+
+.nome{
+  font-size: 16px;
+  padding: 0px 4px;
+  font-weight: bold;
+}

@@ -1,0 +1,51 @@
+<ion-content>
+  <div class="content">
+    <div class="grid-animais">
+      <div *ngIf="loading" class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" class="perfil">
+            <ion-icon name="paw-outline" class="iconi-pet"></ion-icon>
+            <span class="texto-pet">MEUS PETS PARA ADOÇÃO</span>
+          </ion-col>
+          <span *ngIf="!loading">{{mensagem}}</span>
+        </ion-row>
+        <ion-row >
+          <ion-col size="6" class="bloco-card" *ngFor="let animal of animais" (click)="detalhesAnimal(animal.id)">
+            <ion-card>
+              <ion-card-header class="animal">
+                <ion-img class="imagem-animal" [src]="animal.foto" *ngIf="animal.foto !== null"></ion-img>
+                <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.foto === null"></ion-img>
+                <ion-card-subtitle class="nome">{{animal.nome}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content class="local">
+                Bairro: {{animal.bairro}}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button>
+    <ion-icon name="caret-up-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button><ion-icon name="add-circle-outline" style="color: rgb(255, 132, 0); width: 44px; height: 44px;"></ion-icon></ion-fab-button>
+    <ion-fab-button><ion-icon name="heart-outline" style="color: rgb(255, 21, 0); width: 38px; height: 38px;"></ion-icon></ion-fab-button>
+    <ion-fab-button><ion-icon name="person-circle-outline" style="color: rgb(12, 156, 40); width: 40px; height: 40px;"></ion-icon></ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+

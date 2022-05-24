@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+    <div style="display: flex; justify-content: space-between; padding-right: 10px;">
+      <ion-title>Criar Conta</ion-title>
+      <ion-button routerLink="/login" color="secondary">Voltar</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="content">
+
+    <form [formGroup]="cadastroForm" style="width: 100%; padding-left: 7vw; padding-right: 7vw;">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="nome" formControlName="nome" type="text" class="validate">
+          <label for="nome">Nome completo</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <select id="perfil" formControlName="perfil" [(ngModel)]="tipo" class="validate">
+            <option value="" disabled selected></option>
+            <option value="pessoa_fisica">Pessoal Fisica</option>
+            <option value="pessoa_juridica">Pessoa Juridica</option>
+            <option value="ong">Ong</option>
+          </select>
+          <label for="perfil">Tipo de Perfil</label>
+        </div>
+      </div>
+      <div class="row" *ngIf="tipo !== ''">
+        <div class="input-field col s12" *ngIf="tipo === 'pessoa_fisica'">
+          <input id="documento" formControlName="documento" type="text" class="validate">
+          <label for="documento">CPF</label>
+        </div>
+        <div class="input-field col s12" *ngIf="tipo === 'pessoa_juridica'">
+          <input id="documento" formControlName="documento" type="text" class="validate">
+          <label for="documento">CNPJ</label>
+        </div>
+        <div class="input-field col s12" *ngIf="tipo === 'ong'">
+          <input id="documento" formControlName="documento" type="text" class="validate">
+          <label for="documento">CÓDIGO</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" formControlName="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="senha" formControlName="senha" type="password" class="validate">
+          <label for="senha">Senha</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="confSenha" formControlName="confSenha" type="password" class="validate">
+          <label for="confSenha">Confirme a senha</label>
+        </div>
+      </div>
+    </form>
+
+    <div class="row button-area">
+        <ion-button (click)="cadastrar()" expand="block">Finalizar cadastro</ion-button>
+    </div>
+
+  </div>
+
+</ion-content>

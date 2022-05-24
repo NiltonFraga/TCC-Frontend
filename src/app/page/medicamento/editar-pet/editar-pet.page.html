@@ -1,0 +1,103 @@
+<ion-content>
+  <div class="content">
+    <!-- <span *ngIf="!loading">{{mensagem}}</span> -->
+    <div class="filtro">
+
+    </div>
+    <div class="grid-animais">
+      <div *ngIf="loading" class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <ion-grid>
+        <ion-row >
+          <ion-col size="12" class="bloco-card" *ngIf="animal">
+            <ion-card>
+              <ion-card-header class="animal">
+                <ion-img class="imagem-animal" [src]="animal.foto" *ngIf="animal.foto !== null"></ion-img>
+                <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.foto === null"></ion-img>
+                <ion-card-title class="nome">{{animal.nome}}</ion-card-title>
+              </ion-card-header>
+              <form [formGroup]="animalForm" *ngIf="animal" class="formulario">
+                <div class="input-form">
+                  <label class="nome-input" for="icon_prefix">Nome</label>
+                  <input class="" id="icon_prefix" formControlName="nome" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Idade ano(s)</label>
+                  <input class="" id="icon_telephone" formControlName="idade" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Peso Kg</label>
+                  <input class="" id="icon_telephone" formControlName="peso" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Pelagem</label>
+                  <input class="" id="icon_telephone" formControlName="pelagem" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Sexo</label>
+                  <select id="perfil"  formControlName="sexo" class="validate browser-default">
+                    <option value="F">Fêmeia</option>
+                    <option value="M">Macho</option>
+                  </select>
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Vermifugado</label>
+                  <select formControlName="vermifugado" class="validate browser-default">
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                  </select>
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Vacina</label>
+                  <input class="" id="icon_telephone" formControlName="vacina" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Doenças</label>
+                  <input class="" id="icon_telephone" formControlName="doenca" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Detalhes</label>
+                  <input class="" id="icon_telephone" formControlName="descricao" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Rua</label>
+                  <input class="" id="icon_telephone" formControlName="rua" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Bairro</label>
+                  <input class="" id="icon_telephone" formControlName="bairro" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Cidade</label>
+                  <input class="" id="icon_telephone" formControlName="cidade" type="text" class="validate">
+                </div>
+                <div class="input-form">
+                  <label class="nome-input" for="icon_telephone">Status do pet</label>
+                  <select formControlName="ativo" class="validate browser-default">
+                    <option value="true">Pet para adoção</option>
+                    <option value="false">Pet doado</option>
+                  </select>
+                </div>
+              </form>
+              <div class="button-area">
+                <ion-button (click)="cancelar()" expand="block">Cancelar</ion-button>
+                <ion-button (click)="atualizar()" expand="block">Atualizar Dados</ion-button>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+</ion-content>
+

@@ -1,0 +1,38 @@
+<ion-content>
+  <div class="content">
+    <!-- <span *ngIf="!loading">{{mensagem}}</span> -->
+    <div class="filtro">
+
+    </div>
+    <div class="grid-animais">
+      <div *ngIf="loading" class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <ion-grid>
+        <ion-row >
+          <ion-col size="6" class="bloco-card" *ngFor="let animal of animais" (click)="detalhesAnimal(animal.id)">
+            <ion-card>
+              <ion-card-header class="animal">
+                <ion-img class="imagem-animal" [src]="animal.foto" *ngIf="animal.foto !== null"></ion-img>
+                <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.foto === null"></ion-img>
+                <ion-card-subtitle class="nome">{{animal.nome}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content class="local">
+                Bairro: {{animal.bairro}}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+</ion-content>

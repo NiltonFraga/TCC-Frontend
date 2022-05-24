@@ -1,0 +1,74 @@
+<ion-content>
+  <div class="content">
+    <ion-grid style="width: 100%;">
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Razão social: </ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Telefone: </ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Telefone: </ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Rua: </ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Bairro: </ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Cidade: </ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Telefone: </ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Tipo de desconto: </ion-label>
+          <ion-select [(ngModel)]="tipoExame" class="listaTipo" placeholder="Selecione...">
+            <ion-select-option value="Produto">Produto</ion-select-option>
+            <ion-select-option value="Servico">Serviço</ion-select-option>
+            <!-- <ion-select-option [value]="tipo.id">Serviço</ion-select-option> -->
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-textarea [(ngModel)]="observacoes" rows="5" placeholder="Escreva sobre a loja/serviço"></ion-textarea>
+          <!-- <ion-textarea [(ngModel)]="observacoes" rows="7" style="--padding-start: 0; --padding-end: 0" placeholder="Escreva as suas observações..."></ion-textarea> -->
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-textarea [(ngModel)]="observacoes" rows="5" placeholder="Escreva sobre o desconto"></ion-textarea>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form-center" size="12">
+          <ion-button (click)="salvarExame()" color="primary" expand="block">Salvar Exame</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
