@@ -1,0 +1,42 @@
+<ion-content>
+  <div class="content">
+    <ion-grid style="width: 100%;">
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Imagem: </ion-label>
+          <ion-input type="file" (change)="fileChange($event)"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Produto: </ion-label>
+          <ion-input type="text" [(ngModel)]="nome"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Valor Real: </ion-label>
+          <ion-input type="number" [(ngModel)]="valorReal"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Valor com desconto: </ion-label>
+          <ion-input type="number" [(ngModel)]="valorDesconto"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Url: </ion-label>
+          <ion-input type="text" [(ngModel)]="url"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form-center" size="12">
+          <ion-button (click)="cancelar()" color="primary" expand="block">Cancelar</ion-button>
+          <ion-button (click)="salvarProduto()" color="primary" expand="block">Salvar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

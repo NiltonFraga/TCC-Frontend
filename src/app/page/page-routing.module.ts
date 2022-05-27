@@ -29,6 +29,26 @@ const routes: Routes = [
         loadChildren: () => import('./exame/criar-exame/criar-exame.module').then( m => m.CriarExamePageModule)
       },
       {
+        path: 'meus-servicos',
+        loadChildren: () => import('./exame/meus-servico/meus-servicos.module').then( m => m.MeusServicosPageModule)
+      },
+      {
+        path: 'editar-servicos',
+        loadChildren: () => import('./exame/editar-servico/editar-servico.module').then( m => m.EditarServicoPageModule)
+      },
+      {
+        path: 'meus-produtos',
+        loadChildren: () => import('./exame/meus-produtos/meus-produtos.module').then( m => m.MeusProdutosPageModule)
+      },
+      {
+        path: 'editar-produto',
+        loadChildren: () => import('./exame/editar-produto/editar-produto.module').then( m => m.EditarProdutoPageModule)
+      },
+      {
+        path: 'criar-produto',
+        loadChildren: () => import('./exame/criar-produto/criar-produto.module').then( m => m.CriarProdutoPageModule)
+      },
+      {
         path: 'consultas',
         loadChildren: () => import('./consulta/consulta.module').then( m => m.ConsultaPageModule)
       },

@@ -7,30 +7,30 @@ import { UrlService } from 'src/app/shared/class/url-service';
 import { ExameService } from '../exame.service';
 
 @Component({
-  selector: 'app-criar-exame',
-  templateUrl: './criar-exame.page.html',
-  styleUrls: ['./criar-exame.page.scss'],
+  selector: 'app-editar-produto',
+  templateUrl: './editar-produto.page.html',
+  styleUrls: ['./editar-produto.page.scss'],
 })
-export class CriarExamePage implements OnInit {
+export class EditarProdutoPage implements OnInit {
 
-  servicos: any;
+  produto: any;
   user: any;
 
   dataExame: any;
   tipoExame: any;
   publico: any;
   observacoes: any;
-
   public nome: string;
+  public img: string;
+  public url: any;
+  public valorDesconto: number;
+  public valorReal: number;
+  public idDono: number;
+  public idServico: number;
+  public idArquivo: number;
   public arquivo: any;
-  public telefone1: string;
-  public telefone2: string;
-  public rua: string;
-  public bairro: string;
-  public cidade: string;
-  public tipoDesconto: string;
-  public sobreLoja: string;
-  public sobreDesconto: string;
+
+  public id: any;
 
   constructor(
     private exameService: ExameService,
@@ -41,7 +41,7 @@ export class CriarExamePage implements OnInit {
     private storage: StorageService)
   {
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === '/page/criar-exame') {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/editar-produto') {
          this.pageEnter();
       }
     });
@@ -51,17 +51,34 @@ export class CriarExamePage implements OnInit {
 
   async pageEnter(){
     this.user = await this.storage.get('user');
+    this.id = await this.storage.get('idAnimal');
     console.log(this.user);
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
+    await this.getProdutoById();
   }
 
-  async getServicosByUsuario(){
+  async getProdutoById(){
     this.showLoadingScreen()
       .then(async () => {
-        (await this.exameService.getServicosByUsuario(this.user.id))
+        (await this.exameService.getProdutoById(this.id))
           .subscribe((resp: any) => {
-            this.servicos = resp;
+            this.produto = resp;
+            this.id = this.produto.id;
+            this.idServico = this.produto.idServico;
+            this.url = this.produto.url;
+            this.valorDesconto = this.produto.valorDesconto;
+            this.valorReal = this.produto.valorReal;
+            this.nome = this.produto.nome;
+            if(this.produto.imagem !== null){
+              this.img = `data:${this.produto.imagem.tipo};base64,${this.produto.imagem.dados}`;
+              this.idArquivo = this.produto.imagem.id;
+              this.arquivo = {
+                name: this.produto.imagem.nome,
+                type: this.produto.imagem.tipo,
+                binary: this.produto.imagem.dados,
+              };
+            };
             console.log(resp);
           },
           error => {
@@ -84,30 +101,31 @@ export class CriarExamePage implements OnInit {
         });
   }
 
-  salvarServico(){
+  salvarProduto(){
     const request = {
+      id: this.id,
       nome: this.nome,
-      telefone1: this.telefone1,
-      telefone2: this.telefone2,
-      rua: this.rua,
-      bairro: this.bairro,
-      cidade: this.cidade,
-      tipo: this.tipoDesconto,
-      descricao: this.sobreLoja,
-      desconto: this.sobreDesconto,
-      donoServico: this.user.id,
+      idServico: this.idServico,
+      idDonoProduto: this.user.id,
       idImagem: '',
+      url: this.url,
+      valorDesconto: this.valorDesconto,
+      valorReal: this.valorReal,
       imagem: this.arquivo === undefined ? null : {
+        id: this.idArquivo,
         nome: this.arquivo.name,
         tipo: this.arquivo.type,
-        dados: this.arquivo.binary
+        dados: this.arquivo.binary,
+        guid: ''
       }
     };
+    console.log(request);
     this.showLoadingScreen()
       .then(async () => {
-        (await this.exameService.postServico(request))
+        (await this.exameService.updateProduto(request))
           .subscribe(() => {
-            this.router.navigateByUrl('/page/exames');
+            this.storage.set('idAnimal', this.idServico);
+            this.router.navigateByUrl('/page/meus-produtos');
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -129,7 +147,8 @@ export class CriarExamePage implements OnInit {
   }
 
   cancelar(){
-    this.router.navigateByUrl('/page/exames');
+    this.storage.set('idAnimal', this.idServico);
+    this.router.navigateByUrl('/page/meus-produtos');
   }
 
   fileChange(e){
@@ -144,51 +163,6 @@ export class CriarExamePage implements OnInit {
       };
     };
   }
-
-  // async salvarExame(){
-  //   this.showLoadingScreen()
-  //     .then(async () => {
-  //       let request = {
-  //         arquivo: this.arquivo == undefined ? null : {
-  //           nome: this.arquivo.name,
-  //           tipo: this.arquivo.type,
-  //           binario: this.arquivo.binary
-  //         },
-  //         dataRealizacao: this.dataExame.split("T")[0],
-  //         idPaciente: this.user.id,
-  //         idTipoExame: this.tipoExame,
-  //         publico: this.publico,
-  //         observacoes: this.observacoes
-  //       };
-
-  //       this.arquivo = undefined;
-  //       this.dataExame = undefined;
-  //       this.tipoExame = undefined;
-  //       this.publico = false;
-  //       this.observacoes = undefined;
-
-  //       (await this.exameService.salvarExame(request))
-  //         .subscribe(() => {
-  //           this.router.navigateByUrl("/page/exames");
-  //         },
-  //         error => {
-  //           if(error.status == 401 || error.status == 403){
-  //             this.storage.remove("user");
-  //             this.router.navigateByUrl("");
-  //           }else{
-  //             this.toastController.create({
-  //               message: error.error,
-  //               duration: 5000
-  //             }).then(toast => {
-  //               toast.present();
-  //             });
-  //           }
-  //         },
-  //         () => {
-  //           this.closeLoadingScreen();
-  //         });
-  //     });
-  // }
 
   async showLoadingScreen() {
     const loadingScreen = await this.modalController.create({

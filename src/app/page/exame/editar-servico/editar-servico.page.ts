@@ -7,11 +7,11 @@ import { UrlService } from 'src/app/shared/class/url-service';
 import { ExameService } from '../exame.service';
 
 @Component({
-  selector: 'app-criar-exame',
-  templateUrl: './criar-exame.page.html',
-  styleUrls: ['./criar-exame.page.scss'],
+  selector: 'app-editar-servico',
+  templateUrl: './editar-servico.page.html',
+  styleUrls: ['./editar-servico.page.scss'],
 })
-export class CriarExamePage implements OnInit {
+export class EditarServicoPage implements OnInit {
 
   servicos: any;
   user: any;
@@ -20,7 +20,6 @@ export class CriarExamePage implements OnInit {
   tipoExame: any;
   publico: any;
   observacoes: any;
-
   public nome: string;
   public arquivo: any;
   public telefone1: string;
@@ -31,6 +30,11 @@ export class CriarExamePage implements OnInit {
   public tipoDesconto: string;
   public sobreLoja: string;
   public sobreDesconto: string;
+  public img: string;
+  public idServico: number;
+  public idArquivo: number;
+
+  public id: any;
 
   constructor(
     private exameService: ExameService,
@@ -41,7 +45,7 @@ export class CriarExamePage implements OnInit {
     private storage: StorageService)
   {
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === '/page/criar-exame') {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/editar-servicos') {
          this.pageEnter();
       }
     });
@@ -51,17 +55,40 @@ export class CriarExamePage implements OnInit {
 
   async pageEnter(){
     this.user = await this.storage.get('user');
+    this.id = await this.storage.get('idAnimal');
     console.log(this.user);
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
+    await this.getServicosByUsuario();
   }
 
   async getServicosByUsuario(){
     this.showLoadingScreen()
       .then(async () => {
-        (await this.exameService.getServicosByUsuario(this.user.id))
+        (await this.exameService.getServicoById(this.id))
           .subscribe((resp: any) => {
             this.servicos = resp;
+            this.idServico = this.servicos.id;
+            this.nome = this.servicos.nome;
+            this.telefone1 = this.servicos.telefone1;
+            this.telefone2 = this.servicos.telefone2;
+            this.rua = this.servicos.rua;
+            this.bairro = this.servicos.bairro;
+            this.cidade = this.servicos.cidade;
+            this.tipoDesconto = this.servicos.tipo;
+            this.sobreLoja = this.servicos.descricao;
+            this.sobreDesconto = this.servicos.desconto;
+            this.tipoDesconto = this.servicos.tipo;
+            this.tipoDesconto = this.servicos.tipo;
+            if(this.servicos.imagem !== null){
+              this.img = `data:${this.servicos.imagem.tipo};base64,${this.servicos.imagem.dados}`;
+              this.idArquivo = this.servicos.imagem.id;
+              this.arquivo = {
+                name: this.servicos.imagem.nome,
+                type: this.servicos.imagem.tipo,
+                binary: this.servicos.imagem.dados,
+              };
+            };
             console.log(resp);
           },
           error => {
@@ -86,6 +113,7 @@ export class CriarExamePage implements OnInit {
 
   salvarServico(){
     const request = {
+      id: this.idServico,
       nome: this.nome,
       telefone1: this.telefone1,
       telefone2: this.telefone2,
@@ -98,6 +126,7 @@ export class CriarExamePage implements OnInit {
       donoServico: this.user.id,
       idImagem: '',
       imagem: this.arquivo === undefined ? null : {
+        id: this.idArquivo,
         nome: this.arquivo.name,
         tipo: this.arquivo.type,
         dados: this.arquivo.binary
@@ -105,9 +134,9 @@ export class CriarExamePage implements OnInit {
     };
     this.showLoadingScreen()
       .then(async () => {
-        (await this.exameService.postServico(request))
+        (await this.exameService.updateServico(request))
           .subscribe(() => {
-            this.router.navigateByUrl('/page/exames');
+            this.router.navigateByUrl('/page/meus-servicos');
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -129,7 +158,7 @@ export class CriarExamePage implements OnInit {
   }
 
   cancelar(){
-    this.router.navigateByUrl('/page/exames');
+    this.router.navigateByUrl('/page/meus-servicos');
   }
 
   fileChange(e){
@@ -144,51 +173,6 @@ export class CriarExamePage implements OnInit {
       };
     };
   }
-
-  // async salvarExame(){
-  //   this.showLoadingScreen()
-  //     .then(async () => {
-  //       let request = {
-  //         arquivo: this.arquivo == undefined ? null : {
-  //           nome: this.arquivo.name,
-  //           tipo: this.arquivo.type,
-  //           binario: this.arquivo.binary
-  //         },
-  //         dataRealizacao: this.dataExame.split("T")[0],
-  //         idPaciente: this.user.id,
-  //         idTipoExame: this.tipoExame,
-  //         publico: this.publico,
-  //         observacoes: this.observacoes
-  //       };
-
-  //       this.arquivo = undefined;
-  //       this.dataExame = undefined;
-  //       this.tipoExame = undefined;
-  //       this.publico = false;
-  //       this.observacoes = undefined;
-
-  //       (await this.exameService.salvarExame(request))
-  //         .subscribe(() => {
-  //           this.router.navigateByUrl("/page/exames");
-  //         },
-  //         error => {
-  //           if(error.status == 401 || error.status == 403){
-  //             this.storage.remove("user");
-  //             this.router.navigateByUrl("");
-  //           }else{
-  //             this.toastController.create({
-  //               message: error.error,
-  //               duration: 5000
-  //             }).then(toast => {
-  //               toast.present();
-  //             });
-  //           }
-  //         },
-  //         () => {
-  //           this.closeLoadingScreen();
-  //         });
-  //     });
-  // }
 
   async showLoadingScreen() {
     const loadingScreen = await this.modalController.create({

@@ -10,6 +10,8 @@
       <span *ngIf="rotaAtual === '/page/adotar'">Adotar</span>
       <span *ngIf="rotaAtual === '/page/editar-pet'">Editar Pet</span>
       <span *ngIf="rotaAtual === '/page/criar-exame'">Criar Seriços</span>
+      <span *ngIf="rotaAtual === '/page/meus-servicos'">Editar Meus Seriços</span>
+      <span *ngIf="rotaAtual === '/page/editar-servicos'">Editar Seriços</span>
     </ion-title>
     <ion-button (click)="logout()" color="danger">Sair</ion-button>
     </div>
@@ -37,14 +39,19 @@
     <ion-tab-button tab="exames">
       <ion-icon name="briefcase-outline"></ion-icon>
       <!-- <ion-icon name="desktop-outline"></ion-icon> -->
-      <ion-label *ngIf="rotaAtual === '/page/exames' || rotaAtual === '/page/criar-exame'">Serviços</ion-label>
+      <ion-label *ngIf="rotaAtual === '/page/exames' || rotaAtual === '/page/criar-exame' || rotaAtual === '/page/meus-servicos' || rotaAtual === '/page/editar-servicos'">Serviços</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="consultas">
       <ion-icon name="sparkles-outline"></ion-icon>
       <!-- <ion-icon name="notifications-outline"></ion-icon> -->
-      <ion-label *ngIf="rotaAtual === '/page/consultas'">Dicas</ion-label>
+      <ion-label *ngIf="rotaAtual === '/page/clinicas'">Dicas</ion-label>
     </ion-tab-button>
+
+    <!-- <ion-tab-button tab="consultas">
+      <ion-icon name="storefront-outline"></ion-icon>
+      <ion-label *ngIf="rotaAtual === '/page/consultas'">Lojas</ion-label>
+    </ion-tab-button> -->
 
   </ion-tab-bar>
 </ion-tabs>

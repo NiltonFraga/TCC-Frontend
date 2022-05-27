@@ -43,6 +43,11 @@ export class ExamePage implements OnInit {
     (await this.exameService.getAllServico())
       .subscribe((resp: any) => {
         this.servicos = resp;
+        this.servicos.map(x => {
+          if(x.imagem !== null){
+            x.img = `data:${x.imagem.tipo};base64,${x.imagem.dados}`;
+          }
+        });
         console.log(resp);
 
         if(this.servicos.length === 0){
@@ -63,5 +68,9 @@ export class ExamePage implements OnInit {
 
   ciarNovoServico(){
     this.router.navigateByUrl('page/criar-exame');
+  }
+
+  verMeusServico(){
+    this.router.navigateByUrl('page/meus-servicos');
   }
 }

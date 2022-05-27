@@ -16,8 +16,32 @@ export class ExameService {
     return await this.urlService.sendRequestPost('/Servico/GetServicoByUsuario?id='+id);
   }
 
+  async postServico(request: any){
+    return await this.urlService.sendRequestPost('/Servico/PostServico', JSON.stringify(request));
+  }
+
   async getServicoById(id: string){
     return await this.urlService.sendRequestPost('/Servico/GetServicoById?id='+id);
+  }
+
+  async updateServico(request: any){
+    return await this.urlService.sendRequestPost('/Servico/UpdateServico', JSON.stringify(request));
+  }
+
+  async getProdutosByServico(id: string){
+    return await this.urlService.sendRequestPost('/Produto/GetProdutosByServico?id='+id);
+  }
+
+  async getProdutoById(id: string){
+    return await this.urlService.sendRequestPost('/Produto/GetProdutoById?id='+id);
+  }
+
+  async postProduto(request: any){
+    return await this.urlService.sendRequestPost('/Produto/PostProduto', JSON.stringify(request));
+  }
+
+  async updateProduto(request: any){
+    return await this.urlService.sendRequestPost('/Produto/UpdateProduto', JSON.stringify(request));
   }
 
   async consultarListaTiposExames(){

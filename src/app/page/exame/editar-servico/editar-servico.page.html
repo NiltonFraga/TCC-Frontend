@@ -3,14 +3,20 @@
     <ion-grid style="width: 100%;">
       <ion-row>
         <ion-col class="item-form" size="12">
-          <ion-label color="primary">Razão social: </ion-label>
-          <ion-input type="text" [(ngModel)]="nome"></ion-input>
+          <ion-label color="primary">Imagem Atual: </ion-label>
+          <ion-img class="imagem-animal" [src]="img"></ion-img>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="item-form" size="12">
           <ion-label color="primary">Imagem: </ion-label>
           <ion-input type="file" (change)="fileChange($event)"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Razão social: </ion-label>
+          <ion-input type="text" [(ngModel)]="nome"></ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -64,6 +70,7 @@
           <ion-textarea [(ngModel)]="sobreDesconto" rows="5" placeholder="Escreva sobre o desconto"></ion-textarea>
         </ion-col>
       </ion-row>
+
       <ion-row>
         <ion-col class="item-form-center" size="12">
           <ion-button (click)="cancelar()" color="primary" expand="block">Cancelar</ion-button>
