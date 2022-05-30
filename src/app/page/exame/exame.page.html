@@ -24,6 +24,11 @@
                 <ion-img class="imagem-animal" [src]="foto" *ngIf="servico.imagem === null"></ion-img>
                 <ion-card-title class="nome">{{servico.nome}}</ion-card-title>
               </ion-card-header>
+              <ion-fab vertical="center" horizontal="end">
+                <ion-fab-button *ngIf="servico.tipo === 'Produto'">
+                  <ion-icon (click)="verProdutos(servico.id)" name="enter-outline"></ion-icon>
+                </ion-fab-button>
+              </ion-fab>
               <ion-card-content class="bloco-card-content">
                 <div class="info">Tipo de desconto: {{servico.tipo}}</div>
                 <div class="info">{{servico.descricao}}</div>

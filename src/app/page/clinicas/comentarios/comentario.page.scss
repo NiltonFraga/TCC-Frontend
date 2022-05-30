@@ -1,5 +1,5 @@
 .content{
-  margin-top: 8vh;
+  margin-top: 10vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -7,24 +7,34 @@
   justify-content: center;
 }
 
-.header-card{
+.grid-animais{
+  width: 100%;
+  height: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.conteudo-card{
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  text-align: justify;
+  margin-top: 2vh;
 }
 
-.topico{
-  padding-bottom: 6px;
+.bloco-card{
+  padding: 0;
+  margin: 0;
+}
+
+.conteudo{
+  padding: 6px;
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  margin-bottom: 8px;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .acoes-card{
+  padding-top: 10px;
   display: flex;
   justify-content: flex-end;
 }
@@ -54,4 +64,9 @@
 
 .curtir:active{
   color: blue;
+}
+
+.comentario{
+  padding: 6px 4px;
+  border-bottom: 1px solid gray;
 }

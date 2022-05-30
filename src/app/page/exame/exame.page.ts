@@ -73,4 +73,9 @@ export class ExamePage implements OnInit {
   verMeusServico(){
     this.router.navigateByUrl('page/meus-servicos');
   }
+
+  verProdutos(id: any){
+    this.storage.set('idAnimal', id);
+    this.router.navigateByUrl('page/produtos');
+  }
 }

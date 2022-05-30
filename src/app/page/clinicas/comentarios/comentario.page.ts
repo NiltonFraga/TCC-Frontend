@@ -4,24 +4,24 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingPage } from 'src/app/loading/loading.page';
 import { StorageService } from 'src/app/shared/class/storage.service';
 import { UrlService } from 'src/app/shared/class/url-service';
-import { ExameService } from '../exame.service';
+import { ClinicasService } from '../clinicas.service';
 
 @Component({
-  selector: 'app-meus-produtos',
-  templateUrl: './meus-produtos.page.html',
-  styleUrls: ['./meus-produtos.page.scss'],
+  selector: 'app-comentario',
+  templateUrl: './comentario.page.html',
+  styleUrls: ['./comentario.page.scss'],
 })
-export class MeusProdutosPage implements OnInit {
+export class ComentarioPage implements OnInit {
 
-  produtos: any;
-  produtoImg = 'https://scontent.fsdu15-1.fna.fbcdn.net/v/t1.6435-9/173246721_1109225312820513_6797640485221109157_n.png?_nc_cat=102&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeHxv9P3vxN2ECLC28mmIHy1ZceYjGMwe4hlx5iMYzB7iKidkYOuzm1Hw3L1WyH-Hzh-5vtReM-bAQWjgd0Z_qUu&_nc_ohc=4MaH5D1ZvrIAX9iecDQ&_nc_ht=scontent.fsdu15-1.fna&oh=00_AT-wMwuvzScMEiI1zKHE4KAeEOcDXx-OlzG65ggb2Fv7sQ&oe=62B1DFBE';
+  post: any;
+  foto: '';
   loading: boolean;
   mensagem: string;
   public user: any;
-  public idServico: any;
+  public idPost: any;
 
   constructor(
-    private exameService: ExameService,
+    private exameService: ClinicasService,
     public modalController: ModalController,
     public toastController: ToastController,
     private urlService: UrlService,
@@ -29,7 +29,7 @@ export class MeusProdutosPage implements OnInit {
     private storage: StorageService)
   {
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === '/page/meus-produtos') {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/comentario') {
          this.pageEnter();
       }
     });
@@ -39,27 +39,18 @@ export class MeusProdutosPage implements OnInit {
 
   async pageEnter(){
     this.user = await this.storage.get('user');
-    this.idServico = await this.storage.get('idAnimal');
     const token = await this.storage.get('token');
+    this.idPost = await this.storage.get('idAnimal');
     await this.urlService.validateToken(token);
-    if(this.idServico === null){
-      this.router.navigateByUrl('page/meus-servicos');
-    }else{
-      this.getProdutosByServico();
-    }
+    this.getPostAndComentarioById();
   }
 
-  async getProdutosByServico(){
+  async getPostAndComentarioById(){
     this.showLoadingScreen()
       .then(async () => {
-        (await this.exameService.getProdutosByServico(this.idServico))
+        (await this.exameService.getPostAndComentarioById(Number(this.idPost)))
           .subscribe((resp: any) => {
-            this.produtos = resp;
-            this.produtos.map(x => {
-              if(x.imagem !== null){
-                x.img = `data:${x.imagem.tipo};base64,${x.imagem.dados}`;
-              }
-            });
+            this.post = resp;
             console.log(resp);
           },
           error => {
@@ -82,19 +73,14 @@ export class MeusProdutosPage implements OnInit {
         });
   }
 
-  editarProduto(id: any){
+  editarServico(id: any){
     this.storage.set('idAnimal', id);
-    this.router.navigateByUrl('page/editar-produto');
+    this.router.navigateByUrl('page/editar-servicos');
   }
 
-  criarProduto(){
-    this.storage.set('idAnimal', this.idServico);
-    this.router.navigateByUrl('page/criar-produto');
-  }
-
-  voltar(){
-    this.storage.set('idAnimal', this.idServico);
-    this.router.navigateByUrl('page/meus-servicos');
+  verMeusProdutos(id: any){
+    this.storage.set('idAnimal', id);
+    this.router.navigateByUrl('page/meus-produtos');
   }
 
   async showLoadingScreen() {

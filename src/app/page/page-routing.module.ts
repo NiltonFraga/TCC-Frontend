@@ -1,3 +1,4 @@
+import { ComentarioPageModule } from './clinicas/comentarios/comentario.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -49,6 +50,10 @@ const routes: Routes = [
         loadChildren: () => import('./exame/criar-produto/criar-produto.module').then( m => m.CriarProdutoPageModule)
       },
       {
+        path: 'produtos',
+        loadChildren: () => import('./exame/produtos/produtos.module').then( m => m.ProdutosPageModule)
+      },
+      {
         path: 'consultas',
         loadChildren: () => import('./consulta/consulta.module').then( m => m.ConsultaPageModule)
       },
@@ -67,6 +72,14 @@ const routes: Routes = [
       {
         path: 'clinicas',
         loadChildren: () => import('./clinicas/clinicas.module').then( m => m.ClinicasPageModule)
+      },
+      {
+        path: 'criar-post',
+        loadChildren: () => import('./clinicas/criar-post/criar-post.module').then( m => m.CriarPostPageModule)
+      },
+      {
+        path: 'comentario',
+        loadChildren: () => import('./clinicas/comentarios/comentario.module').then( m => m.ComentarioPageModule)
       },
       {
         path: '',

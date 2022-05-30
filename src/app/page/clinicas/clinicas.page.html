@@ -3,59 +3,37 @@
     <div class="sector-novo-clinicas">
       <ion-grid>
         <ion-row>
-          <ion-col size="12">
-            <ion-button *ngIf="!loading" (click)="editarEndereco()" color="primary" expand="block">Editar endereço</ion-button>
-            <div *ngIf="!listaClinicas || listaClinicas.length == 0 || loading" class="area-lista-vazia">
-              <span *ngIf="!loading">{{mensagem}}</span>
-              <div *ngIf="loading" class="preloader-wrapper big active">
-                <div class="spinner-layer spinner-blue-only">
-                  <div class="circle-clipper left">
-                    <div class="circle"></div>
-                  </div><div class="gap-patch">
-                    <div class="circle"></div>
-                  </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <ion-list *ngIf="!loading && listaClinicas && listaClinicas.length > 0">
-
-              <ion-item (click)="exibirModalEnderecoConf(item)" *ngFor="let item of listaClinicas">
-                <ion-label class="ion-text-wrap">
-                  <ion-grid>
-                    <ion-row>
-                      <ion-col class="clinicas-nome" size="12">
-                        <ion-text color="primary">
-                          <h2>{{item.clinica.nomeClinica}}</h2>
-                        </ion-text>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col class="clinicas-quantidade" size="12">
-                        <p>{{'Distancia: ' +
-                          formatarDistancia(item.distancia)
-                        }}</p>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col class="clinicas-quantidade" size="12">
-                        <p>{{'Endereço: ' +
-                          item.clinica.endereco.logradouro +
-                          (item.clinica.endereco.numero ? ", "+item.clinica.endereco.numero : ", S/N") +
-                          " - " +item.clinica.endereco.bairro
-                        }}</p>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </ion-label>
-              </ion-item>
-
-            </ion-list>
+          <ion-col size="12" class="bloco-card">
+            <ion-card *ngFor="let post of posts" (click)="verComentarios(post.id)">
+              <ion-card-header>
+                <ion-card-subtitle class="header-card">
+                  <span>{{post.nomeUsuario.split(' ').slice(0, 2).join(' ')}}</span>
+                  <span>{{post.dataAtualizacao}}</span>
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content class="conteudo-card">
+                <div class="topico">{{post.topico}}</div>
+                <div>{{post.conteudo}}</div>
+              </ion-card-content>
+              <ion-card-content class="acoes-card">
+                <span class="acoes" style="margin-right: 40px;">
+                  <ion-icon name="chatbox-ellipses-outline" class="iconi"></ion-icon>
+                  <ion-badge color="dark" class="contagem">{{post.quantComentarios}}</ion-badge>
+                </span>
+                <span class="acoes curtir" style="margin-right: 10px;" >
+                  <ion-icon name="thumbs-up-outline" class="iconi"></ion-icon>
+                  <ion-badge color="dark" class="contagem">0</ion-badge>
+                </span>
+              </ion-card-content>
+            </ion-card>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
-
   </div>
 </ion-content>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="criarPost()">
+    <ion-icon name="add-circle-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

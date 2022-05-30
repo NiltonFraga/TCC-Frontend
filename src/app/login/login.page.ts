@@ -45,14 +45,11 @@ export class LoginPage implements OnInit {
   }
 
   async entrar(){
-    //this.router.navigateByUrl('page');
     this.showLoadingScreen()
       .then(async () => {
 
         (await this.loginService.entrar(this.loginForm.get('login').value, this.loginForm.get('senha').value))
           .subscribe(async (resp: any) => {
-
-            console.log(resp)
             this.closeLoadingScreen();
 
             await this.storage.set('token', resp.token);
@@ -63,9 +60,7 @@ export class LoginPage implements OnInit {
             this.router.navigateByUrl('page');
 
           },error => {
-
             this.closeLoadingScreen();
-
             this.toastController.create({
               message: error.error,
               duration: 3000

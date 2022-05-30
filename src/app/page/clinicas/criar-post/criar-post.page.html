@@ -1,0 +1,29 @@
+<ion-content>
+  <div class="content">
+    <ion-grid style="width: 100%;">
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-label color="primary">Topico: </ion-label>
+          <ion-select class="listaTipo" [(ngModel)]="topico" placeholder="Selecione...">
+            <ion-select-option value="Alimentação">Alimentação</ion-select-option>
+            <ion-select-option value="Saúde">Saúde</ion-select-option>
+            <ion-select-option value="Bem Estar">Bem Estar</ion-select-option>
+            <ion-select-option value="Curiosidade">Curiosidade</ion-select-option>
+            <ion-select-option value="Dúvida">Dúvida</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form" size="12">
+          <ion-textarea [(ngModel)]="conteudo" rows="5" placeholder="Escreva seu post"></ion-textarea>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="item-form-center" size="12">
+          <ion-button (click)="cancelar()" color="primary" expand="block">Cancelar</ion-button>
+          <ion-button (click)="salvarProduto()" color="primary" expand="block">Salvar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

@@ -12,6 +12,10 @@
       <span *ngIf="rotaAtual === '/page/criar-exame'">Criar Seriços</span>
       <span *ngIf="rotaAtual === '/page/meus-servicos'">Editar Meus Seriços</span>
       <span *ngIf="rotaAtual === '/page/editar-servicos'">Editar Seriços</span>
+      <span *ngIf="rotaAtual === '/page/criar-produto'">Criar Produto</span>
+      <span *ngIf="rotaAtual === '/page/editar-produto'">Editar Produto</span>
+      <span *ngIf="rotaAtual === '/page/meus-produtos'">Meus Produto</span>
+      <span *ngIf="rotaAtual === '/page/produtos'">Produto</span>
     </ion-title>
     <ion-button (click)="logout()" color="danger">Sair</ion-button>
     </div>
@@ -39,7 +43,15 @@
     <ion-tab-button tab="exames">
       <ion-icon name="briefcase-outline"></ion-icon>
       <!-- <ion-icon name="desktop-outline"></ion-icon> -->
-      <ion-label *ngIf="rotaAtual === '/page/exames' || rotaAtual === '/page/criar-exame' || rotaAtual === '/page/meus-servicos' || rotaAtual === '/page/editar-servicos'">Serviços</ion-label>
+      <ion-label
+        *ngIf="rotaAtual === '/page/exames' ||
+        rotaAtual === '/page/criar-exame' ||
+        rotaAtual === '/page/meus-servicos' ||
+        rotaAtual === '/page/editar-servicos' ||
+        rotaAtual === '/page/criar-produto' ||
+        rotaAtual === '/page/editar-produto' ||
+        rotaAtual === '/page/meus-produtos' ||
+        rotaAtual === '/page/produtos'">Serviços</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="consultas">

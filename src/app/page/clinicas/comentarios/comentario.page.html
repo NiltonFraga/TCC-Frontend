@@ -1,0 +1,55 @@
+<ion-content>
+  <div class="content">
+    <div class="grid-animais">
+      <div *ngIf="loading" class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <ion-grid *ngIf="post">
+        <ion-row>
+          <span *ngIf="!loading">{{mensagem}}</span>
+        </ion-row>
+        <ion-row >
+          <ion-col size="12" class="bloco-card" >
+            <div class="conteudo">
+              <div class="header">
+                <span>{{post.nomeUsuario.split(' ').slice(0, 2).join(' ')}}</span>
+                <span>{{post.dataAtualizacao}}</span>
+              </div>
+              <p>Topico: {{post.topico}}</p>
+              <p>{{post.conteudo}}</p>
+              <div class="acoes-card">
+                <span class="acoes" style="margin-right: 40px;">
+                  <ion-icon name="chatbox-ellipses-outline" class="iconi"></ion-icon>
+                  <ion-badge color="dark" class="contagem">{{post.quantComentarios}}</ion-badge>
+                </span>
+                <span class="acoes curtir" style="margin-right: 10px;" >
+                  <ion-icon name="thumbs-up-outline" class="iconi"></ion-icon>
+                  <ion-badge color="dark" class="contagem">0</ion-badge>
+                </span>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="post.comentarios">
+          <ion-col size="12" class="bloco-card" *ngFor="let comentario of post.comentarios">
+            <div class="comentario">
+              <div class="header">
+                <span>{{comentario.nomeUsuario.split(' ').slice(0, 2).join(' ')}}</span>
+                <span>{{comentario.dataAtualizacao}}</span>
+              </div>
+              <p>{{comentario.conteudo}}</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
