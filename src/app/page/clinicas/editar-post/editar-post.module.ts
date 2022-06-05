@@ -4,22 +4,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CriarExamePageRoutingModule } from './criar-exame-routing.module';
+import { EditarPostPageRoutingModule } from './editar-post-routing.module';
 
-import { CriarExamePage } from './criar-exame.page';
-import { ExameService } from '../exame.service';
+import { EditarPostPage } from './editar-post.page';
+import { ClinicasService } from '../clinicas.service';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CriarExamePageRoutingModule,
+    EditarPostPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [CriarExamePage],
+  declarations: [EditarPostPage],
   providers: [
-    ExameService
+    ClinicasService
   ]
 })
-export class CriarExamePageModule {}
+export class EditarPostPageModule {}

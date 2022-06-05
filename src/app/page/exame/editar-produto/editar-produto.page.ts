@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingPage } from 'src/app/loading/loading.page';
@@ -29,8 +30,8 @@ export class EditarProdutoPage implements OnInit {
   public idServico: number;
   public idArquivo: number;
   public arquivo: any;
-
   public id: any;
+  public cadastroForm: FormGroup;
 
   constructor(
     private exameService: ExameService,
@@ -38,8 +39,16 @@ export class EditarProdutoPage implements OnInit {
     public toastController: ToastController,
     private urlService: UrlService,
     private router: Router,
-    private storage: StorageService)
+    private storage: StorageService,
+    private fb: FormBuilder)
   {
+    this.cadastroForm = this.fb.group({
+      nome: this.fb.control('', [Validators.required]),
+      valorReal: this.fb.control('', [Validators.required]),
+      valorDesconto: this.fb.control('', [Validators.required]),
+      url: this.fb.control('', [Validators.required])
+    });
+    this.arquivo = null;
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd && this.router.url === '/page/editar-produto') {
          this.pageEnter();
@@ -52,7 +61,6 @@ export class EditarProdutoPage implements OnInit {
   async pageEnter(){
     this.user = await this.storage.get('user');
     this.id = await this.storage.get('idAnimal');
-    console.log(this.user);
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
     await this.getProdutoById();
@@ -66,10 +74,10 @@ export class EditarProdutoPage implements OnInit {
             this.produto = resp;
             this.id = this.produto.id;
             this.idServico = this.produto.idServico;
-            this.url = this.produto.url;
-            this.valorDesconto = this.produto.valorDesconto;
-            this.valorReal = this.produto.valorReal;
-            this.nome = this.produto.nome;
+            this.cadastroForm.get('url').setValue(this.produto.url);
+            this.cadastroForm.get('valorDesconto').setValue(this.produto.valorDesconto);
+            this.cadastroForm.get('valorReal').setValue(this.produto.valorReal);
+            this.cadastroForm.get('nome').setValue(this.produto.nome);
             if(this.produto.imagem !== null){
               this.img = `data:${this.produto.imagem.tipo};base64,${this.produto.imagem.dados}`;
               this.idArquivo = this.produto.imagem.id;
@@ -79,7 +87,6 @@ export class EditarProdutoPage implements OnInit {
                 binary: this.produto.imagem.dados,
               };
             };
-            console.log(resp);
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -104,13 +111,13 @@ export class EditarProdutoPage implements OnInit {
   salvarProduto(){
     const request = {
       id: this.id,
-      nome: this.nome,
+      nome: this.cadastroForm.get('nome').value,
       idServico: this.idServico,
       idDonoProduto: this.user.id,
       idImagem: '',
-      url: this.url,
-      valorDesconto: this.valorDesconto,
-      valorReal: this.valorReal,
+      url: this.cadastroForm.get('url').value,
+      valorDesconto: this.cadastroForm.get('valorDesconto').value,
+      valorReal: this.cadastroForm.get('valorReal').value,
       imagem: this.arquivo === undefined ? null : {
         id: this.idArquivo,
         nome: this.arquivo.name,
@@ -119,7 +126,6 @@ export class EditarProdutoPage implements OnInit {
         guid: ''
       }
     };
-    console.log(request);
     this.showLoadingScreen()
       .then(async () => {
         (await this.exameService.updateProduto(request))
@@ -177,6 +183,10 @@ export class EditarProdutoPage implements OnInit {
         loader.dismiss();
       }
     });
+  }
+
+  setNull(){
+
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingPage } from 'src/app/loading/loading.page';
@@ -29,6 +30,7 @@ export class CriarProdutoPage implements OnInit {
   public idServico: number;
   public idArquivo: number;
   public arquivo: any;
+  public cadastroForm: FormGroup;
 
   public id: any;
 
@@ -38,8 +40,17 @@ export class CriarProdutoPage implements OnInit {
     public toastController: ToastController,
     private urlService: UrlService,
     private router: Router,
-    private storage: StorageService)
+    private storage: StorageService,
+    private fb: FormBuilder)
   {
+    this.cadastroForm = this.fb.group({
+      nome: this.fb.control('', [Validators.required]),
+      valorReal: this.fb.control('', [Validators.required]),
+      valorDesconto: this.fb.control('', [Validators.required]),
+      url: this.fb.control('', [Validators.required]),
+      file: this.fb.control('', [Validators.required])
+    });
+
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd && this.router.url === '/page/criar-produto') {
         this.setNull();
@@ -53,7 +64,6 @@ export class CriarProdutoPage implements OnInit {
   async pageEnter(){
     this.user = await this.storage.get('user');
     this.idServico = await this.storage.get('idAnimal');
-    console.log(this.user);
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
   }
@@ -61,13 +71,13 @@ export class CriarProdutoPage implements OnInit {
   salvarProduto(){
     const request = {
       id: 0,
-      nome: this.nome,
+      nome: this.cadastroForm.get('nome').value,
       idServico: this.idServico,
       idDonoProduto: this.user.id,
       idImagem: '',
-      url: this.url,
-      valorDesconto: this.valorDesconto,
-      valorReal: this.valorReal,
+      url: this.cadastroForm.get('url').value,
+      valorDesconto: this.cadastroForm.get('valorDesconto').value,
+      valorReal: this.cadastroForm.get('valorReal').value,
       imagem: this.arquivo === undefined ? null : {
         id: 0,
         nome: this.arquivo.name,
@@ -137,14 +147,12 @@ export class CriarProdutoPage implements OnInit {
   }
 
   setNull(){
-    this.nome = null;
-    this.img = null;
-    this.url = null;
-    this.valorDesconto = null;
-    this.valorReal = null;
-    this.idDono = null;
-    this.idServico = null;
-    this.idArquivo = null;
-    this.arquivo = null;
+    this.cadastroForm = this.fb.group({
+      nome: this.fb.control('', [Validators.required]),
+      valorReal: this.fb.control('', [Validators.required]),
+      valorDesconto: this.fb.control('', [Validators.required]),
+      url: this.fb.control('', [Validators.required]),
+      file: this.fb.control('', [Validators.required])
+    });
   }
 }

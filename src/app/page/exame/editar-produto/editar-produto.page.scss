@@ -22,3 +22,23 @@
   justify-content: center;
   align-items: center;
 }
+
+.botaoCancelar{
+  background-color: #a7a7a7;
+  width: 140px;
+  height: 40px;
+  color: aliceblue;
+}
+
+.botaoConfirmar{
+  background-color: #60E677;
+  width: 140px;
+  height: 40px;
+  color: aliceblue;
+}
+
+.mensagem-erro{
+  font-size: 14px;
+  color: red;
+  margin-right: 12px;
+}

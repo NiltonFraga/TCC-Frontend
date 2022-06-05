@@ -2,12 +2,90 @@
   <ion-toolbar>
     <div style="display: flex; justify-content: space-between; padding-right: 10px;">
       <ion-title>Criar Conta</ion-title>
-      <ion-button routerLink="/login" color="secondary">Voltar</ion-button>
+      <!-- <ion-button routerLink="/login" color="secondary">Voltar</ion-button> -->
+      <ion-icon routerLink="/login" name="chevron-back-outline"></ion-icon>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="content">
+    <ion-grid style="width: 100%;">
+      <form [formGroup]="cadastroForm">
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <label color="primary">Nome Completo: </label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.nome.errors">*</span>
+            <input type="text" formControlName="nome" />
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12" class="ajuste-posicao">
+            <label color="primary">Tipo de Perfil: </label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.perfil.errors">*</span>
+            <select class="listaTipo" formControlName="perfil" [(ngModel)]="tipo" placeholder="Selecione...">
+              <option value="pessoa_fisica">Pessoa Fisica</option>
+              <option value="pessoa_juridica">Pessoa Juridica</option>
+            </select>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="tipo === 'pessoa_fisica'">
+          <ion-col class="item-form" size="12" class="ajuste-posicao" >
+            <label color="primary">CPF: </label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.documento.errors">*</span>
+            <input type="number" formControlName="documento"/>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="tipo === 'pessoa_juridica'">
+          <ion-col class="item-form" size="12" class="ajuste-posicao">
+            <label color="primary">CNPJ: </label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.documento.errors">*</span>
+            <input type="number" formControlName="documento" />
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12" class="ajuste-posicao">
+            <label color="primary">Email: </label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.email.errors || cadastroForm.controls.email.errors?.email">*</span>
+            <input type="email" formControlName="email"/>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12" class="ajuste-posicao">
+            <label color="primary">Telefone: </label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.telefone1.errors">*</span>
+            <input type="number" formControlName="telefone1"/>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12" class="ajuste-posicao">
+            <label color="primary">Telefone: </label>
+            <input type="number" formControlName="telefone2"/>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="6">
+            <label color="primary">Senha: </label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.senha.errors">*</span>
+            <input type="password" formControlName="senha"/>
+          </ion-col>
+          <ion-col class="item-form" size="6">
+            <label color="primary">Confirme a senha: </label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.confimeSenha.errors">*</span>
+            <input type="password" formControlName="confimeSenha"/>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col  size="12">
+            <button (click)="cadastrar()" class="button" [disabled]="!cadastroForm.valid">Cadastrar</button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<!-- <ion-content>
 
   <div class="content">
 
@@ -60,11 +138,8 @@
         </div>
       </div>
     </form>
-
     <div class="row button-area">
         <ion-button (click)="cadastrar()" expand="block">Finalizar cadastro</ion-button>
     </div>
-
   </div>
-
-</ion-content>
+</ion-content> -->

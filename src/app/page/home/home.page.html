@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content style="--ion-background-color: #fafafa">
   <div class="content">
     <!-- <span *ngIf="!loading">{{mensagem}}</span> -->
     <div class="filtro">
@@ -19,7 +19,7 @@
       <ion-grid>
         <ion-row >
           <ion-col size="6" class="bloco-card" *ngFor="let animal of animais" (click)="detalhesAnimal(animal.id)">
-            <ion-card>
+            <ion-card style="--ion-background-color: #fafafa">
               <ion-card-header class="animal">
                 <ion-img class="imagem-animal" [src]="animal.foto" *ngIf="animal.foto !== null"></ion-img>
                 <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.foto === null"></ion-img>

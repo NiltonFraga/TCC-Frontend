@@ -1,10 +1,10 @@
 .content{
-  margin-top: 10vh;
-  width: 100%;
+  margin-top: 6vh;
+  width: 100vw;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .grid-animais{
@@ -14,6 +14,11 @@
   align-items: center;
   flex-direction: column;
   margin-top: 2vh;
+  position: relative;
+}
+
+.conteudo-fixo{
+  background-color: aliceblue;
 }
 
 .bloco-card{
@@ -31,6 +36,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .acoes-card{
@@ -62,11 +68,65 @@
   right: -14px;
 }
 
-.curtir:active{
-  color: blue;
+.curtir{
+  color: #15AD2E;
 }
 
 .comentario{
   padding: 6px 4px;
   border-bottom: 1px solid gray;
+}
+
+.input-comentario{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(112, 112, 112);
+  background-color: aliceblue;
+
+  ion-textarea{
+    padding: 0px;
+  }
+
+  ion-icon{
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    fill: green;
+    color: green;
+  }
+}
+
+.conteudo-movel{
+  margin-bottom: 36px;
+}
+
+.excluir{
+  position: absolute;
+  color: red;
+  right: 0;
+
+  ion-icon{
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.edit{
+  position: absolute;
+  color: rgb(0, 153, 255);
+  right: 0;
+  top: 26px;
+
+  ion-icon{
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.margin-exclusao{
+  margin-right: 34px;
 }

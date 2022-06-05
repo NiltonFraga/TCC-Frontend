@@ -54,7 +54,6 @@ export class MeusServicosPage implements OnInit {
                 x.img = `data:${x.imagem.tipo};base64,${x.imagem.dados}`;
               }
             });
-            console.log(resp);
           },
           error => {
             if(error.status === 401 || error.status === 403){

@@ -12,16 +12,22 @@
           </div>
         </div>
       </div>
-      <ion-grid *ngIf="post">
+      <ion-grid *ngIf="post" style="width: 100%">
         <ion-row>
           <span *ngIf="!loading">{{mensagem}}</span>
         </ion-row>
-        <ion-row >
+        <ion-row class="conteudo-fixo">
           <ion-col size="12" class="bloco-card" >
             <div class="conteudo">
               <div class="header">
                 <span>{{post.nomeUsuario.split(' ').slice(0, 2).join(' ')}}</span>
-                <span>{{post.dataAtualizacao}}</span>
+                <span [ngClass]="{'margin-exclusao': post.idUsuario === this.user.id}">{{post.dataAtualizacao | date:'dd/MM/yyyy HH:mm'}}</span>
+                <span *ngIf="post.idUsuario === this.user.id" class="excluir" (click)="excluirPost(post.id)">
+                  <ion-icon name="close-outline"></ion-icon>
+                </span>
+                <span  *ngIf="post.idUsuario === this.user.id" class="edit" (click)="editarPost(post.id)">
+                  <ion-icon name="create-outline" ></ion-icon>
+                </span>
               </div>
               <p>Topico: {{post.topico}}</p>
               <p>{{post.conteudo}}</p>
@@ -30,26 +36,33 @@
                   <ion-icon name="chatbox-ellipses-outline" class="iconi"></ion-icon>
                   <ion-badge color="dark" class="contagem">{{post.quantComentarios}}</ion-badge>
                 </span>
-                <span class="acoes curtir" style="margin-right: 10px;" >
-                  <ion-icon name="thumbs-up-outline" class="iconi"></ion-icon>
-                  <ion-badge color="dark" class="contagem">0</ion-badge>
+                <span class="acoes curtir" style="margin-right: 10px;" (click)="curtirPost(post.id)">
+                  <ion-icon name="thumbs-up-outline" class="iconi"  [ngClass]="{curtir: post.idsUsuariosCurtidas.includes(this.user.id)}"></ion-icon>
+                  <ion-badge color="dark" class="contagem">{{post.idsUsuariosCurtidas.length}}</ion-badge>
                 </span>
               </div>
             </div>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="post.comentarios">
+        <ion-row *ngIf="post.comentarios" class="conteudo-movel">
           <ion-col size="12" class="bloco-card" *ngFor="let comentario of post.comentarios">
             <div class="comentario">
               <div class="header">
                 <span>{{comentario.nomeUsuario.split(' ').slice(0, 2).join(' ')}}</span>
-                <span>{{comentario.dataAtualizacao}}</span>
+                <span [ngClass]="{'margin-exclusao': comentario.idUsuario === this.user.id}">{{comentario.dataAtualizacao | date:'dd/MM/yyyy HH:mm'}}</span>
+                <span *ngIf="comentario.idUsuario === this.user.id" class="excluir" (click)="excluirComentario(comentario.id)">
+                  <ion-icon name="close-outline"></ion-icon>
+                </span>
               </div>
               <p>{{comentario.conteudo}}</p>
             </div>
           </ion-col>
         </ion-row>
       </ion-grid>
+    </div>
+    <div class="input-comentario">
+      <ion-textarea [(ngModel)]="conteudoNovo" rows="1" placeholder="Comentario"></ion-textarea>
+      <ion-icon name="paper-plane-outline" (click)="criarComentario()"></ion-icon>
     </div>
   </div>
 </ion-content>

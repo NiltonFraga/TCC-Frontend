@@ -19,11 +19,10 @@
               <ion-card>
                 <ion-card-header class="animal">
                   <ion-img class="imagem-animal" [src]="produto.img" *ngIf="produto.imagem !== null"></ion-img>
-                  <ion-img class="imagem-animal" [src]="produtoImg" *ngIf="produto.imagem === null"></ion-img>
                   <ion-card-subtitle class="nome">{{produto.nome}}</ion-card-subtitle>
                 </ion-card-header>
                 <ion-fab vertical="center" horizontal="end">
-                  <ion-fab-button >
+                  <ion-fab-button style="--background: #196B10 !important">
                     <ion-icon (click)="editarProduto(produto.id)" name="create-outline"></ion-icon>
                   </ion-fab-button>
                 </ion-fab>
@@ -44,12 +43,12 @@
   </div>
 </ion-content>
 <ion-fab vertical="bottom" horizontal="end">
-  <ion-fab-button >
-    <ion-icon (click)="criarProduto()" name="add-circle-outline"></ion-icon>
+  <ion-fab-button style="--background: transparent !important">
+    <ion-icon (click)="criarProduto()" name="add-circle-outline" class="iconi-style"></ion-icon>
   </ion-fab-button>
 </ion-fab>
 <ion-fab vertical="bottom" horizontal="start">
-  <ion-fab-button >
-    <ion-icon (click)="voltar()" name="arrow-back-outline"></ion-icon>
+  <ion-fab-button style="--background: transparent !important">
+    <ion-icon (click)="voltar()" name="arrow-back-outline" class="iconi-style"></ion-icon>
   </ion-fab-button>
 </ion-fab>

@@ -19,6 +19,7 @@ export class ComentarioPage implements OnInit {
   mensagem: string;
   public user: any;
   public idPost: any;
+  public conteudoNovo: string;
 
   constructor(
     private exameService: ClinicasService,
@@ -51,7 +52,6 @@ export class ComentarioPage implements OnInit {
         (await this.exameService.getPostAndComentarioById(Number(this.idPost)))
           .subscribe((resp: any) => {
             this.post = resp;
-            console.log(resp);
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -73,14 +73,139 @@ export class ComentarioPage implements OnInit {
         });
   }
 
-  editarServico(id: any){
-    this.storage.set('idAnimal', id);
-    this.router.navigateByUrl('page/editar-servicos');
+  async criarComentario(){
+    if(this.conteudoNovo !== ''){
+      const request = {
+        conteudo: this.conteudoNovo,
+        idUsuario:  this.user.id,
+        idPost: this.idPost
+      };
+      this.showLoadingScreen()
+        .then(async () => {
+          (await this.exameService.postComentario(request))
+            .subscribe((resp: any) => {
+              this.conteudoNovo = '';
+              this.getPostAndComentarioById();
+            },
+            error => {
+              if(error.status === 401 || error.status === 403){
+                this.storage.remove('user');
+                this.router.navigateByUrl('');
+              }
+              else{
+                this.toastController.create({
+                  message: error.error,
+                  duration: 5000
+                }).then(toast => {
+                  toast.present();
+                });
+              }
+            },
+            () => {
+              this.closeLoadingScreen();
+            });
+          });
+    }
   }
 
-  verMeusProdutos(id: any){
+  async excluirComentario(id: number){
+    this.showLoadingScreen()
+        .then(async () => {
+          (await this.exameService.deleteComentario(id))
+            .subscribe((resp: any) => {
+              this.conteudoNovo = '';
+              this.getPostAndComentarioById();
+            },
+            error => {
+              if(error.status === 401 || error.status === 403){
+                this.storage.remove('user');
+                this.router.navigateByUrl('');
+              }
+              else{
+                this.toastController.create({
+                  message: error.error,
+                  duration: 5000
+                }).then(toast => {
+                  toast.present();
+                });
+              }
+            },
+            () => {
+              this.closeLoadingScreen();
+            });
+          });
+  }
+
+  async excluirPost(id: number){
+    this.showLoadingScreen()
+        .then(async () => {
+          (await this.exameService.deletePost(id))
+            .subscribe((resp: any) => {
+              this.router.navigateByUrl('/page/forum');
+            },
+            error => {
+              if(error.status === 401 || error.status === 403){
+                this.storage.remove('user');
+                this.router.navigateByUrl('');
+              }
+              else{
+                this.toastController.create({
+                  message: error.error,
+                  duration: 5000
+                }).then(toast => {
+                  toast.present();
+                });
+              }
+            },
+            () => {
+              this.closeLoadingScreen();
+            });
+          });
+  }
+
+  async curtirPost(id: number){
+    const request = {
+      id: 0,
+      idPost: id,
+      idUsuario: this.user.id
+    };
+    (await this.exameService.updateCurtida(request))
+    .subscribe(async () => {
+      (await this.exameService.getPostAndComentarioById(Number(this.idPost)))
+          .subscribe((resp: any) => {
+            this.post = resp;
+          },
+          error => {
+            if(error.status === 401 || error.status === 403){
+              this.storage.remove('user');
+              this.router.navigateByUrl('');
+            }
+            else{
+              this.toastController.create({
+                message: error.error,
+                duration: 5000
+              }).then(toast => {
+                toast.present();
+              });
+            }
+          },
+          () => {
+            this.closeLoadingScreen();
+          });
+    },
+    error => {
+      if(error.status === 401 || error.status === 403){
+        this.storage.remove('user');
+        this.router.navigateByUrl('');
+      }
+      this.mensagem = error.error;
+      this.loading = false;
+    });
+  }
+
+  editarPost(id){
     this.storage.set('idAnimal', id);
-    this.router.navigateByUrl('page/meus-produtos');
+    this.router.navigateByUrl('/page/editar-post');
   }
 
   async showLoadingScreen() {

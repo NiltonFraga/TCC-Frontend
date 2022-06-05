@@ -21,12 +21,14 @@ import { EnderecoAtualPageModule } from './modal/endereco-atual/endereco-atual.m
 import { EnderecoConfirmacaoPageModule } from './modal/endereco-confirmacao/endereco-confirmacao.module';
 import { MedicamentoViewPageModule } from './modal/medicamento-view/medicamento-view.module';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { TextMaskModule } from 'angular2-text-mask';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    TextMaskModule,
     IonicStorageModule.forRoot({
       name: '__mydb',
       driverOrder: [Drivers.IndexedDB, Drivers.LocalStorage]

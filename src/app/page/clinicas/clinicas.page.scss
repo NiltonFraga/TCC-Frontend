@@ -7,6 +7,38 @@
   justify-content: center;
 }
 
+.filtro{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  .filtro-topico{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(208, 208, 208);
+
+    .topico{
+      font-size: 12px;
+      color: gray;
+    }
+
+    .listaTipo{
+      margin: 0 auto;
+      padding: 0;
+    }
+  }
+}
+
+.iconi-add{
+  color: #196B10;
+  width: 36px;
+  height: 36px;
+}
+
 .header-card{
   display: flex;
   align-items: center;
@@ -52,6 +84,6 @@
   right: -14px;
 }
 
-.curtir:active{
-  color: blue;
+.curtir{
+  color: #15AD2E;
 }

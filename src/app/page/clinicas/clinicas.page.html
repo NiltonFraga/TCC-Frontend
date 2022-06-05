@@ -1,39 +1,54 @@
 <ion-content>
   <div class="content">
-    <div class="sector-novo-clinicas">
+    <ion-grid style="width: 100%; margin-bottom: 34px;">
       <ion-grid>
-        <ion-row>
-          <ion-col size="12" class="bloco-card">
-            <ion-card *ngFor="let post of posts" (click)="verComentarios(post.id)">
-              <ion-card-header>
-                <ion-card-subtitle class="header-card">
-                  <span>{{post.nomeUsuario.split(' ').slice(0, 2).join(' ')}}</span>
-                  <span>{{post.dataAtualizacao}}</span>
-                </ion-card-subtitle>
-              </ion-card-header>
-              <ion-card-content class="conteudo-card">
-                <div class="topico">{{post.topico}}</div>
-                <div>{{post.conteudo}}</div>
-              </ion-card-content>
-              <ion-card-content class="acoes-card">
-                <span class="acoes" style="margin-right: 40px;">
-                  <ion-icon name="chatbox-ellipses-outline" class="iconi"></ion-icon>
-                  <ion-badge color="dark" class="contagem">{{post.quantComentarios}}</ion-badge>
-                </span>
-                <span class="acoes curtir" style="margin-right: 10px;" >
-                  <ion-icon name="thumbs-up-outline" class="iconi"></ion-icon>
-                  <ion-badge color="dark" class="contagem">0</ion-badge>
-                </span>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
+        <ion-col size="12" class="filtro">
+          <div class="filtro-topico">
+            <div class="topico">
+              TÓPICO
+            </div>
+            <ion-select class="listaTipo" (ionChange)="buscarDadosFiltro()" [(ngModel)]="filtro" placeholder="Selecione">
+              <ion-select-option value="Todos">Todos</ion-select-option>
+              <ion-select-option value="Alimentação">Alimentação</ion-select-option>
+              <ion-select-option value="Saúde">Saúde</ion-select-option>
+              <ion-select-option value="Bem Estar">Bem Estar</ion-select-option>
+              <ion-select-option value="Curiosidade">Curiosidade</ion-select-option>
+              <ion-select-option value="Dúvida">Dúvida</ion-select-option>
+            </ion-select>
+          </div>
+        </ion-col>
       </ion-grid>
-    </div>
+      <ion-row>
+        <ion-col size="12" class="bloco-card">
+          <ion-card *ngFor="let post of posts">
+            <ion-card-header>
+              <ion-card-subtitle class="header-card">
+                <span>{{post.nomeUsuario.split(' ').slice(0, 2).join(' ')}}</span>
+                <span>{{post.dataAtualizacao | date:'dd/MM/yyyy HH:mm'}}</span>
+              </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="conteudo-card">
+              <div class="topico">{{post.topico}}</div>
+              <div>{{post.conteudo}}</div>
+            </ion-card-content>
+            <ion-card-content class="acoes-card">
+              <span class="acoes" style="margin-right: 40px;" (click)="verComentarios(post.id)">
+                <ion-icon name="chatbox-ellipses-outline" class="iconi"></ion-icon>
+                <ion-badge color="dark" class="contagem">{{post.quantComentarios}}</ion-badge>
+              </span>
+              <span class="acoes" style="margin-right: 10px;" (click)="curtirPost(post.id)">
+                <ion-icon name="thumbs-up-outline" class="iconi" [ngClass]="{curtir: post.idsUsuariosCurtidas.includes(this.user.id)}"></ion-icon>
+                <ion-badge color="dark" class="contagem">{{post.idsUsuariosCurtidas.length}}</ion-badge>
+              </span>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="criarPost()">
-    <ion-icon name="add-circle-outline"></ion-icon>
+<ion-fab vertical="bottom" style="--background: transparent !important" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="criarPost()" style="--background: transparent !important">
+    <ion-icon name="add-outline" class="iconi-add"></ion-icon>
   </ion-fab-button>
 </ion-fab>

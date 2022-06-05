@@ -1,75 +1,93 @@
 <ion-content>
   <div class="content">
     <ion-grid style="width: 100%;">
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Razão social: </ion-label>
-          <ion-input type="text" [(ngModel)]="nome"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Imagem: </ion-label>
-          <ion-input type="file" (change)="fileChange($event)"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Telefone: </ion-label>
-          <ion-input type="text" [(ngModel)]="telefone1"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Telefone: </ion-label>
-          <ion-input type="text" [(ngModel)]="telefone2"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Rua: </ion-label>
-          <ion-input type="text" [(ngModel)]="rua"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Bairro: </ion-label>
-          <ion-input type="text" [(ngModel)]="bairro"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Cidade: </ion-label>
-          <ion-input type="text" [(ngModel)]="cidade"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Tipo de desconto: </ion-label>
-          <ion-select [(ngModel)]="tipoExame" class="listaTipo" [(ngModel)]="tipoDesconto" placeholder="Selecione...">
-            <ion-select-option value="Produto">Produto</ion-select-option>
-            <ion-select-option value="Servico">Serviço</ion-select-option>
-            <!-- <ion-select-option [value]="tipo.id">Serviço</ion-select-option> -->
-          </ion-select>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-textarea [(ngModel)]="sobreLoja" rows="5" placeholder="Escreva sobre a loja/serviço"></ion-textarea>
-          <!-- <ion-textarea [(ngModel)]="observacoes" rows="7" style="--padding-start: 0; --padding-end: 0" placeholder="Escreva as suas observações..."></ion-textarea> -->
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-textarea [(ngModel)]="sobreDesconto" rows="5" placeholder="Escreva sobre o desconto"></ion-textarea>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form-center" size="12">
-          <ion-button (click)="cancelar()" color="primary" expand="block">Cancelar</ion-button>
-          <ion-button (click)="salvarServico()" color="primary" expand="block">Salvar</ion-button>
-        </ion-col>
-      </ion-row>
+      <form [formGroup]="cadastroForm">
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Razão social: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.nome.errors">*</span>
+            <ion-input type="text" formControlName="nome"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Imagem: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.file.errors">*</span>
+            <ion-input type="file" formControlName="file" (change)="fileChange($event)"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Telefone: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.telefone1.errors">*</span>
+            <ion-input type="number" formControlName="telefone1"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Telefone: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.telefone2.errors">*</span>
+            <ion-input type="number" formControlName="telefone2"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Rua: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.rua.errors">*</span>
+            <ion-input type="text" formControlName="rua"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Bairro: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.bairro.errors">*</span>
+            <ion-input type="text" formControlName="bairro"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Cidade: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.cidade.errors">*</span>
+            <ion-input type="text" formControlName="cidade"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Tipo de desconto: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.tipoDesconto.errors">*</span>
+            <ion-select class="listaTipo" formControlName="tipoDesconto" placeholder="Selecione...">
+              <ion-select-option value="Produto">Produto</ion-select-option>
+              <ion-select-option value="Servico">Serviço</ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12" class="ajuste-display">
+            <div>
+              <ion-label style="--color: black; margin-right: 6px;">Sobre a loja/serviço: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.sobreLoja.errors">*</span>
+            </div>
+            <ion-textarea formControlName="sobreLoja" rows="5" placeholder="Escreva sobre a loja/serviço"></ion-textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12" class="ajuste-display">
+            <div>
+              <ion-label style="--color: black; margin-right: 6px;">Sobre o desconto: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.sobreDesconto.errors">*</span>
+            </div>
+            <ion-textarea formControlName="sobreDesconto" rows="5" placeholder="Escreva sobre o desconto"></ion-textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form-center" size="6">
+            <button (click)="cancelar()" class="botaoCancelar" expand="block">Cancelar</button>
+          </ion-col>
+          <ion-col class="item-form-center" size="6">
+            <button (click)="salvarServico()" class="botaoConfirmar" [disabled]="!cadastroForm.valid" expand="block">Salvar</button>
+          </ion-col>
+        </ion-row>
+      </form>
     </ion-grid>
   </div>
 </ion-content>

@@ -1,48 +1,56 @@
 <ion-content>
   <div class="content">
     <ion-grid style="width: 100%;">
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Imagem Atual: </ion-label>
-          <ion-img class="imagem-animal" [src]="img"></ion-img>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Imagem: </ion-label>
-          <ion-input type="file" (change)="fileChange($event)"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Produto: </ion-label>
-          <ion-input type="text" [(ngModel)]="nome"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Valor Real: </ion-label>
-          <ion-input type="number" [(ngModel)]="valorReal"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Valor com desconto: </ion-label>
-          <ion-input type="number" [(ngModel)]="valorDesconto"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form" size="12">
-          <ion-label color="primary">Url: </ion-label>
-          <ion-input type="text" [(ngModel)]="url"></ion-input>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="item-form-center" size="12">
-          <ion-button (click)="cancelar()" color="primary" expand="block">Cancelar</ion-button>
-          <ion-button (click)="salvarProduto()" color="primary" expand="block">Salvar</ion-button>
-        </ion-col>
-      </ion-row>
+      <form [formGroup]="cadastroForm">
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Imagem Atual: </ion-label>
+            <ion-img class="imagem-animal" [src]="img"></ion-img>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Imagem: </ion-label>
+            <ion-input type="file" (change)="fileChange($event)"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Produto: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.nome.errors">*</span>
+            <ion-input type="text" formControlName="nome"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Valor Real: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.valorReal.errors">*</span>
+            <ion-input type="number" formControlName="valorReal"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Valor com desconto: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.valorDesconto.errors">*</span>
+            <ion-input type="number" formControlName="valorDesconto"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Url: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.url.errors">*</span>
+            <ion-input type="text" formControlName="url"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form-center" size="6">
+            <button (click)="cancelar()" class="botaoCancelar" expand="block">Cancelar</button>
+          </ion-col>
+          <ion-col class="item-form-center" size="6">
+            <button (click)="salvarProduto()" class="botaoConfirmar" [disabled]="!cadastroForm.valid" expand="block">Salvar</button>
+          </ion-col>
+        </ion-row>
+      </form>
     </ion-grid>
   </div>
 </ion-content>

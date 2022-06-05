@@ -8,16 +8,18 @@ import { UrlService } from 'src/app/shared/class/url-service';
 import { ClinicasService } from '../clinicas.service';
 
 @Component({
-  selector: 'app-criar-post',
-  templateUrl: './criar-post.page.html',
-  styleUrls: ['./criar-post.page.scss'],
+  selector: 'app-editar-post',
+  templateUrl: './editar-post.page.html',
+  styleUrls: ['./editar-post.page.scss'],
 })
-export class CriarPostPage implements OnInit {
+export class EditarPostPage implements OnInit {
 
   public user: any;
   public topico: string;
   public conteudo: string;
   cadastroForm: FormGroup;
+  public idPost: number;
+  public post: any;
 
   constructor(
     private exameService: ClinicasService,
@@ -34,7 +36,7 @@ export class CriarPostPage implements OnInit {
     });
 
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === '/page/criar-post') {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/editar-post') {
         this.pageEnter();
       }
     });
@@ -45,21 +47,55 @@ export class CriarPostPage implements OnInit {
   async pageEnter(){
     this.user = await this.storage.get('user');
     const token = await this.storage.get('token');
+    this.idPost = await this.storage.get('idAnimal');
     await this.urlService.validateToken(token);
+    this.getPostById();
   }
 
-  salvarPost(){
+  getPostById(){
+    this.showLoadingScreen()
+      .then(async () => {
+        (await this.exameService.getPostById(this.idPost))
+          .subscribe(res => {
+            console.log(res);
+            this.post = res;
+            this.cadastroForm.get('topico').setValue(this.post.topico);
+            this.cadastroForm.get('conteudo').setValue(this.post.conteudo);
+          },
+          error => {
+            this.setNull();
+            if(error.status === 401 || error.status === 403){
+              this.storage.remove('user');
+              this.router.navigateByUrl('');
+            }else{
+              this.toastController.create({
+                message: error.error,
+                duration: 5000
+              }).then(toast => {
+                toast.present();
+              });
+            }
+          },
+          () => {
+            this.closeLoadingScreen();
+          });
+      });
+  }
+
+  updatePost(){
     const request = {
+      id: this.idPost,
       topico: this.cadastroForm.get('topico').value,
       idUsuario: this.user.id,
       conteudo: this.cadastroForm.get('conteudo').value,
     };
     this.showLoadingScreen()
       .then(async () => {
-        (await this.exameService.postPost(request))
+        (await this.exameService.updatePost(request))
           .subscribe(() => {
             this.setNull();
-            this.router.navigateByUrl('/page/forum');
+            this.storage.set('idAnimal', this.idPost);
+            this.router.navigateByUrl('/page/comentario');
           },
           error => {
             this.setNull();
@@ -83,7 +119,8 @@ export class CriarPostPage implements OnInit {
 
   cancelar(){
     this.setNull();
-    this.router.navigateByUrl('/page/forum');
+    this.storage.set('idAnimal', this.idPost);
+    this.router.navigateByUrl('/page/comentario');
   }
 
   async showLoadingScreen() {

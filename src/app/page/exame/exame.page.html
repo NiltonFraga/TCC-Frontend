@@ -24,9 +24,9 @@
                 <ion-img class="imagem-animal" [src]="foto" *ngIf="servico.imagem === null"></ion-img>
                 <ion-card-title class="nome">{{servico.nome}}</ion-card-title>
               </ion-card-header>
-              <ion-fab vertical="center" horizontal="end">
-                <ion-fab-button *ngIf="servico.tipo === 'Produto'">
-                  <ion-icon (click)="verProdutos(servico.id)" name="enter-outline"></ion-icon>
+              <ion-fab vertical="center" horizontal="end" style="--background: #fafafa !important">
+                <ion-fab-button *ngIf="servico.tipo === 'Produto'" style="--background: #fafafa !important">
+                  <ion-icon (click)="verProdutos(servico.id)" name="enter-outline" class="botao-loja"></ion-icon>
                 </ion-fab-button>
               </ion-fab>
               <ion-card-content class="bloco-card-content">
@@ -46,12 +46,12 @@
     </div>
   </div>
 </ion-content>
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="user && user.role === 'pessoa_juridica'">
-  <ion-fab-button>
-    <ion-icon name="caret-up-outline"></ion-icon>
+<ion-fab vertical="bottom" style="--background: #196B10 !important"  horizontal="end" slot="fixed" *ngIf="user && user.role === 'pessoa_juridica'">
+  <ion-fab-button style="--background: #196B10 !important">
+    <ion-icon name="caret-up-outline" ></ion-icon>
   </ion-fab-button>
   <ion-fab-list side="top">
-    <ion-fab-button (click)="ciarNovoServico()"><ion-icon name="add-circle-outline" style="color: rgb(255, 132, 0); width: 44px; height: 44px;"></ion-icon></ion-fab-button>
-    <ion-fab-button (click)="verMeusServico()"><ion-icon name="folder-open-outline" style="color: rgb(12, 156, 40); width: 30px; height: 30px;"></ion-icon></ion-fab-button>
+    <ion-fab-button (click)="ciarNovoServico()"><ion-icon name="add-circle-outline" style="color: rgb(0, 147, 252); width: 44px; height: 44px;"></ion-icon></ion-fab-button>
+    <ion-fab-button (click)="verMeusServico()"><ion-icon name="folder-open-outline" style="color: rgb(203, 136, 1); width: 30px; height: 30px;"></ion-icon></ion-fab-button>
   </ion-fab-list>
 </ion-fab>
