@@ -33,13 +33,12 @@ export class AdotarPage implements OnInit {
   async pageEnter(){
     this.user = await this.storage.get('user');
     const id = await this.storage.get('idAnimal');
+    const token = await this.storage.get('token');
+    await this.urlService.validateToken(token);
     (await this.homeService.getAnimalById(id)).subscribe((res: any) => {
-      console.log(res);
       this.animal = res;
       this.loading = false;
     });
-    //let token = await this.storage.get('token');
-    //await this.urlService.validateToken(token);
   }
 
   ngOnInit() {

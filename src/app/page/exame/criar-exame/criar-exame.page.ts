@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingPage } from 'src/app/loading/loading.page';
@@ -31,6 +32,7 @@ export class CriarExamePage implements OnInit {
   public tipoDesconto: string;
   public sobreLoja: string;
   public sobreDesconto: string;
+  public cadastroForm: FormGroup;
 
   constructor(
     private exameService: ExameService,
@@ -38,10 +40,24 @@ export class CriarExamePage implements OnInit {
     public toastController: ToastController,
     private urlService: UrlService,
     private router: Router,
-    private storage: StorageService)
+    private storage: StorageService,
+    private fb: FormBuilder)
   {
+    this.cadastroForm = this.fb.group({
+      nome: this.fb.control('', [Validators.required]),
+      telefone1: this.fb.control('', [Validators.required]),
+      telefone2: this.fb.control(''),
+      rua: this.fb.control('', [Validators.required]),
+      bairro: this.fb.control('', [Validators.required]),
+      cidade: this.fb.control('', [Validators.required]),
+      tipoDesconto: this.fb.control('', [Validators.required]),
+      sobreLoja: this.fb.control('', [Validators.required]),
+      sobreDesconto: this.fb.control('', [Validators.required]),
+      file: this.fb.control('', [Validators.required])
+    });
+
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === '/page/criar-exame') {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/criar-servicos') {
          this.pageEnter();
       }
     });
@@ -51,7 +67,6 @@ export class CriarExamePage implements OnInit {
 
   async pageEnter(){
     this.user = await this.storage.get('user');
-    console.log(this.user);
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
   }
@@ -62,7 +77,6 @@ export class CriarExamePage implements OnInit {
         (await this.exameService.getServicosByUsuario(this.user.id))
           .subscribe((resp: any) => {
             this.servicos = resp;
-            console.log(resp);
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -86,15 +100,15 @@ export class CriarExamePage implements OnInit {
 
   salvarServico(){
     const request = {
-      nome: this.nome,
-      telefone1: this.telefone1,
-      telefone2: this.telefone2,
-      rua: this.rua,
-      bairro: this.bairro,
-      cidade: this.cidade,
-      tipo: this.tipoDesconto,
-      descricao: this.sobreLoja,
-      desconto: this.sobreDesconto,
+      nome: this.cadastroForm.get('nome').value,
+      telefone1: this.cadastroForm.get('telefone1').value.toString(),
+      telefone2: this.cadastroForm.get('telefone2').value.toString(),
+      rua: this.cadastroForm.get('rua').value,
+      bairro: this.cadastroForm.get('bairro').value,
+      cidade: this.cadastroForm.get('cidade').value,
+      tipo: this.cadastroForm.get('tipoDesconto').value,
+      descricao: this.cadastroForm.get('sobreLoja').value,
+      desconto: this.cadastroForm.get('sobreDesconto').value,
       donoServico: this.user.id,
       idImagem: '',
       imagem: this.arquivo === undefined ? null : {
@@ -107,7 +121,7 @@ export class CriarExamePage implements OnInit {
       .then(async () => {
         (await this.exameService.postServico(request))
           .subscribe(() => {
-            this.router.navigateByUrl('/page/exames');
+            this.router.navigateByUrl('/page/servicos');
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -129,7 +143,7 @@ export class CriarExamePage implements OnInit {
   }
 
   cancelar(){
-    this.router.navigateByUrl('/page/exames');
+    this.router.navigateByUrl('/page/servicos');
   }
 
   fileChange(e){

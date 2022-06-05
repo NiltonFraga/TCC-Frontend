@@ -25,7 +25,7 @@ export class ExamePage implements OnInit {
   {
     this.loading = false;
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === '/page/exames') {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/servicos') {
         this.loading = true;
          this.pageEnter();
       }
@@ -36,7 +36,6 @@ export class ExamePage implements OnInit {
 
   async pageEnter(){
     this.user = await this.storage.get('user');
-    console.log(this.user);
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
 
@@ -48,7 +47,6 @@ export class ExamePage implements OnInit {
             x.img = `data:${x.imagem.tipo};base64,${x.imagem.dados}`;
           }
         });
-        console.log(resp);
 
         if(this.servicos.length === 0){
           this.mensagem = 'Nenhum serviço cadastrado';
@@ -67,10 +65,15 @@ export class ExamePage implements OnInit {
   }
 
   ciarNovoServico(){
-    this.router.navigateByUrl('page/criar-exame');
+    this.router.navigateByUrl('page/criar-servicos');
   }
 
   verMeusServico(){
     this.router.navigateByUrl('page/meus-servicos');
+  }
+
+  verProdutos(id: any){
+    this.storage.set('idAnimal', id);
+    this.router.navigateByUrl('page/produtos');
   }
 }

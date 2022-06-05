@@ -1,4 +1,32 @@
 ion-tab-bar {
-    overflow-x: scroll;
-    justify-content: left;
- }
+  overflow-x: scroll;
+  justify-content: left;
+  --ion-background-color: #15AD2E;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+  color: aliceblue;
+
+  span{
+    font-weight: bold;
+  }
+}
+
+.icon-menu{
+  font-weight: bold;
+  color: aliceblue;
+}
+
+.texto-menu{
+  color: aliceblue;
+}
+
+
+.logout{
+  width: 35px;
+  height: 35px;
+  color: aliceblue;
+}

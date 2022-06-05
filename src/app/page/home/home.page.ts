@@ -41,14 +41,13 @@ export class HomePage implements OnInit {
 
   async pageEnter(){
     this.user = await this.storage.get('user');
+    const token = await this.storage.get('token');
+    await this.urlService.validateToken(token);
     this.getAllAnimal();
-    //let token = await this.storage.get('token');
-    //await this.urlService.validateToken(token);
   }
 
   async getAllAnimal(){
     (await this.homeService.getAllAnimal()).subscribe((res: any) => {
-      console.log(res);
       this.animais = res;
       this.loading = false;
     });
@@ -72,7 +71,6 @@ export class HomePage implements OnInit {
   public detalhesAnimal(id: any){
     this.storage.set('idAnimal', id);
     this.router.navigateByUrl('page/adotar');
-    //this.router.navigate(['page/adotar', id]);
   }
 
 }

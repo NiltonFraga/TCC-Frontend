@@ -1,0 +1,38 @@
+<ion-content>
+  <div class="content">
+    <ion-grid style="width: 100%;">
+      <form [formGroup]="cadastroForm">
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black">Topico: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.topico.errors">*</span>
+            <ion-select class="listaTipo" formControlName="topico" placeholder="Selecione...">
+              <ion-select-option value="Alimentação">Alimentação</ion-select-option>
+              <ion-select-option value="Saúde">Saúde</ion-select-option>
+              <ion-select-option value="Bem Estar">Bem Estar</ion-select-option>
+              <ion-select-option value="Curiosidade">Curiosidade</ion-select-option>
+              <ion-select-option value="Dúvida">Dúvida</ion-select-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12" class="ajuste-display">
+            <div>
+              <ion-label style="--color: black">Conteudo: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.conteudo.errors">*</span>
+            </div>
+            <ion-textarea formControlName="conteudo" rows="5" placeholder="Escreva seu post"></ion-textarea>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form-center" size="6">
+            <button (click)="cancelar()" class="botaoCancelar" expand="block">Cancelar</button>
+          </ion-col>
+          <ion-col class="item-form-center" size="6">
+            <button (click)="updatePost()" class="botaoConfirmar" [disabled]="!cadastroForm.valid" expand="block">Salvar</button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-grid>
+  </div>
+</ion-content>

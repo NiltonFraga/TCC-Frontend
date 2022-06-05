@@ -1,0 +1,132 @@
+.content{
+  margin-top: 6vh;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid-animais{
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2vh;
+  position: relative;
+}
+
+.conteudo-fixo{
+  background-color: aliceblue;
+}
+
+.bloco-card{
+  padding: 0;
+  margin: 0;
+}
+
+.conteudo{
+  padding: 6px;
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  margin-bottom: 8px;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.acoes-card{
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bloco-card{
+  padding: 0;
+  margin: 0;
+}
+
+.acoes{
+  position: relative;
+}
+
+.iconi{
+  width: 25px;
+  height: 25px;
+}
+
+.contagem{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: -14px;
+  right: -14px;
+}
+
+.curtir{
+  color: #15AD2E;
+}
+
+.comentario{
+  padding: 6px 4px;
+  border-bottom: 1px solid gray;
+}
+
+.input-comentario{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(112, 112, 112);
+  background-color: aliceblue;
+
+  ion-textarea{
+    padding: 0px;
+  }
+
+  ion-icon{
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    fill: green;
+    color: green;
+  }
+}
+
+.conteudo-movel{
+  margin-bottom: 36px;
+}
+
+.excluir{
+  position: absolute;
+  color: red;
+  right: 0;
+
+  ion-icon{
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.edit{
+  position: absolute;
+  color: rgb(0, 153, 255);
+  right: 0;
+  top: 26px;
+
+  ion-icon{
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.margin-exclusao{
+  margin-right: 34px;
+}

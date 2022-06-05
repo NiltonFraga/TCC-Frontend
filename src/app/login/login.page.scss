@@ -13,3 +13,26 @@
   justify-content: space-between;
   align-items: center;
 }
+
+ion-header{
+  --ion-background-color: #15AD2E;
+
+  ion-title{
+    font-weight: bold;
+    color: aliceblue;
+  }
+}
+
+.botaoCancelar{
+  background-color: #a7a7a7;
+  width: 120px;
+  height: 40px;
+  color: aliceblue;
+}
+
+.botaoConfirmar{
+  background-color: #60E677;
+  width: 120px;
+  height: 40px;
+  color: aliceblue;
+}

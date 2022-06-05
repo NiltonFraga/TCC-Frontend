@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingPage } from 'src/app/loading/loading.page';
@@ -33,8 +34,8 @@ export class EditarServicoPage implements OnInit {
   public img: string;
   public idServico: number;
   public idArquivo: number;
-
   public id: any;
+  public cadastroForm: FormGroup;
 
   constructor(
     private exameService: ExameService,
@@ -42,8 +43,21 @@ export class EditarServicoPage implements OnInit {
     public toastController: ToastController,
     private urlService: UrlService,
     private router: Router,
-    private storage: StorageService)
+    private storage: StorageService,
+    private fb: FormBuilder)
   {
+    this.cadastroForm = this.fb.group({
+      nome: this.fb.control('', [Validators.required]),
+      telefone1: this.fb.control('', [Validators.required]),
+      telefone2: this.fb.control(''),
+      rua: this.fb.control('', [Validators.required]),
+      bairro: this.fb.control('', [Validators.required]),
+      cidade: this.fb.control('', [Validators.required]),
+      tipoDesconto: this.fb.control('', [Validators.required]),
+      sobreLoja: this.fb.control('', [Validators.required]),
+      sobreDesconto: this.fb.control('', [Validators.required])
+    });
+
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd && this.router.url === '/page/editar-servicos') {
          this.pageEnter();
@@ -56,7 +70,6 @@ export class EditarServicoPage implements OnInit {
   async pageEnter(){
     this.user = await this.storage.get('user');
     this.id = await this.storage.get('idAnimal');
-    console.log(this.user);
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
     await this.getServicosByUsuario();
@@ -69,17 +82,15 @@ export class EditarServicoPage implements OnInit {
           .subscribe((resp: any) => {
             this.servicos = resp;
             this.idServico = this.servicos.id;
-            this.nome = this.servicos.nome;
-            this.telefone1 = this.servicos.telefone1;
-            this.telefone2 = this.servicos.telefone2;
-            this.rua = this.servicos.rua;
-            this.bairro = this.servicos.bairro;
-            this.cidade = this.servicos.cidade;
-            this.tipoDesconto = this.servicos.tipo;
-            this.sobreLoja = this.servicos.descricao;
-            this.sobreDesconto = this.servicos.desconto;
-            this.tipoDesconto = this.servicos.tipo;
-            this.tipoDesconto = this.servicos.tipo;
+            this.cadastroForm.get('nome').setValue(this.servicos.nome);
+            this.cadastroForm.get('telefone1').setValue(this.servicos.telefone1);
+            this.cadastroForm.get('telefone2').setValue(this.servicos.telefone2);
+            this.cadastroForm.get('rua').setValue(this.servicos.rua);
+            this.cadastroForm.get('bairro').setValue(this.servicos.bairro);
+            this.cadastroForm.get('cidade').setValue(this.servicos.cidade);
+            this.cadastroForm.get('tipoDesconto').setValue(this.servicos.tipo);
+            this.cadastroForm.get('sobreLoja').setValue(this.servicos.descricao);
+            this.cadastroForm.get('sobreDesconto').setValue(this.servicos.desconto);
             if(this.servicos.imagem !== null){
               this.img = `data:${this.servicos.imagem.tipo};base64,${this.servicos.imagem.dados}`;
               this.idArquivo = this.servicos.imagem.id;
@@ -89,7 +100,6 @@ export class EditarServicoPage implements OnInit {
                 binary: this.servicos.imagem.dados,
               };
             };
-            console.log(resp);
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -114,15 +124,15 @@ export class EditarServicoPage implements OnInit {
   salvarServico(){
     const request = {
       id: this.idServico,
-      nome: this.nome,
-      telefone1: this.telefone1,
-      telefone2: this.telefone2,
-      rua: this.rua,
-      bairro: this.bairro,
-      cidade: this.cidade,
-      tipo: this.tipoDesconto,
-      descricao: this.sobreLoja,
-      desconto: this.sobreDesconto,
+      nome: this.cadastroForm.get('nome').value,
+      telefone1: this.cadastroForm.get('telefone1').value,
+      telefone2: this.cadastroForm.get('telefone2').value,
+      rua: this.cadastroForm.get('rua').value,
+      bairro: this.cadastroForm.get('bairro').value,
+      cidade: this.cadastroForm.get('cidade').value,
+      tipo: this.cadastroForm.get('tipoDesconto').value,
+      descricao: this.cadastroForm.get('sobreLoja').value,
+      desconto: this.cadastroForm.get('sobreDesconto').value,
       donoServico: this.user.id,
       idImagem: '',
       imagem: this.arquivo === undefined ? null : {

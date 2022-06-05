@@ -21,11 +21,11 @@ const routes: Routes = [
         loadChildren: () => import('./medicamento/editar-pet/editar-pet.module').then( m => m.EditarPetPageModule )
       },
       {
-        path: 'exames',
+        path: 'servicos',
         loadChildren: () => import('./exame/exame.module').then( m => m.ExamePageModule)
       },
       {
-        path: 'criar-exame',
+        path: 'criar-servicos',
         loadChildren: () => import('./exame/criar-exame/criar-exame.module').then( m => m.CriarExamePageModule)
       },
       {
@@ -49,7 +49,11 @@ const routes: Routes = [
         loadChildren: () => import('./exame/criar-produto/criar-produto.module').then( m => m.CriarProdutoPageModule)
       },
       {
-        path: 'consultas',
+        path: 'produtos',
+        loadChildren: () => import('./exame/produtos/produtos.module').then( m => m.ProdutosPageModule)
+      },
+      {
+        path: 'chat',
         loadChildren: () => import('./consulta/consulta.module').then( m => m.ConsultaPageModule)
       },
       {
@@ -57,7 +61,7 @@ const routes: Routes = [
         loadChildren: () => import('./consulta/criar-consulta/criar-consulta.module').then( m => m.CriarConsultaPageModule)
       },
       {
-        path: 'medicamentos',
+        path: 'minha-area',
         loadChildren: () => import('./medicamento/medicamento.module').then( m => m.MedicamentoPageModule)
       },
       {
@@ -65,8 +69,20 @@ const routes: Routes = [
         loadChildren: () => import('./medicamento/criar-medicamento/criar-medicamento.module').then( m => m.CriarMedicamentoPageModule)
       },
       {
-        path: 'clinicas',
+        path: 'forum',
         loadChildren: () => import('./clinicas/clinicas.module').then( m => m.ClinicasPageModule)
+      },
+      {
+        path: 'criar-post',
+        loadChildren: () => import('./clinicas/criar-post/criar-post.module').then( m => m.CriarPostPageModule)
+      },
+      {
+        path: 'comentario',
+        loadChildren: () => import('./clinicas/comentarios/comentario.module').then( m => m.ComentarioPageModule)
+      },
+      {
+        path: 'editar-post',
+        loadChildren: () => import('./clinicas/editar-post/editar-post.module').then( m => m.EditarPostPageModule)
       },
       {
         path: '',

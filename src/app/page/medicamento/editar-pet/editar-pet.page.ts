@@ -64,11 +64,11 @@ export class EditarPetPage implements OnInit {
   }
 
   public cancelar(){
-    this.router.navigateByUrl('page/medicamentos');
+    this.router.navigateByUrl('page/minha-area');
   }
 
   public atualizar(){
-    this.router.navigateByUrl('page/medicamentos');
+    this.router.navigateByUrl('page/minha-area');
   }
 
   ngOnInit() {

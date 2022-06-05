@@ -28,7 +28,7 @@ export class MedicamentoPage implements OnInit {
   {
     this.loading = false;
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === '/page/medicamentos') {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/minha-area') {
         this.loading = true;
         this.pageEnter();
       }
@@ -40,9 +40,7 @@ export class MedicamentoPage implements OnInit {
   async pageEnter(){
     const user = await this.storage.get('user');
     const token = await this.storage.get('token');
-    //await this.urlService.validateToken(token);
-
-    console.log(user);
+    await this.urlService.validateToken(token);
 
     (await this.medicamentoService.getAnimaisByUsuario(user.id))
       .subscribe((resp: any) => {
