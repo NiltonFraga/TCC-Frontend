@@ -18,6 +18,10 @@
         <span *ngIf="rotaAtual === '/page/produtos'">Produto</span>
         <span *ngIf="rotaAtual === '/page/comentario'">Post</span>
         <span *ngIf="rotaAtual === '/page/criar-post'">Criar Post</span>
+        <span *ngIf="rotaAtual === '/page/criar-pet'">Criar Pet</span>
+        <span *ngIf="rotaAtual === '/page/pets-favoritos'">Pets Favoritos</span>
+        <span *ngIf="rotaAtual === '/page/perfil'">Perfil</span>
+        <span *ngIf="rotaAtual === '/page/editar-perfil'">Perfil</span>
       </ion-title>
       <ion-icon (click)="logout()" class="logout" name="log-out-outline"></ion-icon>
     </div>
@@ -42,7 +46,13 @@
 
     <ion-tab-button tab="minha-area">
       <ion-icon class="icon-menu" name="footsteps-outline"></ion-icon>
-      <ion-label class="texto-menu" *ngIf="rotaAtual === '/page/minha-area' || rotaAtual === '/page/editar-pet'">Minha Área</ion-label>
+      <ion-label class="texto-menu"
+        *ngIf="rotaAtual === '/page/minha-area' ||
+        rotaAtual === '/page/editar-pet' ||
+        rotaAtual === '/page/criar-pet' ||
+        rotaAtual === '/page/pets-favoritos' ||
+        rotaAtual === '/page/perfil' ||
+        rotaAtual === '/page/editar-perfil'">Minha Área</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="servicos">

@@ -1,32 +1,49 @@
 .content{
-  margin-top: 9vh;
+  margin-top: 8vh;
   width: 100%;
-  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0;
+  justify-content: center;
 }
 
-.button-area{
-  margin-top: 40px;
+.listaTipo{
+  --placeholder-opacity: 0.5;
+}
+
+.item-form{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.item-form-center{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.nome-input{
+.mensagem-erro{
   font-size: 14px;
+  color: red;
+  margin-right: 12px;
 }
 
-.input-form{
-  padding: 10px 8px;
-}
-
-.button-area{
-  width: 100%;
-  margin: 20px 0px;
+.ajuste-display{
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  flex-direction: column;
+}
+
+.botaoCancelar{
+  background-color: #a7a7a7;
+  width: 140px;
+  height: 40px;
+  color: aliceblue;
+}
+
+.botaoConfirmar{
+  background-color: #60E677;
+  width: 140px;
+  height: 40px;
+  color: aliceblue;
 }

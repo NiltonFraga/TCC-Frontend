@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CriarMedicamentoPageRoutingModule } from './criar-medicamento-routing.module';
+import { EditarPerfilPageRoutingModule } from './editar-perfil-routing.module';
 
-import { CriarMedicamentoPage } from './criar-medicamento.page';
+import { EditarPerfilPage } from './editar-perfil.page';
 import { MedicamentoService } from '../medicamento.service';
 
 @NgModule({
@@ -14,12 +14,12 @@ import { MedicamentoService } from '../medicamento.service';
     CommonModule,
     FormsModule,
     IonicModule,
-    ReactiveFormsModule,
-    CriarMedicamentoPageRoutingModule
+    EditarPerfilPageRoutingModule,
+    ReactiveFormsModule
   ],
-  declarations: [CriarMedicamentoPage],
+  declarations: [EditarPerfilPage],
   providers: [
     MedicamentoService
   ]
 })
-export class CriarMedicamentoPageModule {}
+export class EditarPerfilPageModule {}

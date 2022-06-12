@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { CriarMedicamentoPageRoutingModule } from './criar-medicamento-routing.module';
-
-import { CriarMedicamentoPage } from './criar-medicamento.page';
+import { PetFavoritoPageRoutingModule } from './pet-favorito-routing.module';
+import { PetFavoritoPage } from './pet-favorito.page';
 import { MedicamentoService } from '../medicamento.service';
 
 @NgModule({
@@ -14,12 +11,10 @@ import { MedicamentoService } from '../medicamento.service';
     CommonModule,
     FormsModule,
     IonicModule,
-    ReactiveFormsModule,
-    CriarMedicamentoPageRoutingModule
+    PetFavoritoPageRoutingModule,
+    ReactiveFormsModule
   ],
-  declarations: [CriarMedicamentoPage],
-  providers: [
-    MedicamentoService
-  ]
+  declarations: [PetFavoritoPage],
+  providers: [MedicamentoService]
 })
-export class CriarMedicamentoPageModule {}
+export class PetFavoritoPageModule {}

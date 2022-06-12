@@ -1,0 +1,55 @@
+<ion-content>
+  <div class="content">
+    <ion-grid style="width: 100%;" *ngIf="usuario">
+      <ion-row>
+        <ion-card style="width: 100%; height: 100%;">
+          <ion-card-content class="bloco-card-content">
+            <ion-col class="bloco-tipo" size="12">
+              <span class="nome">Nome: </span>
+              <span>{{usuario.nome}}</span>
+            </ion-col>
+            <ion-col class="bloco-tipo" size="12">
+              <span class="nome" *ngIf="usuario.role === 'pessoa_fisica'">CPF: </span>
+              <span class="nome" *ngIf="usuario.role !== 'pessoa_fisica'">CNPJ: </span>
+              <span>{{usuario.documento}}</span>
+            </ion-col>
+            <ion-col class="bloco-tipo" size="12">
+              <span class="nome">Email: </span>
+              <span>{{usuario.email}}</span>
+            </ion-col>
+            <ion-col class="bloco-tipo" size="12">
+              <span class="nome">Telefone: </span>
+              <span>{{usuario.telefone1}}</span>
+            </ion-col>
+            <ion-col class="bloco-tipo" size="12">
+              <span class="nome">Telefone: </span>
+              <span>{{usuario.telefone2}}</span>
+            </ion-col>
+            <ion-col class="bloco-tipo" size="12">
+              <span class="nome">Quantidades de Animais Doados: </span>
+              <span>{{usuario.quantAnimaisDoados}}</span>
+            </ion-col>
+            <ion-col class="bloco-tipo" size="12" *ngIf="usuario.role !== 'pessoa_fisica'">
+              <span class="nome">Quantidades de Servisos Cadastrados: </span>
+              <span>{{usuario.quantSevicosCadastrados}}</span>
+            </ion-col>
+            <ion-col class="bloco-tipo" size="12" *ngIf="usuario.role !== 'pessoa_fisica'">
+              <span class="nome">Quantidades de Produtos Cadastrados: </span>
+              <span>{{usuario.quantProdutosCadastrados}}</span>
+            </ion-col>
+            <ion-col class="bloco-tipo" size="12" *ngIf="usuario.role !== 'pessoa_fisica'">
+              <span class="nome">Quantidades de Produtos Cadastrados: </span>
+              <span>{{usuario.quantProdutosCadastrados}}</span>
+            </ion-col>
+            <ion-col class="item-form-center" size="12">
+              <button (click)="editarUsuario()" class="botaoConfirmar" expand="block">Editar Informações Cadastrais</button>
+            </ion-col>
+            <!-- <ion-col class="item-form-center" size="12">
+              <button (click)="deletarUsuario()" class="botaoDeletar" expand="block">Deletar Conta</button>
+            </ion-col> -->
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

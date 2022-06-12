@@ -42,6 +42,7 @@ export class ClinicasPage implements OnInit {
   }
 
   async getAllPost(filtro: any){
+    console.log(filtro);
     (await this.clinicasService.getAllPost(filtro))
     .subscribe((resp: any) => {
       this.posts = resp;

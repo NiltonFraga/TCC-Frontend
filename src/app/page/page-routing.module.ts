@@ -65,8 +65,20 @@ const routes: Routes = [
         loadChildren: () => import('./medicamento/medicamento.module').then( m => m.MedicamentoPageModule)
       },
       {
-        path: 'criar-medicamento/:id',
+        path: 'criar-pet',
         loadChildren: () => import('./medicamento/criar-medicamento/criar-medicamento.module').then( m => m.CriarMedicamentoPageModule)
+      },
+      {
+        path: 'pets-favoritos',
+        loadChildren: () => import('./medicamento/pets-favoritos/pet-favorito.module').then( m => m.PetFavoritoPageModule)
+      },
+      {
+        path: 'perfil',
+        loadChildren: () => import('./medicamento/perfil/perfil.module').then( m => m.PerfilPageModule)
+      },
+      {
+        path: 'editar-perfil',
+        loadChildren: () => import('./medicamento/editar-perfil/editar-perfil.module').then( m => m.EditarPerfilPageModule)
       },
       {
         path: 'forum',

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ModalController, ToastController } from '@ionic/angular';
+import { LoadingPage } from 'src/app/loading/loading.page';
 import { StorageService } from 'src/app/shared/class/storage.service';
 import { UrlService } from 'src/app/shared/class/url-service';
 import { MedicamentoService } from '../medicamento.service';
@@ -16,16 +18,40 @@ export class EditarPetPage implements OnInit {
   public animal: any;
   public loading: boolean;
   gato = 'https://www.petz.com.br/blog/wp-content/uploads/2021/05/gato-branco-de-olho-azul.jpg';
-  animalForm: FormGroup;
+  cadastroForm: FormGroup;
   public nome: string;
+  arquivo: any;
+  idAnimal: number;
+  idArquivo: number;
+  img: any;
+  idDoador: number;
 
   constructor(
     private router: Router,
     private storage: StorageService,
     private urlService: UrlService,
+    public modalController: ModalController,
+    public toastController: ToastController,
     private medicamentoService: MedicamentoService,
     private fb: FormBuilder) {
     this.loading = false;
+    this.cadastroForm = this.fb.group({
+      nome: this.fb.control('', [Validators.required]),
+      idade: this.fb.control(''),
+      peso: this.fb.control('', [Validators.required]),
+      pelagem: this.fb.control('', [Validators.required]),
+      sexo: this.fb.control('', [Validators.required]),
+      vermifugado: this.fb.control('', [Validators.required]),
+      vacina: this.fb.control('', [Validators.required]),
+      doenca: this.fb.control('', [Validators.required]),
+      descricao: this.fb.control('', [Validators.required]),
+      castrado: this.fb.control('', [Validators.required]),
+      rua: this.fb.control('', [Validators.required]),
+      bairro: this.fb.control('', [Validators.required]),
+      cidade: this.fb.control('', [Validators.required]),
+      tipo: this.fb.control('', [Validators.required]),
+      ativo: this.fb.control('', [Validators.required])
+    });
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd && this.router.url === `/page/editar-pet`) {
         this.loading = true;
@@ -40,38 +66,128 @@ export class EditarPetPage implements OnInit {
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
     const id = await this.storage.get('idAnimal');
+    await this.getAnimalById(id);
+  }
+
+  async getAnimalById(id){
     (await this.medicamentoService.getAnimalById(id)).subscribe((res: any) => {
-      console.log(res);
       this.animal = res;
-      this.animalForm = this.fb.group({
-        nome: this.fb.control(this.animal.nome, [Validators.required]),
-        idade: this.fb.control(this.animal.idade, [Validators.required]),
-        peso: this.fb.control(this.animal.peso, [Validators.required]),
-        pelagem: this.fb.control(this.animal.pelagem, [Validators.required]),
-        sexo: this.fb.control(this.animal.sexo, [Validators.required]),
-        vermifugado: this.fb.control(this.animal.vermifugado, [Validators.required]),
-        vacina: this.fb.control(this.animal.vacina, [Validators.required]),
-        doenca: this.fb.control(this.animal.doenca, [Validators.required]),
-        descricao: this.fb.control(this.animal.descricao, [Validators.required]),
-        castrado: this.fb.control(this.animal.castrado, [Validators.required]),
-        rua: this.fb.control(this.animal.rua, [Validators.required]),
-        bairro: this.fb.control(this.animal.bairro, [Validators.required]),
-        cidade: this.fb.control(this.animal.cidade, [Validators.required]),
-        ativo: this.fb.control(this.animal.ativo, [Validators.required])
-      });
+      this.idAnimal = this.animal.id;
+      this.idDoador = this.animal.idDoador;
+      this.cadastroForm.get('nome').setValue(this.animal.nome);
+      this.cadastroForm.get('idade').setValue(this.animal.idade);
+      this.cadastroForm.get('tipo').setValue(this.animal.tipo);
+      this.cadastroForm.get('pelagem').setValue(this.animal.pelagem);
+      this.cadastroForm.get('peso').setValue(this.animal.peso);
+      this.cadastroForm.get('sexo').setValue(this.animal.sexo);
+      this.cadastroForm.get('vermifugado').setValue(this.animal.vermifugado);
+      this.cadastroForm.get('vacina').setValue(this.animal.vacina);
+      this.cadastroForm.get('doenca').setValue(this.animal.doenca);
+      this.cadastroForm.get('descricao').setValue(this.animal.descricao);
+      this.cadastroForm.get('castrado').setValue(this.animal.castrado);
+      this.cadastroForm.get('rua').setValue(this.animal.rua);
+      this.cadastroForm.get('bairro').setValue(this.animal.bairro);
+      this.cadastroForm.get('cidade').setValue(this.animal.cidade);
+      this.cadastroForm.get('ativo').setValue(this.animal.ativo);
+      if(this.animal.imagem !== null){
+        this.img = `data:${this.animal.imagem.tipo};base64,${this.animal.imagem.dados}`;
+        this.idArquivo = this.animal.imagem.id;
+        this.arquivo = {
+          name: this.animal.imagem.nome,
+          type: this.animal.imagem.tipo,
+          binary: this.animal.imagem.dados,
+        };
+      };
       this.loading = false;
     });
+  }
+
+  salvarAnimal(){
+    const request = {
+      id: this.idAnimal,
+      nome: this.cadastroForm.get('nome').value,
+      tipo: this.cadastroForm.get('tipo').value,
+      idade: this.cadastroForm.get('idade').value,
+      sexo: this.cadastroForm.get('sexo').value,
+      peso: this.cadastroForm.get('peso').value,
+      pelagem: this.cadastroForm.get('pelagem').value,
+      castrado: this.cadastroForm.get('castrado').value,
+      vermifugado: this.cadastroForm.get('vermifugado').value,
+      doenca: this.cadastroForm.get('doenca').value,
+      vacina: this.cadastroForm.get('vacina').value,
+      descricao: this.cadastroForm.get('descricao').value,
+      doador: this.user.id,
+      rua: this.cadastroForm.get('rua').value,
+      bairro: this.cadastroForm.get('bairro').value,
+      cidade: this.cadastroForm.get('cidade').value,
+      ativo: this.cadastroForm.get('ativo').value,
+      idImagem: '',
+      imagem: this.arquivo === undefined ? null : {
+        id: this.idArquivo,
+        nome: this.arquivo.name,
+        tipo: this.arquivo.type,
+        dados: this.arquivo.binary
+      }
+    };
+    console.log(request);
+    this.showLoadingScreen()
+      .then(async () => {
+        (await this.medicamentoService.updateAnimal(request))
+          .subscribe(() => {
+            this.router.navigateByUrl('/page/minha-area');
+          },
+          error => {
+            if(error.status === 401 || error.status === 403){
+              this.storage.remove('user');
+              this.router.navigateByUrl('');
+            }else{
+              this.toastController.create({
+                message: error.error,
+                duration: 5000
+              }).then(toast => {
+                toast.present();
+                this.closeLoadingScreen();
+              });
+            }
+          },
+          () => {
+            this.closeLoadingScreen();
+          });
+      });
+  }
+
+  fileChange(e){
+    const arquivoPre = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(arquivoPre);
+    reader.onload = () => {
+      this.arquivo = {
+        name: arquivoPre.name,
+        type: arquivoPre.type,
+        binary: reader.result.toString().split(';')[1].split(',')[1]
+      };
+    };
   }
 
   public cancelar(){
     this.router.navigateByUrl('page/minha-area');
   }
 
-  public atualizar(){
-    this.router.navigateByUrl('page/minha-area');
-  }
-
   ngOnInit() {
   }
 
+  async showLoadingScreen() {
+    const loadingScreen = await this.modalController.create({
+      component: LoadingPage
+    });
+    return await loadingScreen.present();
+  }
+
+  async closeLoadingScreen() {
+    this.modalController.getTop().then(loader => {
+      if (loader) {
+        loader.dismiss();
+      }
+    });
+  }
 }

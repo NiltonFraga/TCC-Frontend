@@ -35,13 +35,35 @@ export class AdotarPage implements OnInit {
     const id = await this.storage.get('idAnimal');
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
+    await this.getAnimalById(id);
+  }
+
+  async getAnimalById(id){
     (await this.homeService.getAnimalById(id)).subscribe((res: any) => {
       this.animal = res;
+      if(this.animal.imagem !== null){
+        this.animal.img = `data:${this.animal.imagem.tipo};base64,${this.animal.imagem.dados}`;
+      }
       this.loading = false;
     });
+  }
+
+  irParaMeusFavoritos(){
+    this.router.navigateByUrl('page/pets-favoritos');
   }
 
   ngOnInit() {
   }
 
+  async favoritarAnimal(id){
+    const request = {
+      idAnimal: id,
+      idUsuario: this.user.id
+    };
+    (await this.homeService.favoritarAnimal(request)).subscribe(() => {
+      this.loading = true;
+      this.getAnimalById(id);
+      this.loading = false;
+    });
+  }
 }

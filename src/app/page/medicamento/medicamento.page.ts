@@ -18,6 +18,7 @@ export class MedicamentoPage implements OnInit {
   loading: boolean;
   mensagem: string;
   gato = 'https://www.petz.com.br/blog/wp-content/uploads/2021/05/gato-branco-de-olho-azul.jpg';
+  public user: any;
 
   constructor(
     private router: Router,
@@ -38,13 +39,21 @@ export class MedicamentoPage implements OnInit {
   ngOnInit() {}
 
   async pageEnter(){
-    const user = await this.storage.get('user');
+    this.user = await this.storage.get('user');
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
+    this.getAnimaisByUsuario();
+  }
 
-    (await this.medicamentoService.getAnimaisByUsuario(user.id))
+  async getAnimaisByUsuario(){
+    (await this.medicamentoService.getAnimaisByUsuario(this.user.id))
       .subscribe((resp: any) => {
         this.animais = resp;
+        this.animais.map(x => {
+          if(x.imagem !== null){
+            x.img = `data:${x.imagem.tipo};base64,${x.imagem.dados}`;
+          }
+        });
 
         if(this.animais.length === 0){
           this.mensagem = 'Não há nenhum animal para adoção';
@@ -62,23 +71,35 @@ export class MedicamentoPage implements OnInit {
       });
   }
 
+  async excluirPet(id){
+    (await this.medicamentoService.deleteAnimal(id))
+      .subscribe(() => {
+        this.getAnimaisByUsuario();
+      },
+      error => {
+        if(error.status === 401 || error.status === 403){
+          this.storage.remove('user');
+          this.router.navigateByUrl('');
+        }
+        this.mensagem = error.error;
+        this.loading = false;
+      });
+  }
+
   public detalhesAnimal(id: any){
     this.storage.set('idAnimal', id);
     this.router.navigateByUrl('page/editar-pet');
   }
 
-  // async abrirMedicamento(id: string){
-  //   const loadingScreen = await this.modalController.create({
-  //     component: MedicamentoViewPage,
-  //     componentProps: {
-  //       id: id
-  //     }
-  //   });
+  public criarAnimal(){
+    this.router.navigateByUrl('page/criar-pet');
+  }
 
-  //   loadingScreen.onDidDismiss()
-  //     .then(async () => {});
+  public visualizarAnimaisFavoritos(){
+    this.router.navigateByUrl('page/pets-favoritos');
+  }
 
-  //   return await loadingScreen.present();
-  // }
-
+  public visualizarPerfil(){
+    this.router.navigateByUrl('page/perfil');
+  }
 }

@@ -8,14 +8,14 @@ import { UrlService } from 'src/app/shared/class/url-service';
 import { MedicamentoService } from '../medicamento.service';
 
 @Component({
-  selector: 'app-perfil',
-  templateUrl: './perfil.page.html',
-  styleUrls: ['./perfil.page.scss']
+  selector: 'app-pet-favorito',
+  templateUrl: './pet-favorito.page.html',
+  styleUrls: ['./pet-favorito.page.scss']
 })
-export class PerfilPage implements OnInit {
+export class PetFavoritoPage implements OnInit {
 
   public user: any;
-  public usuario: any;
+  public animais: any;
   public loading: boolean;
   public mensagem: string;
 
@@ -25,10 +25,11 @@ export class PerfilPage implements OnInit {
     private urlService: UrlService,
     public modalController: ModalController,
     public toastController: ToastController,
-    private medicamentoService: MedicamentoService) {
+    private medicamentoService: MedicamentoService,
+    private fb: FormBuilder) {
     this.loading = false;
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === `/page/perfil`) {
+      if (evt instanceof NavigationEnd && this.router.url === `/page/pets-favoritos`) {
         this.loading = true;
         this.pageEnter();
       }
@@ -40,39 +41,29 @@ export class PerfilPage implements OnInit {
     this.user = await this.storage.get('user');
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
-    this.getUsuario();
+    await this.getAnimaisFavorito();
   }
 
-  async getUsuario(){
-    this.showLoadingScreen()
-      .then(async () => {
-        (await this.medicamentoService.getUsuario(this.user.id))
-          .subscribe((resp: any) => {
-            this.usuario = resp;
-      console.log(this.usuario);
-          },
-          error => {
-            if(error.status === 401 || error.status === 403){
-              this.storage.remove('user');
-              this.router.navigateByUrl('');
-            }
-            else{
-              this.toastController.create({
-                message: error.error,
-                duration: 5000
-              }).then(toast => {
-                toast.present();
-              });
-            }
-          },
-          () => {
-            this.closeLoadingScreen();
-          });
-        });
+  async getAnimaisFavorito(){
+    (await this.medicamentoService.getAnimaisFavorito(this.user.id)).subscribe((res: any) => {
+      this.animais = res;
+      this.animais.map(x => {
+        if(x.imagem !== null){
+          x.img = `data:${x.imagem.tipo};base64,${x.imagem.dados}`;
+        }
+      });
+
+      if(this.animais.length === 0){
+        this.mensagem = 'Não há nenhum animal favoritado';
+      }
+
+      this.loading = false;
+    });
   }
 
-  public editarUsuario(){
-    this.router.navigateByUrl('page/editar-perfil');
+  public detalhesAnimal(id){
+    this.storage.set('idAnimal', id);
+    this.router.navigateByUrl('page/adotar');
   }
 
   ngOnInit() {

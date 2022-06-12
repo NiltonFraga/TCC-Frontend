@@ -49,24 +49,15 @@ export class HomePage implements OnInit {
   async getAllAnimal(){
     (await this.homeService.getAllAnimal()).subscribe((res: any) => {
       this.animais = res;
+      this.animais.map(x => {
+        if(x.imagem !== null){
+          x.img = `data:${x.imagem.tipo};base64,${x.imagem.dados}`;
+        }
+      });
+      console.log(this.animais);
       this.loading = false;
     });
   }
-
-  // async openPhoto() {
-  //   const loadingScreen = await this.modalController.create({
-  //     component: FotoperfilPage
-  //   });
-
-  //   loadingScreen.onDidDismiss()
-  //     .then(async (data: any) => {
-  //       const userReturn = data['data'];
-  //       this.user = userReturn;
-  //       await this.storage.set('user', this.user);
-  //     });
-
-  //   return await loadingScreen.present();
-  // }
 
   public detalhesAnimal(id: any){
     this.storage.set('idAnimal', id);

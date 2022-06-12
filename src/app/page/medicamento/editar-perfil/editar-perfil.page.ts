@@ -5,59 +5,39 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingPage } from 'src/app/loading/loading.page';
 import { StorageService } from 'src/app/shared/class/storage.service';
 import { UrlService } from 'src/app/shared/class/url-service';
-import { ExameService } from '../exame.service';
+import { MedicamentoService } from '../medicamento.service';
 
 @Component({
-  selector: 'app-criar-exame',
-  templateUrl: './criar-exame.page.html',
-  styleUrls: ['./criar-exame.page.scss'],
+  selector: 'app-editar-perfil',
+  templateUrl: './editar-perfil.page.html',
+  styleUrls: ['./editar-perfil.page.scss'],
 })
-export class CriarExamePage implements OnInit {
+export class EditarPerfilPage implements OnInit {
 
-  servicos: any;
   user: any;
-
-  dataExame: any;
-  tipoExame: any;
-  publico: any;
-  observacoes: any;
-
-  public nome: string;
-  public arquivo: any;
-  public telefone1: string;
-  public telefone2: string;
-  public rua: string;
-  public bairro: string;
-  public cidade: string;
-  public tipoDesconto: string;
-  public sobreLoja: string;
-  public sobreDesconto: string;
+  public id: any;
   public cadastroForm: FormGroup;
+  usuario: any;
 
   constructor(
-    private exameService: ExameService,
     public modalController: ModalController,
     public toastController: ToastController,
     private urlService: UrlService,
+    private medicamentoService: MedicamentoService,
     private router: Router,
     private storage: StorageService,
     private fb: FormBuilder)
   {
     this.cadastroForm = this.fb.group({
       nome: this.fb.control('', [Validators.required]),
+      email: this.fb.control('', [Validators.required]),
       telefone1: this.fb.control('', [Validators.required]),
       telefone2: this.fb.control(''),
-      rua: this.fb.control('', [Validators.required]),
-      bairro: this.fb.control('', [Validators.required]),
-      cidade: this.fb.control('', [Validators.required]),
-      tipoDesconto: this.fb.control('', [Validators.required]),
-      sobreLoja: this.fb.control('', [Validators.required]),
-      sobreDesconto: this.fb.control('', [Validators.required]),
-      file: this.fb.control('', [Validators.required])
+      senha: this.fb.control(''),
+      confimeSenha: this.fb.control(''),
     });
-
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url === '/page/criar-servicos') {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/editar-perfil') {
          this.pageEnter();
       }
     });
@@ -69,14 +49,19 @@ export class CriarExamePage implements OnInit {
     this.user = await this.storage.get('user');
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
+    await this.getUsuario();
   }
 
-  async getServicosByUsuario(){
+  async getUsuario(){
     this.showLoadingScreen()
       .then(async () => {
-        (await this.exameService.getServicosByUsuario(this.user.id))
+        (await this.medicamentoService.getUsuario(this.user.id))
           .subscribe((resp: any) => {
-            this.servicos = resp;
+            this.usuario = resp;
+            this.cadastroForm.get('nome').setValue(this.usuario.nome);
+            this.cadastroForm.get('email').setValue(this.usuario.email);
+            this.cadastroForm.get('telefone1').setValue(this.usuario.telefone1);
+            this.cadastroForm.get('telefone2').setValue(this.usuario.telefone2);
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -98,30 +83,31 @@ export class CriarExamePage implements OnInit {
         });
   }
 
-  salvarServico(){
+  salvarUsuario(){
+    if(this.cadastroForm.get('senha').value !== this.cadastroForm.get('confimeSenha').value){
+      this.toastController.create({
+        message: 'As senhas não coincidem',
+        duration: 2000
+      }).then(toast => {
+        toast.present();
+      });
+      return;
+    }
+
     const request = {
+      id: this.user.id,
       nome: this.cadastroForm.get('nome').value,
-      telefone1: this.cadastroForm.get('telefone1').value.toString(),
-      telefone2: this.cadastroForm.get('telefone2').value.toString(),
-      rua: this.cadastroForm.get('rua').value,
-      bairro: this.cadastroForm.get('bairro').value,
-      cidade: this.cadastroForm.get('cidade').value,
-      tipo: this.cadastroForm.get('tipoDesconto').value,
-      descricao: this.cadastroForm.get('sobreLoja').value,
-      desconto: this.cadastroForm.get('sobreDesconto').value,
-      donoServico: this.user.id,
-      idImagem: '',
-      imagem: this.arquivo === undefined ? null : {
-        nome: this.arquivo.name,
-        tipo: this.arquivo.type,
-        dados: this.arquivo.binary
-      }
+      email: this.cadastroForm.get('email').value,
+      telefone1: this.cadastroForm.get('telefone1').value,
+      telefone2: this.cadastroForm.get('telefone2').value,
+      senha:  this.cadastroForm.get('senha').value
     };
     this.showLoadingScreen()
       .then(async () => {
-        (await this.exameService.postServico(request))
+        (await this.medicamentoService.updateCredenciais(request))
           .subscribe(() => {
-            this.router.navigateByUrl('/page/servicos');
+            this.setNull();
+            this.router.navigateByUrl('/page/perfil');
           },
           error => {
             if(error.status === 401 || error.status === 403){
@@ -143,20 +129,19 @@ export class CriarExamePage implements OnInit {
   }
 
   cancelar(){
-    this.router.navigateByUrl('/page/servicos');
+    this.setNull();
+    this.router.navigateByUrl('/page/perfil');
   }
 
-  fileChange(e){
-    const arquivoPre = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(arquivoPre);
-    reader.onload = () => {
-      this.arquivo = {
-        name: arquivoPre.name,
-        type: arquivoPre.type,
-        binary: reader.result.toString().split(';')[1].split(',')[1]
-      };
-    };
+  setNull(){
+    this.cadastroForm = this.fb.group({
+      nome: this.fb.control('', [Validators.required]),
+      email: this.fb.control('', [Validators.required]),
+      telefone1: this.fb.control('', [Validators.required]),
+      telefone2: this.fb.control(''),
+      senha: this.fb.control(''),
+      confimeSenha: this.fb.control(''),
+    });
   }
 
   async showLoadingScreen() {
@@ -173,5 +158,4 @@ export class CriarExamePage implements OnInit {
       }
     });
   }
-
 }

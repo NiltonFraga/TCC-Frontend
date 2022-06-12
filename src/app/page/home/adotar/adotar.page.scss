@@ -23,3 +23,37 @@
   font-size: 16px;
   text-transform: uppercase;
 }
+
+.animal{
+  position: relative;
+}
+
+.imagem-animal{
+  z-index: 99;
+}
+
+.favoritar-pet{
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: rgb(155, 155, 155);
+  border-radius: 6px;
+}
+
+.isFavorito{
+  color: red;
+}
+
+.isNotFavorito{
+  color: rgb(252, 252, 252);
+}
+
+.iconi-add{
+  color: #196B10;
+  width: 36px;
+  height: 36px;
+}

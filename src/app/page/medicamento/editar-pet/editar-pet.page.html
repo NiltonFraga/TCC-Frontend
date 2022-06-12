@@ -1,9 +1,5 @@
 <ion-content>
   <div class="content">
-    <!-- <span *ngIf="!loading">{{mensagem}}</span> -->
-    <div class="filtro">
-
-    </div>
     <div class="grid-animais">
       <div *ngIf="loading" class="preloader-wrapper big active">
         <div class="spinner-layer spinner-blue-only">
@@ -17,84 +13,150 @@
         </div>
       </div>
       <ion-grid>
-        <ion-row >
-          <ion-col size="12" class="bloco-card" *ngIf="animal">
-            <ion-card>
-              <ion-card-header class="animal">
-                <ion-img class="imagem-animal" [src]="animal.foto" *ngIf="animal.foto !== null"></ion-img>
-                <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.foto === null"></ion-img>
-                <ion-card-title class="nome">{{animal.nome}}</ion-card-title>
-              </ion-card-header>
-              <form [formGroup]="animalForm" *ngIf="animal" class="formulario">
-                <div class="input-form">
-                  <label class="nome-input" for="icon_prefix">Nome</label>
-                  <input class="" id="icon_prefix" formControlName="nome" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Idade ano(s)</label>
-                  <input class="" id="icon_telephone" formControlName="idade" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Peso Kg</label>
-                  <input class="" id="icon_telephone" formControlName="peso" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Pelagem</label>
-                  <input class="" id="icon_telephone" formControlName="pelagem" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Sexo</label>
-                  <select id="perfil"  formControlName="sexo" class="validate browser-default">
-                    <option value="F">Fêmeia</option>
-                    <option value="M">Macho</option>
-                  </select>
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Vermifugado</label>
-                  <select formControlName="vermifugado" class="validate browser-default">
-                    <option value="true">Sim</option>
-                    <option value="false">Não</option>
-                  </select>
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Vacina</label>
-                  <input class="" id="icon_telephone" formControlName="vacina" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Doenças</label>
-                  <input class="" id="icon_telephone" formControlName="doenca" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Detalhes</label>
-                  <input class="" id="icon_telephone" formControlName="descricao" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Rua</label>
-                  <input class="" id="icon_telephone" formControlName="rua" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Bairro</label>
-                  <input class="" id="icon_telephone" formControlName="bairro" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Cidade</label>
-                  <input class="" id="icon_telephone" formControlName="cidade" type="text" class="validate">
-                </div>
-                <div class="input-form">
-                  <label class="nome-input" for="icon_telephone">Status do pet</label>
-                  <select formControlName="ativo" class="validate browser-default">
-                    <option value="true">Pet para adoção</option>
-                    <option value="false">Pet doado</option>
-                  </select>
-                </div>
-              </form>
-              <div class="button-area">
-                <ion-button (click)="cancelar()" expand="block">Cancelar</ion-button>
-                <ion-button (click)="atualizar()" expand="block">Atualizar Dados</ion-button>
+        <form [formGroup]="cadastroForm">
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Imagem Atual: </ion-label>
+              <ion-img class="imagem-animal" [src]="img"></ion-img>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Imagem: </ion-label>
+              <ion-input type="file" (change)="fileChange($event)"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Nome: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.nome.errors">*</span>
+              <ion-input type="text" formControlName="nome"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Tipo: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.tipo.errors">*</span>
+              <ion-select formControlName="tipo" class="listaTipo" placeholder="Selecione...">
+                <ion-select-option value="Gato">Gato</ion-select-option>
+                <ion-select-option value="Cachorro">Cachorro</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Idade: </ion-label>
+              <ion-input type="text" formControlName="idade"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Peso: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.peso.errors">*</span>
+              <ion-input type="number" formControlName="peso"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Pelagem: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.pelagem.errors">*</span>
+              <ion-input type="text" formControlName="pelagem"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Sexo: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.sexo.errors">*</span>
+              <ion-select formControlName="sexo" class="listaTipo" placeholder="Selecione...">
+                <ion-select-option value="M">Macho</ion-select-option>
+                <ion-select-option value="F">Fêmea</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Vermifugado: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.vermifugado.errors">*</span>
+              <ion-select formControlName="vermifugado" class="listaTipo" placeholder="Selecione...">
+                <ion-select-option value="true">Sim</ion-select-option>
+                <ion-select-option value="false">Não</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Castrado: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.castrado.errors">*</span>
+              <ion-select formControlName="castrado" class="listaTipo" placeholder="Selecione...">
+                <ion-select-option value="true">Sim</ion-select-option>
+                <ion-select-option value="false">Não</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Vacinas: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.vacina.errors">*</span>
+              <ion-input type="text" formControlName="vacina"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Doenças: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.doenca.errors">*</span>
+              <ion-input type="text" formControlName="doenca"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12" class="ajuste-display">
+              <div>
+                <ion-label style="--color: black; margin-right: 8px">Detalhes do bixinho: </ion-label>
+                <span class="mensagem-erro" *ngIf="cadastroForm.controls.descricao.errors">*</span>
               </div>
-            </ion-card>
-          </ion-col>
-        </ion-row>
+              <ion-textarea style="border: 1px solid black" formControlName="descricao" rows="5" placeholder="Escreva sobre o bixinho"></ion-textarea>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Rua: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.rua.errors">*</span>
+              <ion-input type="text" formControlName="rua"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Bairro: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.bairro.errors">*</span>
+              <ion-input type="text" formControlName="bairro"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Cidade: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.cidade.errors">*</span>
+              <ion-input type="text" formControlName="cidade"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="item-form" size="12">
+              <ion-label style="--color: black; margin-right: 8px">Status do bixinho: </ion-label>
+              <span class="mensagem-erro" *ngIf="cadastroForm.controls.ativo.errors">*</span>
+              <ion-select formControlName="ativo" class="listaTipo" placeholder="Selecione...">
+                <ion-select-option value="true">Bixinho para adoção</ion-select-option>
+                <ion-select-option value="false">Bixinho foi doado</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col class="item-form-center" size="6">
+              <button (click)="cancelar()" class="botaoCancelar" expand="block">Cancelar</button>
+            </ion-col>
+            <ion-col class="item-form-center" size="6">
+              <button (click)="salvarAnimal()" class="botaoConfirmar" [disabled]="!cadastroForm.valid" expand="block">Salvar</button>
+            </ion-col>
+          </ion-row>
+        </form>
       </ion-grid>
     </div>
   </div>

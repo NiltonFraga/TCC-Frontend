@@ -16,15 +16,27 @@ export class MedicamentoService {
     return  await this.urlService.sendRequestPost('/Animal/GetAnimal?id='+id);
   }
 
-  async salvarMedicamento(request: any){
-    return await this.urlService.sendRequestPost('/Medicamento/Cadastro', JSON.stringify(request));
+  async getAnimaisFavorito(id: any = ''): Promise<any>{
+    return  await this.urlService.sendRequestPost('/Animal/GetAnimaisFavorito?id='+id);
   }
 
-  async editarMedicamento(request: any){
-    return await this.urlService.sendRequestPost('/Medicamento/EditarMedicamento', JSON.stringify(request));
+  async postAnimal(request: any){
+    return await this.urlService.sendRequestPost('/Animal/PostAnimal', JSON.stringify(request));
   }
 
-  async getMedicamentoById(id: string){
-    return await this.urlService.sendRequestPost('/Medicamento/ConsultarMedicamentoById?idMedicamento='+id);
+  async deleteAnimal(id: any = ''){
+    return await this.urlService.sendRequestPost('/Animal/DeleteAnimal?id='+id);
+  }
+
+  async updateAnimal(request: any){
+    return await this.urlService.sendRequestPost('/Animal/UpdateAnimal', JSON.stringify(request));
+  }
+
+  async getUsuario(id: any){
+    return await this.urlService.sendRequestPost('/Usuario/GetUsuario?id='+id);
+  }
+
+  async updateCredenciais(request: any){
+    return await this.urlService.sendRequestPost('/Usuario/UpdateCredenciais', JSON.stringify(request));
   }
 }

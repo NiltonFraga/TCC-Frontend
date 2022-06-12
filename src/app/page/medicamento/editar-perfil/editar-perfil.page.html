@@ -1,0 +1,53 @@
+<ion-content>
+  <div class="content">
+    <ion-grid style="width: 100%;">
+      <form [formGroup]="cadastroForm">
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Nome: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.nome.errors">*</span>
+            <ion-input type="text" formControlName="nome"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Email: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.email.errors">*</span>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Telefone: </ion-label>
+            <span class="mensagem-erro" *ngIf="cadastroForm.controls.telefone1.errors">*</span>
+            <ion-input type="text" formControlName="telefone1"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Telefone: </ion-label>
+            <ion-input type="text" formControlName="telefone2"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Senha: </ion-label>
+            <ion-input type="password" formControlName="senha"></ion-input>
+          </ion-col>
+          <ion-col class="item-form" size="12">
+            <ion-label style="--color: black; margin-right: 6px;">Confirme a senha: </ion-label>
+            <ion-input type="password" formControlName="confimeSenha"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="item-form-center" size="6">
+            <button (click)="cancelar()" class="botaoCancelar" expand="block">Cancelar</button>
+          </ion-col>
+          <ion-col class="item-form-center" size="6">
+            <button (click)="salvarUsuario()" class="botaoConfirmar" [disabled]="!cadastroForm.valid" expand="block">Atualizar</button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-grid>
+  </div>
+</ion-content>

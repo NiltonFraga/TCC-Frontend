@@ -21,11 +21,17 @@
           <span *ngIf="!loading">{{mensagem}}</span>
         </ion-row>
         <ion-row >
-          <ion-col size="6" class="bloco-card" *ngFor="let animal of animais" (click)="detalhesAnimal(animal.id)">
+          <ion-col size="6" class="bloco-card" *ngFor="let animal of animais">
             <ion-card>
               <ion-card-header class="animal">
-                <ion-img class="imagem-animal" [src]="animal.foto" *ngIf="animal.foto !== null"></ion-img>
-                <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.foto === null"></ion-img>
+                <ion-img class="imagem-animal" [src]="animal.img" *ngIf="animal.imagem !== null"></ion-img>
+                <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.imagem === null"></ion-img>
+                <span class="excluir" (click)="excluirPet(animal.id)">
+                  <ion-icon name="close-outline"></ion-icon>
+                </span>
+                <span class="edit" (click)="detalhesAnimal(animal.id)">
+                  <ion-icon name="create-outline" ></ion-icon>
+                </span>
                 <ion-card-subtitle class="nome">{{animal.nome}}</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content class="local">
@@ -38,14 +44,14 @@
     </div>
   </div>
 </ion-content>
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button>
-    <ion-icon name="caret-up-outline"></ion-icon>
+<ion-fab vertical="bottom" style="--background: #196B10 !important"  horizontal="end" slot="fixed">
+  <ion-fab-button style="--background: #196B10 !important">
+    <ion-icon name="caret-up-outline" ></ion-icon>
   </ion-fab-button>
   <ion-fab-list side="top">
-    <ion-fab-button><ion-icon name="add-circle-outline" style="color: rgb(255, 132, 0); width: 44px; height: 44px;"></ion-icon></ion-fab-button>
-    <ion-fab-button><ion-icon name="heart-outline" style="color: rgb(255, 21, 0); width: 38px; height: 38px;"></ion-icon></ion-fab-button>
-    <ion-fab-button><ion-icon name="person-circle-outline" style="color: rgb(12, 156, 40); width: 40px; height: 40px;"></ion-icon></ion-fab-button>
+    <ion-fab-button (click)="criarAnimal()"><ion-icon name="add-circle-outline" style="color: rgb(255, 132, 0); width: 44px; height: 44px;"></ion-icon></ion-fab-button>
+    <ion-fab-button (click)="visualizarAnimaisFavoritos()"><ion-icon name="heart" style="color: rgb(255, 21, 0); width: 38px; height: 38px;"></ion-icon></ion-fab-button>
+    <ion-fab-button (click)="visualizarPerfil()"><ion-icon name="person-circle-outline" style="color: rgb(12, 156, 40); width: 40px; height: 40px;"></ion-icon></ion-fab-button>
   </ion-fab-list>
 </ion-fab>
 

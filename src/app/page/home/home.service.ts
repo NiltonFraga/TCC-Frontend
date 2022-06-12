@@ -15,4 +15,8 @@ export class HomeService {
   async getAnimalById(id: any = ''): Promise<any>{
     return  await this.urlService.sendRequestPost('/Animal/GetAnimal?id='+id);
   }
+
+  async favoritarAnimal(request: any): Promise<any>{
+    return  await this.urlService.sendRequestPost('/AnimalFavorito/UpdateAnimalFavorito', JSON.stringify(request));
+  }
 }

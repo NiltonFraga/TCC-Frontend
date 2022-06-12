@@ -21,8 +21,15 @@
           <ion-col size="12" class="bloco-card" *ngIf="animal">
             <ion-card>
               <ion-card-header class="animal">
-                <ion-img class="imagem-animal" [src]="animal.foto" *ngIf="animal.foto !== null"></ion-img>
-                <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.foto === null"></ion-img>
+                <ion-img class="imagem-animal" [src]="animal.img" *ngIf="animal.imagem !== null"></ion-img>
+                <ion-img class="imagem-animal" [src]="gato" *ngIf="animal.imagem === null"></ion-img>
+                <ion-icon
+                  name="heart"
+                  class="favoritar-pet"
+                  [ngClass]="{
+                    isFavorito: animal.idsUsuariosQueFavoritaram.includes(this.user.id),
+                    isNotFavorito: !animal.idsUsuariosQueFavoritaram.includes(this.user.id)
+                  }" (click)="favoritarAnimal(animal.id)"></ion-icon>
                 <ion-card-title class="nome">{{animal.nome}}</ion-card-title>
               </ion-card-header>
               <ion-card-content class="local">
@@ -33,7 +40,7 @@
                 </ion-row>
                 <ion-row >
                   <ion-col size="6" >
-                    Idade: {{animal.idade}} ano(s)
+                    Idade: {{animal.idade}}
                   </ion-col>
                   <ion-col size="6">
                     Peso: {{animal.peso}} Kg
@@ -87,6 +94,16 @@
                     Doador: {{animal.nomeDoador}}
                   </ion-col>
                 </ion-row>
+                <ion-row >
+                  <ion-col size="12">
+                    Telefone: {{animal.telefone1}}
+                  </ion-col>
+                </ion-row>
+                <ion-row *ngIf="animal.telefone2 !== ''">
+                  <ion-col size="12">
+                    Telefone: {{animal.telefone2}}
+                  </ion-col>
+                </ion-row>
                 <div class="row button-area">
                   <div class="col s12">
                     <button class="button" expand="block">Falar com o doador</button>
@@ -99,5 +116,10 @@
       </ion-grid>
     </div>
   </div>
-
 </ion-content>
+
+<ion-fab vertical="bottom" style="--background: trasparent !important"  horizontal="start" slot="fixed" *ngIf="animal && animal.idsUsuariosQueFavoritaram.includes(this.user.id)">
+  <ion-fab-button style="--background: trasparent !important" (click)="irParaMeusFavoritos()">
+    <ion-icon name="arrow-back-outline" class="iconi-add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
