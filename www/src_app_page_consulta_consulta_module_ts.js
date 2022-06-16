@@ -122,12 +122,9 @@ let ConsultaPage = class ConsultaPage {
         this.storage = storage;
         this.urlService = urlService;
         this.consultaService = consultaService;
-        this.loading = false;
-        this.dataFiltrada = false;
-        this.tipoFiltrado = false;
         this.router.events.subscribe((evt) => {
-            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__.NavigationEnd && this.router.url == "/page/consultas") {
-                this.loading = true;
+            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__.NavigationEnd && this.router.url === '/page/chat') {
+                //this.loading = true;
                 this.pageEnter();
             }
         });
@@ -136,84 +133,13 @@ let ConsultaPage = class ConsultaPage {
     }
     pageEnter() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
-            let user = yield this.storage.get("user");
-            let token = yield this.storage.get("token");
+            this.user = yield this.storage.get('user');
+            const token = yield this.storage.get('token');
             yield this.urlService.validateToken(token);
-            this.listaConsultaFull = undefined;
-            this.listaConsulta = undefined;
-            yield this.getTiposConsultas();
-            (yield this.consultaService.consultarListaConsultas(user.id))
-                .subscribe((resp) => {
-                this.listaConsultaFull = resp;
-                this.listaConsulta = resp;
-                if (this.listaConsulta.length == 0)
-                    this.mensagem = "Nenhuma consulta salva";
-                this.loading = false;
-            }, error => {
-                if (error.status == 401 || error.status == 403) {
-                    this.storage.remove("user");
-                    this.router.navigateByUrl("");
-                }
-                this.mensagem = error.error;
-                this.loading = false;
-            });
         });
     }
-    getTiposConsultas() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
-            (yield this.consultaService.consultarListaTiposConsultas())
-                .subscribe((resp) => {
-                this.tiposConsultas = resp;
-            }, error => {
-                if (error.status == 401 || error.status == 403) {
-                    this.storage.remove("user");
-                    this.router.navigateByUrl("");
-                }
-            });
-        });
-    }
-    filtroData() {
-        if (this.dataFiltro && this.tipoFiltrado) {
-            this.listaConsulta = this.listaConsultaFull.filter((item) => {
-                return new Date(item.diaRealizacao).getDate() == new Date(this.dataFiltro).getDate() &&
-                    new Date(item.diaRealizacao).getMonth() == new Date(this.dataFiltro).getMonth() &&
-                    new Date(item.diaRealizacao).getFullYear() == new Date(this.dataFiltro).getFullYear() &&
-                    item.tipo.id == this.tipoFiltro;
-            });
-            this.dataFiltrada = true;
-        }
-        else if (this.dataFiltro && !this.tipoFiltrado) {
-            this.listaConsulta = this.listaConsultaFull.filter((item) => {
-                return new Date(item.diaRealizacao).getDate() == new Date(this.dataFiltro).getDate() &&
-                    new Date(item.diaRealizacao).getMonth() == new Date(this.dataFiltro).getMonth() &&
-                    new Date(item.diaRealizacao).getFullYear() == new Date(this.dataFiltro).getFullYear();
-            });
-            this.dataFiltrada = true;
-        }
-    }
-    filtroTipo() {
-        if (this.tipoFiltro && this.dataFiltrada) {
-            this.listaConsulta = this.listaConsultaFull.filter((item) => {
-                return new Date(item.diaRealizacao).getDate() == new Date(this.dataFiltro).getDate() &&
-                    new Date(item.diaRealizacao).getMonth() == new Date(this.dataFiltro).getMonth() &&
-                    new Date(item.diaRealizacao).getFullYear() == new Date(this.dataFiltro).getFullYear() &&
-                    item.tipo.id == this.tipoFiltro;
-            });
-            this.tipoFiltrado = true;
-        }
-        else if (this.tipoFiltro && !this.dataFiltrada) {
-            this.listaConsulta = this.listaConsultaFull.filter((item) => {
-                return item.tipo.id == this.tipoFiltro;
-            });
-            this.tipoFiltrado = true;
-        }
-    }
-    limparFiltro() {
-        this.dataFiltro = undefined;
-        this.tipoFiltro = undefined;
-        this.listaConsulta = this.listaConsultaFull;
-        this.dataFiltrada = false;
-        this.tipoFiltrado = false;
+    falarCom() {
+        this.router.navigateByUrl('page/mensagem');
     }
 };
 ConsultaPage.ctorParameters = () => [
@@ -245,7 +171,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (".content {\n  margin-top: 10vh;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: space-between;\n}\n\n.sector-nova-consulta {\n  width: 100%;\n  height: auto;\n}\n\n.area-lista-vazia {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: 55vh;\n}\n\n.btFiltrar {\n  height: 100%;\n  font-size: 12px;\n}\n\n.col-lista-consulta {\n  --ion-grid-column-padding: 0 !important;\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n\n.col-lista-consulta-dia {\n  --ion-grid-column-padding: 0 !important;\n}\n\n.listaTipo {\n  --placeholder-opacity: 0.5;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbnN1bHRhLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLGFBQUE7RUFDQSxzQkFBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7QUFDRjs7QUFFQTtFQUNFLFdBQUE7RUFDQSxZQUFBO0FBQ0Y7O0FBRUE7RUFDRSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0FBQ0Y7O0FBRUE7RUFDRSxZQUFBO0VBQ0EsZUFBQTtBQUNGOztBQUVBO0VBQ0UsdUNBQUE7RUFDQSxhQUFBO0VBQ0EsMkJBQUE7RUFDQSxtQkFBQTtBQUNGOztBQUVBO0VBQ0UsdUNBQUE7QUFDRjs7QUFFQTtFQUNFLDBCQUFBO0FBQ0YiLCJmaWxlIjoiY29uc3VsdGEucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvbnRlbnR7XHJcbiAgbWFyZ2luLXRvcDogMTB2aDtcclxuICB3aWR0aDogMTAwJTtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbn1cclxuXHJcbi5zZWN0b3Itbm92YS1jb25zdWx0YXtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IGF1dG87XHJcbn1cclxuXHJcbi5hcmVhLWxpc3RhLXZhemlhe1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDU1dmg7XHJcbn1cclxuXHJcbi5idEZpbHRyYXJ7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIGZvbnQtc2l6ZTogMTJweDtcclxufVxyXG5cclxuLmNvbC1saXN0YS1jb25zdWx0YXtcclxuICAtLWlvbi1ncmlkLWNvbHVtbi1wYWRkaW5nOiAwICFpbXBvcnRhbnQ7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5cclxuLmNvbC1saXN0YS1jb25zdWx0YS1kaWF7XHJcbiAgLS1pb24tZ3JpZC1jb2x1bW4tcGFkZGluZzogMCAhaW1wb3J0YW50O1xyXG59XHJcblxyXG4ubGlzdGFUaXBve1xyXG4gIC0tcGxhY2Vob2xkZXItb3BhY2l0eTogMC41O1xyXG59XHJcbiJdfQ== */");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("* {\n  margin: 0;\n  padding: 0;\n}\n\n.content {\n  margin-top: 8vh;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: space-between;\n}\n\n.bloco-conversa {\n  border-bottom: 1px solid #196B10;\n  width: 100%;\n}\n\n.bloco {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  padding: 6px 8px;\n  color: #7b7b7b;\n}\n\n.circulo {\n  border: 1px solid #196B10;\n  width: 50px;\n  height: 50px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 20px;\n  margin-right: 10px;\n}\n\n.bloco-left {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n.data {\n  position: absolute;\n  top: 4px;\n  right: 10px;\n}\n\n.border {\n  border: 1px solid black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbnN1bHRhLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFNBQUE7RUFDQSxVQUFBO0FBQ0Y7O0FBRUE7RUFDRSxlQUFBO0VBQ0EsV0FBQTtFQUNBLGFBQUE7RUFDQSxzQkFBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7QUFDRjs7QUFFQTtFQUNFLGdDQUFBO0VBQ0EsV0FBQTtBQUNGOztBQUVBO0VBQ0UsYUFBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7RUFDQSxnQkFBQTtFQUNBLGNBQUE7QUFDRjs7QUFFQTtFQUNFLHlCQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxrQkFBQTtFQUNBLGFBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0VBQ0EsZUFBQTtFQUNBLGtCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtBQUNGOztBQUVBO0VBQ0Usa0JBQUE7RUFDQSxRQUFBO0VBQ0EsV0FBQTtBQUNGOztBQUVBO0VBQ0UsdUJBQUE7QUFDRiIsImZpbGUiOiJjb25zdWx0YS5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIqe1xyXG4gIG1hcmdpbjogMDtcclxuICBwYWRkaW5nOiAwO1xyXG59XHJcblxyXG4uY29udGVudHtcclxuICBtYXJnaW4tdG9wOiA4dmg7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcblxyXG4uYmxvY28tY29udmVyc2F7XHJcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICMxOTZCMTA7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbi5ibG9jb3tcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG4gIHBhZGRpbmc6IDZweCA4cHg7XHJcbiAgY29sb3I6IHJnYigxMjMsIDEyMywgMTIzKTtcclxufVxyXG5cclxuLmNpcmN1bG97XHJcbiAgYm9yZGVyOiAxcHggc29saWQgIzE5NkIxMDtcclxuICB3aWR0aDogNTBweDtcclxuICBoZWlnaHQ6IDUwcHg7XHJcbiAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBmb250LXNpemU6IDIwcHg7XHJcbiAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xyXG59XHJcblxyXG4uYmxvY28tbGVmdHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbn1cclxuXHJcbi5kYXRhe1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICB0b3A6IDRweDtcclxuICByaWdodDogMTBweDtcclxufVxyXG5cclxuLmJvcmRlcntcclxuICBib3JkZXI6IDFweCBzb2xpZCBibGFjaztcclxufVxyXG4iXX0= */");
 
 /***/ }),
 
@@ -260,7 +186,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-content>\n  <div class=\"content\">\n    <div class=\"sector-nova-consulta\">\n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"8\">\n            <ion-datetime displayFormat=\"DD / MMM / YYYY\" [(ngModel)]=\"dataFiltro\" (ionChange)=\"filtroData()\" placeholder=\"Data da Consulta\"></ion-datetime>\n            <ion-select *ngIf=\"tiposConsultas && tiposConsultas.length > 0\" [(ngModel)]=\"tipoFiltro\" (ionChange)=\"filtroTipo()\" class=\"listaTipo\" placeholder=\"Especialidade\">\n              <ion-select-option *ngFor=\"let tipo of tiposConsultas\" [value]=\"tipo.id\">{{tipo.nome}}</ion-select-option>\n            </ion-select>\n          </ion-col>\n          <ion-col size=\"4\">\n            <ion-button class=\"btFiltrar\" (click)=\"limparFiltro()\" [disabled]=\"!dataFiltro && !tipoFiltro\" color=\"secondary\" expand=\"block\">Limpar Filtro</ion-button>\n          </ion-col>\n        </ion-row>\n        <ion-item-divider></ion-item-divider>\n        <ion-row>\n          <ion-col size=\"12\">\n            <div *ngIf=\"!listaConsulta || listaConsulta.length == 0\" class=\"area-lista-vazia\">\n              <span *ngIf=\"!loading\">{{mensagem}}</span>\n              <div *ngIf=\"loading\" class=\"preloader-wrapper big active\">\n                <div class=\"spinner-layer spinner-blue-only\">\n                  <div class=\"circle-clipper left\">\n                    <div class=\"circle\"></div>\n                  </div><div class=\"gap-patch\">\n                    <div class=\"circle\"></div>\n                  </div><div class=\"circle-clipper right\">\n                    <div class=\"circle\"></div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <ion-list *ngIf=\"listaConsulta && listaConsulta.length > 0\">\n              <ion-item *ngFor=\"let item of listaConsulta\">\n                <ion-label class=\"ion-text-wrap\">\n                  <ion-grid>\n                    <ion-row>\n                      <ion-col class=\"col-lista-consulta\" size=\"1\">\n                        <i *ngIf=\"!item.publico\" style=\"color:#D63742\" class=\"fa fa-lock\"></i>\n                        <i *ngIf=\"item.publico\" style=\"color:#168A32\" class=\"fa fa-unlock\"></i>\n                      </ion-col>\n                      <ion-col class=\"col-lista-consulta\" size=\"6\">\n                        <ion-text color=\"primary\">\n                          <h2>{{item.tipo.nome}}</h2>\n                        </ion-text>\n                      </ion-col>\n                      <ion-col class=\"col-lista-consulta-dia\" size=\"5\">\n                        <p>Data de Realização</p>\n                        <ion-text color=\"secondary\">\n                          <p>{{item.diaRealizacao | date: 'dd/MMM/yyyy'}}</p>\n                        </ion-text>\n                      </ion-col>\n                    </ion-row>\n                  </ion-grid>\n\n                </ion-label>\n              </ion-item>\n            </ion-list>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </div>\n\n  </div>\n</ion-content>\n<ion-fab vertical=\"bottom\" horizontal=\"end\" slot=\"fixed\">\n  <ion-fab-button routerLink=\"/page/criar-consulta\">\n    <ion-icon name=\"add\"></ion-icon>\n  </ion-fab-button>\n</ion-fab>\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-content>\r\n  <div class=\"content\">\r\n    <ion-grid style=\"width: 100%\">\r\n      <ion-row class=\"bloco-conversa\" (click)=\"falarCom()\">\r\n        <ion-col size=\"12\">\r\n          <div class=\"bloco\">\r\n            <div class=\"bloco-left\">\r\n              <div class=\"circulo\">NF</div>\r\n              <div>Nilton Fraga</div>\r\n            </div>\r\n            <div class=\"data\">12/06/2022</div>\r\n          </div>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row class=\"bloco-conversa\" (click)=\"falarCom()\">\r\n        <ion-col size=\"12\">\r\n          <div class=\"bloco\">\r\n            <div class=\"bloco-left\">\r\n              <div class=\"circulo\">KM</div>\r\n              <div>Karine Moraes</div>\r\n            </div>\r\n            <div class=\"data\">11/06/2022</div>\r\n          </div>\r\n        </ion-col>\r\n      </ion-row>\r\n      <ion-row class=\"bloco-conversa\" (click)=\"falarCom()\">\r\n        <ion-col size=\"12\">\r\n          <div class=\"bloco\">\r\n            <div class=\"bloco-left\">\r\n              <div class=\"circulo\">MA</div>\r\n              <div>Marco Antonio</div>\r\n            </div>\r\n            <div class=\"data\">10/06/2022</div>\r\n          </div>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n  </div>\r\n</ion-content>\r\n");
 
 /***/ })
 

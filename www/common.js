@@ -440,6 +440,86 @@ const openURL = async (url, ev, direction, animation) => {
 
 /***/ }),
 
+/***/ 4016:
+/*!***************************************************!*\
+  !*** ./src/app/page/clinicas/clinicas.service.ts ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ClinicasService": () => (/* binding */ ClinicasService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/shared/class/url-service */ 2567);
+
+
+
+let ClinicasService = class ClinicasService {
+    constructor(urlService) {
+        this.urlService = urlService;
+    }
+    getAllPost(filtro) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Post/GetAllPost', JSON.stringify(filtro));
+        });
+    }
+    getPostAndComentarioById(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Post/GetPostAndComentarioById?id=' + id);
+        });
+    }
+    getPostById(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Post/GetPostById?id=' + id);
+        });
+    }
+    postPost(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Post/PostPost', JSON.stringify(request));
+        });
+    }
+    updatePost(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Post/UpdatePost', JSON.stringify(request));
+        });
+    }
+    deletePost(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Post/DeletePost?id=' + id);
+        });
+    }
+    postComentario(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Comentario/PostComentario', JSON.stringify(request));
+        });
+    }
+    deleteComentario(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Comentario/DeleteComentario?id=' + id);
+        });
+    }
+    updateCurtida(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Curtida/UpdateCurtida', JSON.stringify(request));
+        });
+    }
+};
+ClinicasService.ctorParameters = () => [
+    { type: src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_0__.UrlService }
+];
+ClinicasService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+        providedIn: 'root'
+    })
+], ClinicasService);
+
+
+
+/***/ }),
+
 /***/ 1493:
 /*!***************************************************!*\
   !*** ./src/app/page/consulta/consulta.service.ts ***!
@@ -511,19 +591,59 @@ let ExameService = class ExameService {
     constructor(urlService) {
         this.urlService = urlService;
     }
-    consultarListaExames(id) {
+    getAllServico() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost("/Exame/ConsultarListaExame?id=" + id);
+            return yield this.urlService.sendRequestPost('/Servico/GetAllServico');
         });
     }
-    consultarListaTiposExames() {
+    getServicosByUsuario(id) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost("/Exame/ConsultarListaTiposExame");
+            return yield this.urlService.sendRequestPost('/Servico/GetServicoByUsuario?id=' + id);
         });
     }
-    salvarExame(request) {
+    postServico(request) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost("/Exame/CadastroExame", JSON.stringify(request));
+            return yield this.urlService.sendRequestPost('/Servico/PostServico', JSON.stringify(request));
+        });
+    }
+    getServicoById(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Servico/GetServicoById?id=' + id);
+        });
+    }
+    deletarServico(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Servico/DeleteServico?id=' + id);
+        });
+    }
+    updateServico(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Servico/UpdateServico', JSON.stringify(request));
+        });
+    }
+    getProdutosByServico(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Produto/GetProdutosByServico?id=' + id);
+        });
+    }
+    getProdutoById(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Produto/GetProdutoById?id=' + id);
+        });
+    }
+    postProduto(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Produto/PostProduto', JSON.stringify(request));
+        });
+    }
+    updateProduto(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Produto/UpdateProduto', JSON.stringify(request));
+        });
+    }
+    deletarProduto(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Produto/DeleteProduto?id=' + id);
         });
     }
 };
@@ -535,6 +655,56 @@ ExameService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
         providedIn: 'root'
     })
 ], ExameService);
+
+
+
+/***/ }),
+
+/***/ 5699:
+/*!*******************************************!*\
+  !*** ./src/app/page/home/home.service.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "HomeService": () => (/* binding */ HomeService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/shared/class/url-service */ 2567);
+
+
+
+let HomeService = class HomeService {
+    constructor(urlService) {
+        this.urlService = urlService;
+    }
+    getAllAnimal(request = '') {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Animal/GetAllAnimais');
+        });
+    }
+    getAnimalById(id = '') {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Animal/GetAnimal?id=' + id);
+        });
+    }
+    favoritarAnimal(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/AnimalFavorito/UpdateAnimalFavorito', JSON.stringify(request));
+        });
+    }
+};
+HomeService.ctorParameters = () => [
+    { type: src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_0__.UrlService }
+];
+HomeService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+        providedIn: 'root'
+    })
+], HomeService);
 
 
 
@@ -561,24 +731,44 @@ let MedicamentoService = class MedicamentoService {
     constructor(urlService) {
         this.urlService = urlService;
     }
-    consultarListaMedicamentos(id) {
+    getAnimaisByUsuario(id) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost("/Medicamento/ConsultarListaMedicamento?idPaciente=" + id);
+            return yield this.urlService.sendRequestPost('/Animal/GetAnimaisByUsuario?id=' + id);
         });
     }
-    salvarMedicamento(request) {
+    getAnimalById(id = '') {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost("/Medicamento/Cadastro", JSON.stringify(request));
+            return yield this.urlService.sendRequestPost('/Animal/GetAnimal?id=' + id);
         });
     }
-    editarMedicamento(request) {
+    getAnimaisFavorito(id = '') {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost("/Medicamento/EditarMedicamento", JSON.stringify(request));
+            return yield this.urlService.sendRequestPost('/Animal/GetAnimaisFavorito?id=' + id);
         });
     }
-    getMedicamentoById(id) {
+    postAnimal(request) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost("/Medicamento/ConsultarMedicamentoById?idMedicamento=" + id);
+            return yield this.urlService.sendRequestPost('/Animal/PostAnimal', JSON.stringify(request));
+        });
+    }
+    deleteAnimal(id = '') {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Animal/DeleteAnimal?id=' + id);
+        });
+    }
+    updateAnimal(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Animal/UpdateAnimal', JSON.stringify(request));
+        });
+    }
+    getUsuario(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Usuario/GetUsuario?id=' + id);
+        });
+    }
+    updateCredenciais(request) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
+            return yield this.urlService.sendRequestPost('/Usuario/UpdateCredenciais', JSON.stringify(request));
         });
     }
 };

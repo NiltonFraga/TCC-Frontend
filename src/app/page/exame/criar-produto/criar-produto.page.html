@@ -5,8 +5,9 @@
         <ion-row>
           <ion-col class="item-form" size="12">
             <ion-label style="--color: black; margin-right: 6px;">Imagem: </ion-label>
-            <span class="mensagem-erro" *ngIf="cadastroForm.controls.file.errors">*</span>
-            <ion-input type="file" formControlName="file" (change)="fileChange($event)"></ion-input>
+            <span class="mensagem-erro" *ngIf="!this.arquivo">*</span>
+            <ion-img class="imagem-animal"  *ngIf="this.arquivo !== null" [src]="img"></ion-img>
+            <button (click)="mudarFoto()" class="btn-image">{{statusFoto}}</button>
           </ion-col>
         </ion-row>
         <ion-row>
