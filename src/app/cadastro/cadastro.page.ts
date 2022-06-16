@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingPage } from '../loading/loading.page';
 import { CadastroService } from './cadastro.service';
+import { cpf, cnpj } from 'cpf-cnpj-validator';
 declare const M: any;
 
 
@@ -40,17 +41,6 @@ export class CadastroPage implements OnInit {
   ngOnInit() {
     const elems = document.querySelectorAll('select');
     M.FormSelect.init(elems, {});
-
-    this.cadastroForm = this.fb.group({
-      nome: this.fb.control('', [Validators.required]),
-      perfil: this.fb.control('', [Validators.required]),
-      documento: this.fb.control('', [Validators.required]),
-      email: this.fb.control('', [Validators.required, Validators.email]),
-      telefone1: this.fb.control('', [Validators.required]),
-      telefone2: this.fb.control(''),
-      senha: this.fb.control('', [Validators.required]),
-      confimeSenha: this.fb.control('', [Validators.required])
-    });
   }
 
   async cadastrar(){
@@ -64,7 +54,7 @@ export class CadastroPage implements OnInit {
       return;
     }
 
-    if(this.cadastroForm.get('perfil').value === 'pessoa_fisica' && this.cadastroForm.get('documento').value.toString().length !== 11){
+    if(this.cadastroForm.get('perfil').value === 'pessoa_fisica' && !cpf.isValid(this.cadastroForm.get('documento').value.toString())){
       this.toastController.create({
         message: 'Campo CPF com valor incorreto',
         duration: 2000
@@ -74,7 +64,7 @@ export class CadastroPage implements OnInit {
       return;
     }
 
-    if(this.cadastroForm.get('perfil').value === 'pessoa_juridica' && this.cadastroForm.get('documento').value.toString().length !== 14){
+    if(this.cadastroForm.get('perfil').value === 'pessoa_juridica' && !cnpj.isValid(this.cadastroForm.get('documento').value.toString())){
       this.toastController.create({
         message: 'Campo CNPF com valor incorreto',
         duration: 2000

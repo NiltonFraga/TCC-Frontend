@@ -37,10 +37,6 @@
               <span class="nome">Quantidades de Produtos Cadastrados: </span>
               <span>{{usuario.quantProdutosCadastrados}}</span>
             </ion-col>
-            <ion-col class="bloco-tipo" size="12" *ngIf="usuario.role !== 'pessoa_fisica'">
-              <span class="nome">Quantidades de Produtos Cadastrados: </span>
-              <span>{{usuario.quantProdutosCadastrados}}</span>
-            </ion-col>
             <ion-col class="item-form-center" size="12">
               <button (click)="editarUsuario()" class="botaoConfirmar" expand="block">Editar Informações Cadastrais</button>
             </ion-col>

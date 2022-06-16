@@ -85,6 +85,33 @@ export class MeusServicosPage implements OnInit {
     this.router.navigateByUrl('page/meus-produtos');
   }
 
+  excluirServico(id: any){
+    this.showLoadingScreen()
+      .then(async () => {
+        (await this.exameService.deletarServico(id))
+          .subscribe(() => {
+            this.getServicosByUsuario();
+          },
+          error => {
+            if(error.status === 401 || error.status === 403){
+              this.storage.remove('user');
+              this.router.navigateByUrl('');
+            }
+            else{
+              this.toastController.create({
+                message: error.error,
+                duration: 5000
+              }).then(toast => {
+                toast.present();
+              });
+            }
+          },
+          () => {
+            this.closeLoadingScreen();
+          });
+        });
+  }
+
   async showLoadingScreen() {
     const loadingScreen = await this.modalController.create({
       component: LoadingPage

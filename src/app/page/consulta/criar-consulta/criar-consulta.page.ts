@@ -31,7 +31,7 @@ export class CriarConsultaPage implements OnInit {
     private storage: StorageService)
   {
     this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd && this.router.url == "/page/criar-consulta") {
+      if (evt instanceof NavigationEnd && this.router.url === '/page/mensagem') {
          this.pageEnter();
       }
     });
@@ -40,78 +40,9 @@ export class CriarConsultaPage implements OnInit {
   async ngOnInit() {}
 
   async pageEnter(){
-    this.getTiposExames();
-    this.user = await this.storage.get("user");
-    let token = await this.storage.get("token");
+    this.user = await this.storage.get('user');
+    const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
-  }
-
-  async getTiposExames(){
-    this.showLoadingScreen()
-      .then(async () => {
-        (await this.consultaService.consultarListaTiposConsultas())
-          .subscribe((resp: any) => {
-            this.tiposConsultas = resp;
-          },
-          error => {
-            if(error.status == 401 || error.status == 403){
-              this.storage.remove("user");
-              this.router.navigateByUrl("");
-            }else{
-              this.toastController.create({
-                message: error.error,
-                duration: 5000
-              }).then(toast => {
-                toast.present();
-              });
-            }
-          },
-          () => {
-            this.closeLoadingScreen();
-          });
-    });
-  }
-
-  async salvarConsulta(){
-    this.showLoadingScreen()
-      .then(async () => {
-        let request = {
-          idPaciente: this.user.id,
-          idTipoConsulta: this.tipoConsulta,
-          diaRealizacao: this.dataConsulta.split("T")[0],
-          publico: this.publico,
-          resumo: this.resumo,
-          observacoes: this.observacoes
-        };
-
-        this.dataConsulta = undefined;
-        this.tipoConsulta = undefined;
-        this.publico = false;
-        this.resumo = undefined;
-        this.observacoes = undefined;
-
-        (await this.consultaService.salvarConsulta(request))
-          .subscribe(() => {
-            this.router.navigateByUrl("/page/consultas");
-          },
-          error => {
-            if(error.status == 401 || error.status == 403){
-              this.storage.remove("user");
-              this.router.navigateByUrl("");
-            }else{
-              this.toastController.create({
-                message: error.error,
-                duration: 5000
-              }).then(toast => {
-                toast.present();
-              });
-            }
-          },
-          () => {
-            this.closeLoadingScreen();
-          });
-
-      });
   }
 
   async showLoadingScreen() {

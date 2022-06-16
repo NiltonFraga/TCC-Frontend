@@ -57,7 +57,7 @@ const routes: Routes = [
         loadChildren: () => import('./consulta/consulta.module').then( m => m.ConsultaPageModule)
       },
       {
-        path: 'criar-consulta',
+        path: 'mensagem',
         loadChildren: () => import('./consulta/criar-consulta/criar-consulta.module').then( m => m.CriarConsultaPageModule)
       },
       {

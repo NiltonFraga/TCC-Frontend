@@ -24,6 +24,10 @@ export class ExameService {
     return await this.urlService.sendRequestPost('/Servico/GetServicoById?id='+id);
   }
 
+  async deletarServico(id: string){
+    return await this.urlService.sendRequestPost('/Servico/DeleteServico?id='+id);
+  }
+
   async updateServico(request: any){
     return await this.urlService.sendRequestPost('/Servico/UpdateServico', JSON.stringify(request));
   }
@@ -44,12 +48,8 @@ export class ExameService {
     return await this.urlService.sendRequestPost('/Produto/UpdateProduto', JSON.stringify(request));
   }
 
-  async consultarListaTiposExames(){
-    return await this.urlService.sendRequestPost('/Exame/ConsultarListaTiposExame');
-  }
-
-  async salvarExame(request: any){
-    return await this.urlService.sendRequestPost('/Exame/CadastroExame', JSON.stringify(request));
+  async deletarProduto(id: string){
+    return await this.urlService.sendRequestPost('/Produto/DeleteProduto?id='+id);
   }
 
 }

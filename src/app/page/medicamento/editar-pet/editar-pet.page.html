@@ -137,7 +137,7 @@
               <ion-input type="text" formControlName="cidade"></ion-input>
             </ion-col>
           </ion-row>
-          <ion-row>
+          <ion-row class="juste-margin">
             <ion-col class="item-form" size="12">
               <ion-label style="--color: black; margin-right: 8px">Status do bixinho: </ion-label>
               <span class="mensagem-erro" *ngIf="cadastroForm.controls.ativo.errors">*</span>
@@ -148,7 +148,7 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row class="juste-margin">
             <ion-col class="item-form-center" size="6">
               <button (click)="cancelar()" class="botaoCancelar" expand="block">Cancelar</button>
             </ion-col>

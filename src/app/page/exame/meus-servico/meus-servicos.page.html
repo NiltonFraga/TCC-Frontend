@@ -31,6 +31,7 @@
                 <ion-fab-list side="top">
                   <ion-fab-button (click)="editarServico(servico.id)"><ion-icon name="create-outline" style="color: rgb(0, 147, 252); width: 30px; height: 30px;"></ion-icon></ion-fab-button>
                   <ion-fab-button (click)="verMeusProdutos(servico.id)" *ngIf="servico.tipo === 'Produto'"><ion-icon name="storefront-outline" style="color: rgb(203, 136, 1); width: 30px; height: 30px;"></ion-icon></ion-fab-button>
+                  <ion-fab-button (click)="excluirServico(servico.id)" ><ion-icon name="trash-outline" style="color: rgb(249, 61, 3); width: 30px; height: 30px;"></ion-icon></ion-fab-button>
                 </ion-fab-list>
               </ion-fab>
               <ion-card-content class="bloco-card-content">

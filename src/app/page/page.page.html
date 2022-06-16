@@ -9,9 +9,9 @@
         <span *ngIf="rotaAtual === '/page/chat'">Chat</span>
         <span *ngIf="rotaAtual === '/page/adotar'">Adotar</span>
         <span *ngIf="rotaAtual === '/page/editar-pet'">Editar Pet</span>
-        <span *ngIf="rotaAtual === '/page/criar-servicos'">Criar Seriços</span>
-        <span *ngIf="rotaAtual === '/page/meus-servicos'">Meus Seriços</span>
-        <span *ngIf="rotaAtual === '/page/editar-servicos'">Editar Seriços</span>
+        <span *ngIf="rotaAtual === '/page/criar-servicos'">Criar Serviço</span>
+        <span *ngIf="rotaAtual === '/page/meus-servicos'">Meus Serviços</span>
+        <span *ngIf="rotaAtual === '/page/editar-servicos'">Editar Serviço</span>
         <span *ngIf="rotaAtual === '/page/criar-produto'">Criar Produto</span>
         <span *ngIf="rotaAtual === '/page/editar-produto'">Editar Produto</span>
         <span *ngIf="rotaAtual === '/page/meus-produtos'">Meus Produtos</span>
@@ -21,7 +21,9 @@
         <span *ngIf="rotaAtual === '/page/criar-pet'">Criar Pet</span>
         <span *ngIf="rotaAtual === '/page/pets-favoritos'">Pets Favoritos</span>
         <span *ngIf="rotaAtual === '/page/perfil'">Perfil</span>
-        <span *ngIf="rotaAtual === '/page/editar-perfil'">Perfil</span>
+        <span *ngIf="rotaAtual === '/page/editar-perfil'">Editar Perfil</span>
+        <span *ngIf="rotaAtual === '/page/mensagem'">Mensagem</span>
+        <span *ngIf="rotaAtual === '/page/editar-post'">Editar Post</span>
       </ion-title>
       <ion-icon (click)="logout()" class="logout" name="log-out-outline"></ion-icon>
     </div>
@@ -41,7 +43,8 @@
       <ion-label class="texto-menu"
         *ngIf="rotaAtual === '/page/forum' ||
         rotaAtual === '/page/comentario' ||
-        rotaAtual === '/page/criar-post'">Forum</ion-label>
+        rotaAtual === '/page/criar-post' ||
+        rotaAtual === '/page/editar-post'">Forum</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="minha-area">
@@ -70,7 +73,7 @@
 
     <ion-tab-button tab="chat">
       <ion-icon class="icon-menu" name="chatbubbles-outline"></ion-icon>
-      <ion-label class="texto-menu" *ngIf="rotaAtual === '/page/chat'">Chat</ion-label>
+      <ion-label class="texto-menu" *ngIf="rotaAtual === '/page/chat' || rotaAtual === '/page/mensagem'">Chat</ion-label>
     </ion-tab-button>
 
     <!-- <ion-tab-button tab="consultas">

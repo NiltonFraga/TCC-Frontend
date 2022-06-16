@@ -90,6 +90,33 @@ export class MeusProdutosPage implements OnInit {
     this.router.navigateByUrl('page/criar-produto');
   }
 
+  excluirProduto(id: any){
+    this.showLoadingScreen()
+      .then(async () => {
+        (await this.exameService.deletarProduto(id))
+          .subscribe(() => {
+            this.getProdutosByServico();
+          },
+          error => {
+            if(error.status === 401 || error.status === 403){
+              this.storage.remove('user');
+              this.router.navigateByUrl('');
+            }
+            else{
+              this.toastController.create({
+                message: error.error,
+                duration: 5000
+              }).then(toast => {
+                toast.present();
+              });
+            }
+          },
+          () => {
+            this.closeLoadingScreen();
+          });
+        });
+  }
+
   voltar(){
     this.storage.set('idAnimal', this.idServico);
     this.router.navigateByUrl('page/meus-servicos');
