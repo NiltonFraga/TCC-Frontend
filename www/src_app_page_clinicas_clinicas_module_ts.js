@@ -99,25 +99,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ClinicasPage": () => (/* binding */ ClinicasPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 4762);
 /* harmony import */ var _raw_loader_clinicas_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./clinicas.page.html */ 543);
 /* harmony import */ var _clinicas_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./clinicas.page.scss */ 9804);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/core */ 7716);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 9895);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 9895);
 /* harmony import */ var src_app_shared_class_storage_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/class/storage.service */ 6578);
 /* harmony import */ var src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/class/url-service */ 2567);
 /* harmony import */ var _clinicas_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./clinicas.service */ 4016);
-/* harmony import */ var _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic-native/location-accuracy/ngx */ 6030);
-/* harmony import */ var _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic-native/geolocation/ngx */ 7152);
-/* harmony import */ var _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic-native/android-permissions/ngx */ 9315);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ionic/angular */ 476);
-/* harmony import */ var src_app_modal_endereco_atual_endereco_atual_page__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/modal/endereco-atual/endereco-atual.page */ 4136);
-/* harmony import */ var src_app_modal_endereco_confirmacao_endereco_confirmacao_page__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/modal/endereco-confirmacao/endereco-confirmacao.page */ 1170);
-
-
-
-
-
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 476);
 
 
 
@@ -128,138 +118,76 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ClinicasPage = class ClinicasPage {
-    constructor(router, storage, locationAccuracy, modalController, geolocation, plt, androidPermissions, urlService, clinicasService) {
+    constructor(router, storage, modalController, plt, urlService, clinicasService) {
         this.router = router;
         this.storage = storage;
-        this.locationAccuracy = locationAccuracy;
         this.modalController = modalController;
-        this.geolocation = geolocation;
         this.plt = plt;
-        this.androidPermissions = androidPermissions;
         this.urlService = urlService;
         this.clinicasService = clinicasService;
-        this.loading = false;
-        this.locationCordinates = {
-            latitude: "",
-            longitude: "",
-            accuracy: "",
-            timestamp: ""
-        };
         this.router.events.subscribe((evt) => {
-            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_10__.NavigationEnd && this.router.url == "/page/clinicas") {
-                this.plataformas = this.plt.platforms();
+            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__.NavigationEnd && this.router.url === '/page/forum') {
                 this.pageEnter();
             }
         });
     }
-    checkPermission() {
-        if (this.plataformas.includes("cordova")) {
-            this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(result => {
-                if (result.hasPermission) {
-                    this.enableGPS();
-                }
-                else {
-                    this.locationAccPermission();
-                }
-            }, error => {
-                alert(error);
-            });
-        }
-        else {
-            this.currentLocPosition();
-        }
-    }
-    locationAccPermission() {
-        this.locationAccuracy.canRequest().then((canRequest) => {
-            if (canRequest) {
-                this.enableGPS();
-            }
-            else {
-                this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
-                    .then(() => {
-                    this.enableGPS();
-                }, error => {
-                    alert(error);
-                });
-            }
-        });
-    }
-    enableGPS() {
-        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(() => {
-            this.currentLocPosition();
-        }, error => this.router.navigateByUrl("/page/home"));
-    }
-    currentLocPosition() {
-        this.geolocation.getCurrentPosition().then((response) => (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, function* () {
-            this.locationCordinates.latitude = response.coords.latitude;
-            this.locationCordinates.longitude = response.coords.longitude;
-            this.locationCordinates.accuracy = response.coords.accuracy;
-            this.locationCordinates.timestamp = response.timestamp;
-            this.coords = this.locationCordinates.latitude + "," + this.locationCordinates.longitude;
-            this.exibirModal(this.coords);
-        })).catch((error) => {
-            alert('Error: ' + error);
-        });
-    }
-    exibirModal(coords) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, function* () {
-            const loadingScreen = yield this.modalController.create({
-                component: src_app_modal_endereco_atual_endereco_atual_page__WEBPACK_IMPORTED_MODULE_8__.EnderecoAtualPage,
-                componentProps: {
-                    coords: coords
-                }
-            });
-            loadingScreen.onDidDismiss()
-                .then((data) => (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, function* () {
-                const coords = data['data'];
-                this.coords = coords;
-                if (this.coords == null)
-                    this.router.navigateByUrl("/page/home");
-                else {
-                    this.getListaClinicas(this.coords);
-                }
-            }));
-            return yield loadingScreen.present();
-        });
-    }
-    exibirModalEnderecoConf(item) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, function* () {
-            const loadingScreen = yield this.modalController.create({
-                component: src_app_modal_endereco_confirmacao_endereco_confirmacao_page__WEBPACK_IMPORTED_MODULE_9__.EnderecoConfirmacaoPage,
-                componentProps: {
-                    item: item
-                }
-            });
-            loadingScreen.onDidDismiss()
-                .then(() => (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, function* () {
-            }));
-            return yield loadingScreen.present();
-        });
-    }
     pageEnter() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, function* () {
-            let token = yield this.storage.get("token");
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
+            this.user = yield this.storage.get('user');
+            const token = yield this.storage.get('token');
             yield this.urlService.validateToken(token);
-            this.listaClinicas = undefined;
-            this.loading = true;
-            this.checkPermission();
+            this.filtro = { topico: 'Todos', usuario: 0 };
+            this.getAllPost(this.filtro);
         });
     }
-    editarEndereco() {
-        this.exibirModal(this.coords);
-    }
-    getListaClinicas(coords) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__awaiter)(this, void 0, void 0, function* () {
-            (yield this.clinicasService.consultarListaClinica(coords))
+    getAllPost(filtro) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
+            console.log(filtro);
+            (yield this.clinicasService.getAllPost(filtro))
                 .subscribe((resp) => {
-                this.listaClinicas = resp;
-                if (this.listaClinicas.length == 0)
-                    this.mensagem = "Nenhuma clinica cadastrada!";
+                this.posts = resp;
+                console.log(this.posts);
+                if (this.posts.length === 0) {
+                    this.mensagem = 'Não há nenhum post';
+                }
                 this.loading = false;
             }, error => {
-                if (error.status == 401 || error.status == 403) {
-                    this.storage.remove("user");
-                    this.router.navigateByUrl("");
+                if (error.status === 401 || error.status === 403) {
+                    this.storage.remove('user');
+                    this.router.navigateByUrl('');
+                }
+                this.mensagem = error.error;
+                this.loading = false;
+            });
+        });
+    }
+    criarPost() {
+        this.router.navigateByUrl('/page/criar-post');
+    }
+    verComentarios(id) {
+        this.storage.set('idAnimal', id);
+        this.router.navigateByUrl('/page/comentario');
+    }
+    buscarDadosFiltro() {
+        const request = {
+            topico: this.filtro
+        };
+        this.getAllPost(request);
+    }
+    curtirPost(id) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
+            const request = {
+                id: 0,
+                idPost: id,
+                idUsuario: this.user.id
+            };
+            (yield this.clinicasService.updateCurtida(request))
+                .subscribe(() => {
+                this.getAllPost(this.filtro);
+            }, error => {
+                if (error.status === 401 || error.status === 403) {
+                    this.storage.remove('user');
+                    this.router.navigateByUrl('');
                 }
                 this.mensagem = error.error;
                 this.loading = false;
@@ -267,71 +195,22 @@ let ClinicasPage = class ClinicasPage {
         });
     }
     ngOnInit() { }
-    formatarDistancia(distancia) {
-        if (distancia < 1000)
-            return distancia + (distancia > 1 ? " metros" : " metro");
-        else
-            return (distancia / 1000).toFixed(1) + " Km";
-    }
 };
 ClinicasPage.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_10__.Router },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__.Router },
     { type: src_app_shared_class_storage_service__WEBPACK_IMPORTED_MODULE_2__.StorageService },
-    { type: _ionic_native_location_accuracy_ngx__WEBPACK_IMPORTED_MODULE_5__.LocationAccuracy },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.ModalController },
-    { type: _ionic_native_geolocation_ngx__WEBPACK_IMPORTED_MODULE_6__.Geolocation },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_12__.Platform },
-    { type: _ionic_native_android_permissions_ngx__WEBPACK_IMPORTED_MODULE_7__.AndroidPermissions },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ModalController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.Platform },
     { type: src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_3__.UrlService },
     { type: _clinicas_service__WEBPACK_IMPORTED_MODULE_4__.ClinicasService }
 ];
-ClinicasPage = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_13__.Component)({
+ClinicasPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_8__.Component)({
         selector: 'app-clinicas',
         template: _raw_loader_clinicas_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_clinicas_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
     })
 ], ClinicasPage);
-
-
-
-/***/ }),
-
-/***/ 4016:
-/*!***************************************************!*\
-  !*** ./src/app/page/clinicas/clinicas.service.ts ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ClinicasService": () => (/* binding */ ClinicasService)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7716);
-/* harmony import */ var src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/shared/class/url-service */ 2567);
-
-
-
-let ClinicasService = class ClinicasService {
-    constructor(urlService) {
-        this.urlService = urlService;
-    }
-    consultarListaClinica(coordenada) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost("/Clinica/GetListaClinicaByDistancia?coordenada=" + coordenada);
-        });
-    }
-};
-ClinicasService.ctorParameters = () => [
-    { type: src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_0__.UrlService }
-];
-ClinicasService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
-        providedIn: 'root'
-    })
-], ClinicasService);
 
 
 
@@ -348,7 +227,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (".content {\n  margin-top: 10vh;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: space-between;\n}\n\n.sector-novo-clinicas {\n  width: 100%;\n  height: auto;\n}\n\n.area-lista-vazia {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: 65vh;\n}\n\n.clinicas-nome {\n  --ion-grid-column-padding: 0 !important;\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n\n.clinicas-publico {\n  --ion-grid-column-padding: 0 !important;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n}\n\n.clinicas-quantidade {\n  --ion-grid-column-padding: 0 !important;\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n\n.clinicas-dataTermino {\n  --ion-grid-column-padding: 0 !important;\n  display: flex;\n  justify-content: flex-end;\n  align-items: center;\n  text-align: center;\n}\n\n.listaTipo {\n  --placeholder-opacity: 0.5;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNsaW5pY2FzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLGFBQUE7RUFDQSxzQkFBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7QUFDRjs7QUFFQTtFQUNFLFdBQUE7RUFDQSxZQUFBO0FBQ0Y7O0FBRUE7RUFDRSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLFdBQUE7RUFDQSxZQUFBO0FBQ0Y7O0FBRUE7RUFDRSx1Q0FBQTtFQUNBLGFBQUE7RUFDQSwyQkFBQTtFQUNBLG1CQUFBO0FBQ0Y7O0FBRUE7RUFDRSx1Q0FBQTtFQUNBLGFBQUE7RUFDQSx5QkFBQTtFQUNBLG1CQUFBO0FBQ0Y7O0FBRUE7RUFDRSx1Q0FBQTtFQUNBLGFBQUE7RUFDQSwyQkFBQTtFQUNBLG1CQUFBO0FBQ0Y7O0FBRUE7RUFDRSx1Q0FBQTtFQUNBLGFBQUE7RUFDQSx5QkFBQTtFQUNBLG1CQUFBO0VBQ0Esa0JBQUE7QUFDRjs7QUFFQTtFQUNFLDBCQUFBO0FBQ0YiLCJmaWxlIjoiY2xpbmljYXMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvbnRlbnR7XHJcbiAgbWFyZ2luLXRvcDogMTB2aDtcclxuICB3aWR0aDogMTAwJTtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbn1cclxuXHJcbi5zZWN0b3Itbm92by1jbGluaWNhc3tcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IGF1dG87XHJcbn1cclxuXHJcbi5hcmVhLWxpc3RhLXZhemlhe1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDY1dmg7XHJcbn1cclxuXHJcbi5jbGluaWNhcy1ub21le1xyXG4gIC0taW9uLWdyaWQtY29sdW1uLXBhZGRpbmc6IDAgIWltcG9ydGFudDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcblxyXG4uY2xpbmljYXMtcHVibGljb3tcclxuICAtLWlvbi1ncmlkLWNvbHVtbi1wYWRkaW5nOiAwICFpbXBvcnRhbnQ7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtZW5kO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbn1cclxuXHJcbi5jbGluaWNhcy1xdWFudGlkYWRle1xyXG4gIC0taW9uLWdyaWQtY29sdW1uLXBhZGRpbmc6IDAgIWltcG9ydGFudDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcblxyXG4uY2xpbmljYXMtZGF0YVRlcm1pbm97XHJcbiAgLS1pb24tZ3JpZC1jb2x1bW4tcGFkZGluZzogMCAhaW1wb3J0YW50O1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBmbGV4LWVuZDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG5cclxuLmxpc3RhVGlwb3tcclxuICAtLXBsYWNlaG9sZGVyLW9wYWNpdHk6IDAuNTtcclxufVxyXG4iXX0= */");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (".content {\n  margin-top: 8vh;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.filtro {\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n}\n\n.filtro .filtro-topico {\n  margin: 0;\n  padding: 0;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  border: 1px solid #d0d0d0;\n}\n\n.filtro .filtro-topico .topico {\n  font-size: 12px;\n  color: gray;\n}\n\n.filtro .filtro-topico .listaTipo {\n  margin: 0 auto;\n  padding: 0;\n}\n\n.iconi-add {\n  color: #196B10;\n  width: 36px;\n  height: 36px;\n}\n\n.header-card {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n.conteudo-card {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  text-align: justify;\n}\n\n.topico {\n  padding-bottom: 6px;\n}\n\n.acoes-card {\n  display: flex;\n  justify-content: flex-end;\n}\n\n.bloco-card {\n  padding: 0;\n  margin: 0;\n}\n\n.acoes {\n  position: relative;\n}\n\n.iconi {\n  width: 25px;\n  height: 25px;\n}\n\n.contagem {\n  position: absolute;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  top: -14px;\n  right: -14px;\n}\n\n.curtir {\n  color: #15AD2E;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNsaW5pY2FzLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGVBQUE7RUFDQSxXQUFBO0VBQ0EsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtBQUNGOztBQUVBO0VBQ0UsYUFBQTtFQUNBLG1CQUFBO0VBQ0EsMkJBQUE7QUFDRjs7QUFDRTtFQUNFLFNBQUE7RUFDQSxVQUFBO0VBQ0EsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtFQUNBLHlCQUFBO0FBQ0o7O0FBQ0k7RUFDRSxlQUFBO0VBQ0EsV0FBQTtBQUNOOztBQUVJO0VBQ0UsY0FBQTtFQUNBLFVBQUE7QUFBTjs7QUFLQTtFQUNFLGNBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtBQUZGOztBQUtBO0VBQ0UsYUFBQTtFQUNBLG1CQUFBO0VBQ0EsOEJBQUE7QUFGRjs7QUFLQTtFQUNFLGFBQUE7RUFDQSxzQkFBQTtFQUNBLHVCQUFBO0VBQ0EsbUJBQUE7QUFGRjs7QUFLQTtFQUNFLG1CQUFBO0FBRkY7O0FBS0E7RUFDRSxhQUFBO0VBQ0EseUJBQUE7QUFGRjs7QUFLQTtFQUNFLFVBQUE7RUFDQSxTQUFBO0FBRkY7O0FBS0E7RUFDRSxrQkFBQTtBQUZGOztBQUtBO0VBQ0UsV0FBQTtFQUNBLFlBQUE7QUFGRjs7QUFLQTtFQUNFLGtCQUFBO0VBQ0EsYUFBQTtFQUNBLG1CQUFBO0VBQ0EsdUJBQUE7RUFDQSxVQUFBO0VBQ0EsWUFBQTtBQUZGOztBQUtBO0VBQ0UsY0FBQTtBQUZGIiwiZmlsZSI6ImNsaW5pY2FzLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jb250ZW50e1xyXG4gIG1hcmdpbi10b3A6IDh2aDtcclxuICB3aWR0aDogMTAwJTtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxufVxyXG5cclxuLmZpbHRyb3tcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0O1xyXG5cclxuICAuZmlsdHJvLXRvcGljb3tcclxuICAgIG1hcmdpbjogMDtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYigyMDgsIDIwOCwgMjA4KTtcclxuXHJcbiAgICAudG9waWNve1xyXG4gICAgICBmb250LXNpemU6IDEycHg7XHJcbiAgICAgIGNvbG9yOiBncmF5O1xyXG4gICAgfVxyXG5cclxuICAgIC5saXN0YVRpcG97XHJcbiAgICAgIG1hcmdpbjogMCBhdXRvO1xyXG4gICAgICBwYWRkaW5nOiAwO1xyXG4gICAgfVxyXG4gIH1cclxufVxyXG5cclxuLmljb25pLWFkZHtcclxuICBjb2xvcjogIzE5NkIxMDtcclxuICB3aWR0aDogMzZweDtcclxuICBoZWlnaHQ6IDM2cHg7XHJcbn1cclxuXHJcbi5oZWFkZXItY2FyZHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcblxyXG4uY29udGV1ZG8tY2FyZHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgdGV4dC1hbGlnbjoganVzdGlmeTtcclxufVxyXG5cclxuLnRvcGljb3tcclxuICBwYWRkaW5nLWJvdHRvbTogNnB4O1xyXG59XHJcblxyXG4uYWNvZXMtY2FyZHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XHJcbn1cclxuXHJcbi5ibG9jby1jYXJke1xyXG4gIHBhZGRpbmc6IDA7XHJcbiAgbWFyZ2luOiAwO1xyXG59XHJcblxyXG4uYWNvZXN7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG59XHJcblxyXG4uaWNvbml7XHJcbiAgd2lkdGg6IDI1cHg7XHJcbiAgaGVpZ2h0OiAyNXB4O1xyXG59XHJcblxyXG4uY29udGFnZW17XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICB0b3A6IC0xNHB4O1xyXG4gIHJpZ2h0OiAtMTRweDtcclxufVxyXG5cclxuLmN1cnRpcntcclxuICBjb2xvcjogIzE1QUQyRTtcclxufVxyXG4iXX0= */");
 
 /***/ }),
 
@@ -363,7 +242,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-content>\n  <div class=\"content\">\n    <div class=\"sector-novo-clinicas\">\n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"12\">\n            <ion-button *ngIf=\"!loading\" (click)=\"editarEndereco()\" color=\"primary\" expand=\"block\">Editar endereço</ion-button>\n            <div *ngIf=\"!listaClinicas || listaClinicas.length == 0 || loading\" class=\"area-lista-vazia\">\n              <span *ngIf=\"!loading\">{{mensagem}}</span>\n              <div *ngIf=\"loading\" class=\"preloader-wrapper big active\">\n                <div class=\"spinner-layer spinner-blue-only\">\n                  <div class=\"circle-clipper left\">\n                    <div class=\"circle\"></div>\n                  </div><div class=\"gap-patch\">\n                    <div class=\"circle\"></div>\n                  </div><div class=\"circle-clipper right\">\n                    <div class=\"circle\"></div>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <ion-list *ngIf=\"!loading && listaClinicas && listaClinicas.length > 0\">\n\n              <ion-item (click)=\"exibirModalEnderecoConf(item)\" *ngFor=\"let item of listaClinicas\">\n                <ion-label class=\"ion-text-wrap\">\n                  <ion-grid>\n                    <ion-row>\n                      <ion-col class=\"clinicas-nome\" size=\"12\">\n                        <ion-text color=\"primary\">\n                          <h2>{{item.clinica.nomeClinica}}</h2>\n                        </ion-text>\n                      </ion-col>\n                    </ion-row>\n                    <ion-row>\n                      <ion-col class=\"clinicas-quantidade\" size=\"12\">\n                        <p>{{'Distancia: ' +\n                          formatarDistancia(item.distancia)\n                        }}</p>\n                      </ion-col>\n                    </ion-row>\n                    <ion-row>\n                      <ion-col class=\"clinicas-quantidade\" size=\"12\">\n                        <p>{{'Endereço: ' +\n                          item.clinica.endereco.logradouro +\n                          (item.clinica.endereco.numero ? \", \"+item.clinica.endereco.numero : \", S/N\") +\n                          \" - \" +item.clinica.endereco.bairro\n                        }}</p>\n                      </ion-col>\n                    </ion-row>\n                  </ion-grid>\n                </ion-label>\n              </ion-item>\n\n            </ion-list>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </div>\n\n  </div>\n</ion-content>\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-content>\r\n  <div class=\"content\">\r\n    <ion-grid style=\"width: 100%; margin-bottom: 34px;\">\r\n      <ion-grid>\r\n        <ion-col size=\"12\" class=\"filtro\">\r\n          <div class=\"filtro-topico\">\r\n            <div class=\"topico\">\r\n              TÓPICO\r\n            </div>\r\n            <ion-select class=\"listaTipo\" (ionChange)=\"buscarDadosFiltro()\" [(ngModel)]=\"filtro\" placeholder=\"Selecione\">\r\n              <ion-select-option value=\"Todos\">Todos</ion-select-option>\r\n              <ion-select-option value=\"Alimentação\">Alimentação</ion-select-option>\r\n              <ion-select-option value=\"Saúde\">Saúde</ion-select-option>\r\n              <ion-select-option value=\"Bem Estar\">Bem Estar</ion-select-option>\r\n              <ion-select-option value=\"Curiosidade\">Curiosidade</ion-select-option>\r\n              <ion-select-option value=\"Dúvida\">Dúvida</ion-select-option>\r\n            </ion-select>\r\n          </div>\r\n        </ion-col>\r\n      </ion-grid>\r\n      <ion-row>\r\n        <ion-col size=\"12\" class=\"bloco-card\">\r\n          <ion-card *ngFor=\"let post of posts\">\r\n            <ion-card-header>\r\n              <ion-card-subtitle class=\"header-card\">\r\n                <span>{{post.nomeUsuario.split(' ').slice(0, 2).join(' ')}}</span>\r\n                <span>{{post.dataAtualizacao | date:'dd/MM/yyyy HH:mm'}}</span>\r\n              </ion-card-subtitle>\r\n            </ion-card-header>\r\n            <ion-card-content class=\"conteudo-card\">\r\n              <div class=\"topico\">{{post.topico}}</div>\r\n              <div>{{post.conteudo}}</div>\r\n            </ion-card-content>\r\n            <ion-card-content class=\"acoes-card\">\r\n              <span class=\"acoes\" style=\"margin-right: 40px;\" (click)=\"verComentarios(post.id)\">\r\n                <ion-icon name=\"chatbox-ellipses-outline\" class=\"iconi\"></ion-icon>\r\n                <ion-badge color=\"dark\" class=\"contagem\">{{post.quantComentarios}}</ion-badge>\r\n              </span>\r\n              <span class=\"acoes\" style=\"margin-right: 10px;\" (click)=\"curtirPost(post.id)\">\r\n                <ion-icon name=\"thumbs-up-outline\" class=\"iconi\" [ngClass]=\"{curtir: post.idsUsuariosCurtidas.includes(this.user.id)}\"></ion-icon>\r\n                <ion-badge color=\"dark\" class=\"contagem\">{{post.idsUsuariosCurtidas.length}}</ion-badge>\r\n              </span>\r\n            </ion-card-content>\r\n          </ion-card>\r\n        </ion-col>\r\n      </ion-row>\r\n    </ion-grid>\r\n  </div>\r\n</ion-content>\r\n<ion-fab vertical=\"bottom\" style=\"--background: transparent !important\" horizontal=\"end\" slot=\"fixed\">\r\n  <ion-fab-button (click)=\"criarPost()\" style=\"--background: transparent !important\">\r\n    <ion-icon name=\"add-outline\" class=\"iconi-add\"></ion-icon>\r\n  </ion-fab-button>\r\n</ion-fab>\r\n");
 
 /***/ })
 

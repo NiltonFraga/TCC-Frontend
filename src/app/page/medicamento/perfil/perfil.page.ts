@@ -49,7 +49,6 @@ export class PerfilPage implements OnInit {
         (await this.medicamentoService.getUsuario(this.user.id))
           .subscribe((resp: any) => {
             this.usuario = resp;
-      console.log(this.usuario);
           },
           error => {
             if(error.status === 401 || error.status === 403){

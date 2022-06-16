@@ -7,6 +7,8 @@ import { LoadingPage } from 'src/app/loading/loading.page';
 import { UrlService } from 'src/app/shared/class/url-service';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FotoperfilPage } from 'src/app/modal/fotoperfil/fotoperfil.page';
+import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-criar-medicamento',
@@ -18,6 +20,8 @@ export class CriarMedicamentoPage implements OnInit {
   user: any;
   public cadastroForm: FormGroup;
   public arquivo: any;
+  statusFoto: string;
+  public img: any;
 
   constructor(
     private medicamentoService: MedicamentoService,
@@ -44,9 +48,11 @@ export class CriarMedicamentoPage implements OnInit {
       rua: this.fb.control('', [Validators.required]),
       bairro: this.fb.control('', [Validators.required]),
       cidade: this.fb.control('', [Validators.required]),
-      ativo: this.fb.control('true', [Validators.required]),
-      file: this.fb.control('', [Validators.required])
+      ativo: this.fb.control('true', [Validators.required])
     });
+
+    this.arquivo = null;
+    this.statusFoto = 'Insira a Imagem';
 
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd && this.router.url === '/page/criar-pet') {
@@ -83,6 +89,16 @@ export class CriarMedicamentoPage implements OnInit {
   }
 
   salvarAnimal(){
+    if(!this.arquivo){
+      this.toastController.create({
+        message: 'A Imagem é obrigatôria',
+        duration: 3000
+      }).then(toast => {
+        toast.present();
+      });
+      return;
+    }
+
     const request = {
       nome: this.cadastroForm.get('nome').value,
       tipo: this.cadastroForm.get('tipo').value,
@@ -102,7 +118,7 @@ export class CriarMedicamentoPage implements OnInit {
       ativo: this.cadastroForm.get('ativo').value,
       idImagem: '',
       imagem: this.arquivo === undefined ? null : {
-        nome: this.arquivo.name,
+        nome: this.cadastroForm.get('nome').value,
         tipo: this.arquivo.type,
         dados: this.arquivo.binary
       }
@@ -165,9 +181,43 @@ export class CriarMedicamentoPage implements OnInit {
       rua: this.fb.control('', [Validators.required]),
       bairro: this.fb.control('', [Validators.required]),
       cidade: this.fb.control('', [Validators.required]),
-      ativo: this.fb.control('true', [Validators.required]),
-      file: this.fb.control('', [Validators.required])
+      ativo: this.fb.control('true', [Validators.required])
     });
+
+    this.arquivo = null;
+    this.statusFoto = 'Insira a Imagem';
+  }
+
+
+
+  async mudarFoto(){
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      direction: CameraDirection.Rear,
+      source: CameraSource.Camera,
+      resultType: CameraResultType.DataUrl
+    });
+
+    const photoObj = image.dataUrl;
+
+    this.arquivo = {
+      type: this.getTypePhoto(photoObj),
+      binary: this.getBinaryPhoto(photoObj)
+    };
+
+    if(this.arquivo){
+      this.statusFoto = 'Alterar Imagem';
+      this.img = `data:${this.arquivo.typo};base64,${this.arquivo.binary}`;
+    };
+  }
+
+  getTypePhoto(photo: any): string{
+    return photo.split(';')[0].split(':')[1];
+  }
+
+  getBinaryPhoto(photo: any): any{
+    return photo.split(';')[1].split(',')[1];
   }
 
 }
