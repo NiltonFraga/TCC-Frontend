@@ -155,7 +155,6 @@ let HomePage = class HomePage {
                         x.img = `data:${x.imagem.tipo};base64,${x.imagem.dados}`;
                     }
                 });
-                console.log(this.animais);
                 this.loading = false;
             });
         });

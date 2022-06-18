@@ -96,17 +96,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "EditarPetPage": () => (/* binding */ EditarPetPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 4762);
 /* harmony import */ var _raw_loader_editar_pet_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !raw-loader!./editar-pet.page.html */ 5231);
 /* harmony import */ var _editar_pet_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editar-pet.page.scss */ 9959);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 7716);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 3679);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 9895);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 476);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 3679);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 9895);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 476);
 /* harmony import */ var src_app_loading_loading_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/loading/loading.page */ 8532);
 /* harmony import */ var src_app_shared_class_storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/class/storage.service */ 6578);
 /* harmony import */ var src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/class/url-service */ 2567);
 /* harmony import */ var _medicamento_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../medicamento.service */ 5418);
+/* harmony import */ var _capacitor_camera__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @capacitor/camera */ 7673);
+
 
 
 
@@ -129,32 +131,33 @@ let EditarPetPage = class EditarPetPage {
         this.fb = fb;
         this.gato = 'https://www.petz.com.br/blog/wp-content/uploads/2021/05/gato-branco-de-olho-azul.jpg';
         this.loading = false;
+        this.statusFoto = 'Alterar Imagem';
         this.cadastroForm = this.fb.group({
-            nome: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
+            nome: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
             idade: this.fb.control(''),
-            peso: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            pelagem: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            sexo: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            vermifugado: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            vacina: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            doenca: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            descricao: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            castrado: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            rua: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            bairro: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            cidade: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            tipo: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required]),
-            ativo: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_6__.Validators.required])
+            peso: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            pelagem: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            sexo: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            vermifugado: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            vacina: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            doenca: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            descricao: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            castrado: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            rua: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            bairro: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            cidade: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            tipo: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required]),
+            ativo: this.fb.control('', [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required])
         });
         this.router.events.subscribe((evt) => {
-            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_7__.NavigationEnd && this.router.url === `/page/editar-pet`) {
+            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_8__.NavigationEnd && this.router.url === `/page/editar-pet`) {
                 this.loading = true;
                 this.pageEnter();
             }
         });
     }
     pageEnter() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__awaiter)(this, void 0, void 0, function* () {
             this.user = yield this.storage.get('user');
             const token = yield this.storage.get('token');
             yield this.urlService.validateToken(token);
@@ -163,7 +166,7 @@ let EditarPetPage = class EditarPetPage {
         });
     }
     getAnimalById(id) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__awaiter)(this, void 0, void 0, function* () {
             (yield this.medicamentoService.getAnimalById(id)).subscribe((res) => {
                 this.animal = res;
                 this.idAnimal = this.animal.id;
@@ -219,14 +222,13 @@ let EditarPetPage = class EditarPetPage {
             idImagem: '',
             imagem: this.arquivo === undefined ? null : {
                 id: this.idArquivo,
-                nome: this.arquivo.name,
+                nome: this.cadastroForm.get('nome').value,
                 tipo: this.arquivo.type,
                 dados: this.arquivo.binary
             }
         };
-        console.log(request);
         this.showLoadingScreen()
-            .then(() => (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function* () {
+            .then(() => (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__awaiter)(this, void 0, void 0, function* () {
             (yield this.medicamentoService.updateAnimal(request))
                 .subscribe(() => {
                 this.router.navigateByUrl('/page/minha-area');
@@ -267,7 +269,7 @@ let EditarPetPage = class EditarPetPage {
     ngOnInit() {
     }
     showLoadingScreen() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__awaiter)(this, void 0, void 0, function* () {
             const loadingScreen = yield this.modalController.create({
                 component: src_app_loading_loading_page__WEBPACK_IMPORTED_MODULE_2__.LoadingPage
             });
@@ -275,7 +277,7 @@ let EditarPetPage = class EditarPetPage {
         });
     }
     closeLoadingScreen() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__awaiter)(this, void 0, void 0, function* () {
             this.modalController.getTop().then(loader => {
                 if (loader) {
                     loader.dismiss();
@@ -283,18 +285,45 @@ let EditarPetPage = class EditarPetPage {
             });
         });
     }
+    mudarFoto() {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__awaiter)(this, void 0, void 0, function* () {
+            const image = yield _capacitor_camera__WEBPACK_IMPORTED_MODULE_6__.Camera.getPhoto({
+                quality: 90,
+                allowEditing: false,
+                direction: _capacitor_camera__WEBPACK_IMPORTED_MODULE_6__.CameraDirection.Rear,
+                source: _capacitor_camera__WEBPACK_IMPORTED_MODULE_6__.CameraSource.Photos,
+                resultType: _capacitor_camera__WEBPACK_IMPORTED_MODULE_6__.CameraResultType.DataUrl
+            });
+            const photoObj = image.dataUrl;
+            this.arquivo = {
+                type: this.getTypePhoto(photoObj),
+                binary: this.getBinaryPhoto(photoObj)
+            };
+            if (this.arquivo) {
+                this.statusFoto = 'Alterar Imagem';
+                this.img = `data:${this.arquivo.typo};base64,${this.arquivo.binary}`;
+            }
+            ;
+        });
+    }
+    getTypePhoto(photo) {
+        return photo.split(';')[0].split(':')[1];
+    }
+    getBinaryPhoto(photo) {
+        return photo.split(';')[1].split(',')[1];
+    }
 };
 EditarPetPage.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__.Router },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_8__.Router },
     { type: src_app_shared_class_storage_service__WEBPACK_IMPORTED_MODULE_3__.StorageService },
     { type: src_app_shared_class_url_service__WEBPACK_IMPORTED_MODULE_4__.UrlService },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.ModalController },
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.ToastController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.ModalController },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.ToastController },
     { type: _medicamento_service__WEBPACK_IMPORTED_MODULE_5__.MedicamentoService },
-    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormBuilder }
+    { type: _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormBuilder }
 ];
-EditarPetPage = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
+EditarPetPage = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.Component)({
         selector: 'app-editar-pet',
         template: _raw_loader_editar_pet_page_html__WEBPACK_IMPORTED_MODULE_0__.default,
         styles: [_editar_pet_page_scss__WEBPACK_IMPORTED_MODULE_1__.default]
@@ -316,7 +345,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (".content {\n  margin-top: 8vh;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.listaTipo {\n  --placeholder-opacity: 0.5;\n}\n\n.item-form {\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n\n.item-form-center {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.mensagem-erro {\n  font-size: 14px;\n  color: red;\n  margin-right: 12px;\n}\n\n.ajuste-display {\n  display: flex;\n  flex-direction: column;\n}\n\n.botaoCancelar {\n  background-color: #a7a7a7;\n  width: 140px;\n  height: 40px;\n  color: aliceblue;\n}\n\n.botaoConfirmar {\n  background-color: #60E677;\n  width: 140px;\n  height: 40px;\n  color: aliceblue;\n}\n\n.juste-margin {\n  margin-bottom: 26px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXRhci1wZXQucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtFQUNBLFdBQUE7RUFDQSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0FBQ0Y7O0FBRUE7RUFDRSwwQkFBQTtBQUNGOztBQUVBO0VBQ0UsYUFBQTtFQUNBLDJCQUFBO0VBQ0EsbUJBQUE7QUFDRjs7QUFFQTtFQUNFLGFBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0FBQ0Y7O0FBRUE7RUFDRSxlQUFBO0VBQ0EsVUFBQTtFQUNBLGtCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxhQUFBO0VBQ0Esc0JBQUE7QUFDRjs7QUFFQTtFQUNFLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtBQUNGOztBQUVBO0VBQ0UseUJBQUE7RUFDQSxZQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxtQkFBQTtBQUNGIiwiZmlsZSI6ImVkaXRhci1wZXQucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvbnRlbnR7XHJcbiAgbWFyZ2luLXRvcDogOHZoO1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG59XHJcblxyXG4ubGlzdGFUaXBve1xyXG4gIC0tcGxhY2Vob2xkZXItb3BhY2l0eTogMC41O1xyXG59XHJcblxyXG4uaXRlbS1mb3Jte1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbn1cclxuXHJcbi5pdGVtLWZvcm0tY2VudGVye1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5cclxuLm1lbnNhZ2VtLWVycm97XHJcbiAgZm9udC1zaXplOiAxNHB4O1xyXG4gIGNvbG9yOiByZWQ7XHJcbiAgbWFyZ2luLXJpZ2h0OiAxMnB4O1xyXG59XHJcblxyXG4uYWp1c3RlLWRpc3BsYXl7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG59XHJcblxyXG4uYm90YW9DYW5jZWxhcntcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjYTdhN2E3O1xyXG4gIHdpZHRoOiAxNDBweDtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgY29sb3I6IGFsaWNlYmx1ZTtcclxufVxyXG5cclxuLmJvdGFvQ29uZmlybWFye1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICM2MEU2Nzc7XHJcbiAgd2lkdGg6IDE0MHB4O1xyXG4gIGhlaWdodDogNDBweDtcclxuICBjb2xvcjogYWxpY2VibHVlO1xyXG59XHJcblxyXG4uanVzdGUtbWFyZ2lue1xyXG4gIG1hcmdpbi1ib3R0b206IDI2cHg7XHJcbn1cclxuIl19 */");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (".content {\n  margin-top: 8vh;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.listaTipo {\n  --placeholder-opacity: 0.5;\n}\n\n.item-form {\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n\n.item-form-center {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.mensagem-erro {\n  font-size: 14px;\n  color: red;\n  margin-right: 12px;\n}\n\n.ajuste-display {\n  display: flex;\n  flex-direction: column;\n}\n\n.botaoCancelar {\n  background-color: #a7a7a7;\n  width: 140px;\n  height: 40px;\n  color: aliceblue;\n}\n\n.botaoConfirmar {\n  background-color: #60E677;\n  width: 140px;\n  height: 40px;\n  color: aliceblue;\n}\n\n.juste-margin {\n  margin-bottom: 26px;\n}\n\n.btn-image {\n  padding: 6px 10px;\n  background-color: #8fc30b;\n  color: black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImVkaXRhci1wZXQucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtFQUNBLFdBQUE7RUFDQSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0FBQ0Y7O0FBRUE7RUFDRSwwQkFBQTtBQUNGOztBQUVBO0VBQ0UsYUFBQTtFQUNBLDJCQUFBO0VBQ0EsbUJBQUE7QUFDRjs7QUFFQTtFQUNFLGFBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0FBQ0Y7O0FBRUE7RUFDRSxlQUFBO0VBQ0EsVUFBQTtFQUNBLGtCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxhQUFBO0VBQ0Esc0JBQUE7QUFDRjs7QUFFQTtFQUNFLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtBQUNGOztBQUVBO0VBQ0UseUJBQUE7RUFDQSxZQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0FBQ0Y7O0FBRUE7RUFDRSxtQkFBQTtBQUNGOztBQUVBO0VBQ0UsaUJBQUE7RUFDQSx5QkFBQTtFQUNBLFlBQUE7QUFDRiIsImZpbGUiOiJlZGl0YXItcGV0LnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jb250ZW50e1xyXG4gIG1hcmdpbi10b3A6IDh2aDtcclxuICB3aWR0aDogMTAwJTtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxufVxyXG5cclxuLmxpc3RhVGlwb3tcclxuICAtLXBsYWNlaG9sZGVyLW9wYWNpdHk6IDAuNTtcclxufVxyXG5cclxuLml0ZW0tZm9ybXtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcblxyXG4uaXRlbS1mb3JtLWNlbnRlcntcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbn1cclxuXHJcbi5tZW5zYWdlbS1lcnJve1xyXG4gIGZvbnQtc2l6ZTogMTRweDtcclxuICBjb2xvcjogcmVkO1xyXG4gIG1hcmdpbi1yaWdodDogMTJweDtcclxufVxyXG5cclxuLmFqdXN0ZS1kaXNwbGF5e1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxufVxyXG5cclxuLmJvdGFvQ2FuY2VsYXJ7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2E3YTdhNztcclxuICB3aWR0aDogMTQwcHg7XHJcbiAgaGVpZ2h0OiA0MHB4O1xyXG4gIGNvbG9yOiBhbGljZWJsdWU7XHJcbn1cclxuXHJcbi5ib3Rhb0NvbmZpcm1hcntcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNjBFNjc3O1xyXG4gIHdpZHRoOiAxNDBweDtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgY29sb3I6IGFsaWNlYmx1ZTtcclxufVxyXG5cclxuLmp1c3RlLW1hcmdpbntcclxuICBtYXJnaW4tYm90dG9tOiAyNnB4O1xyXG59XHJcblxyXG4uYnRuLWltYWdle1xyXG4gIHBhZGRpbmc6IDZweCAxMHB4O1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICM4ZmMzMGI7XHJcbiAgY29sb3I6IGJsYWNrO1xyXG59XHJcbiJdfQ== */");
 
 /***/ }),
 
@@ -331,7 +360,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-content>\r\n  <div class=\"content\">\r\n    <div class=\"grid-animais\">\r\n      <div *ngIf=\"loading\" class=\"preloader-wrapper big active\">\r\n        <div class=\"spinner-layer spinner-blue-only\">\r\n          <div class=\"circle-clipper left\">\r\n            <div class=\"circle\"></div>\r\n          </div><div class=\"gap-patch\">\r\n            <div class=\"circle\"></div>\r\n          </div><div class=\"circle-clipper right\">\r\n            <div class=\"circle\"></div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <ion-grid>\r\n        <form [formGroup]=\"cadastroForm\">\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Imagem Atual: </ion-label>\r\n              <ion-img class=\"imagem-animal\" [src]=\"img\"></ion-img>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Imagem: </ion-label>\r\n              <ion-input type=\"file\" (change)=\"fileChange($event)\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Nome: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.nome.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"nome\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Tipo: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.tipo.errors\">*</span>\r\n              <ion-select formControlName=\"tipo\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"Gato\">Gato</ion-select-option>\r\n                <ion-select-option value=\"Cachorro\">Cachorro</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Idade: </ion-label>\r\n              <ion-input type=\"text\" formControlName=\"idade\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Peso: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.peso.errors\">*</span>\r\n              <ion-input type=\"number\" formControlName=\"peso\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Pelagem: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.pelagem.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"pelagem\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Sexo: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.sexo.errors\">*</span>\r\n              <ion-select formControlName=\"sexo\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"M\">Macho</ion-select-option>\r\n                <ion-select-option value=\"F\">Fêmea</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Vermifugado: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.vermifugado.errors\">*</span>\r\n              <ion-select formControlName=\"vermifugado\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"true\">Sim</ion-select-option>\r\n                <ion-select-option value=\"false\">Não</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Castrado: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.castrado.errors\">*</span>\r\n              <ion-select formControlName=\"castrado\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"true\">Sim</ion-select-option>\r\n                <ion-select-option value=\"false\">Não</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Vacinas: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.vacina.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"vacina\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Doenças: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.doenca.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"doenca\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\" class=\"ajuste-display\">\r\n              <div>\r\n                <ion-label style=\"--color: black; margin-right: 8px\">Detalhes do bixinho: </ion-label>\r\n                <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.descricao.errors\">*</span>\r\n              </div>\r\n              <ion-textarea style=\"border: 1px solid black\" formControlName=\"descricao\" rows=\"5\" placeholder=\"Escreva sobre o bixinho\"></ion-textarea>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Rua: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.rua.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"rua\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Bairro: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.bairro.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"bairro\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Cidade: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.cidade.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"cidade\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row class=\"juste-margin\">\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Status do bixinho: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.ativo.errors\">*</span>\r\n              <ion-select formControlName=\"ativo\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"true\">Bixinho para adoção</ion-select-option>\r\n                <ion-select-option value=\"false\">Bixinho foi doado</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n\r\n          <ion-row class=\"juste-margin\">\r\n            <ion-col class=\"item-form-center\" size=\"6\">\r\n              <button (click)=\"cancelar()\" class=\"botaoCancelar\" expand=\"block\">Cancelar</button>\r\n            </ion-col>\r\n            <ion-col class=\"item-form-center\" size=\"6\">\r\n              <button (click)=\"salvarAnimal()\" class=\"botaoConfirmar\" [disabled]=\"!cadastroForm.valid\" expand=\"block\">Salvar</button>\r\n            </ion-col>\r\n          </ion-row>\r\n        </form>\r\n      </ion-grid>\r\n    </div>\r\n  </div>\r\n\r\n</ion-content>\r\n\r\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-content>\r\n  <div class=\"content\">\r\n    <div class=\"grid-animais\">\r\n      <div *ngIf=\"loading\" class=\"preloader-wrapper big active\">\r\n        <div class=\"spinner-layer spinner-blue-only\">\r\n          <div class=\"circle-clipper left\">\r\n            <div class=\"circle\"></div>\r\n          </div><div class=\"gap-patch\">\r\n            <div class=\"circle\"></div>\r\n          </div><div class=\"circle-clipper right\">\r\n            <div class=\"circle\"></div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <ion-grid>\r\n        <form [formGroup]=\"cadastroForm\">\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Imagem: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"!this.arquivo\">*</span>\r\n              <ion-img class=\"imagem-animal\"  *ngIf=\"this.arquivo !== null\" [src]=\"img\"></ion-img>\r\n              <button (click)=\"mudarFoto()\" class=\"btn-image\">{{statusFoto}}</button>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Nome: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.nome.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"nome\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Tipo: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.tipo.errors\">*</span>\r\n              <ion-select formControlName=\"tipo\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"Gato\">Gato</ion-select-option>\r\n                <ion-select-option value=\"Cachorro\">Cachorro</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Idade: </ion-label>\r\n              <ion-input type=\"text\" formControlName=\"idade\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Peso: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.peso.errors\">*</span>\r\n              <ion-input type=\"number\" formControlName=\"peso\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Pelagem: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.pelagem.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"pelagem\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Sexo: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.sexo.errors\">*</span>\r\n              <ion-select formControlName=\"sexo\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"M\">Macho</ion-select-option>\r\n                <ion-select-option value=\"F\">Fêmea</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Vermifugado: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.vermifugado.errors\">*</span>\r\n              <ion-select formControlName=\"vermifugado\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"true\">Sim</ion-select-option>\r\n                <ion-select-option value=\"false\">Não</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Castrado: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.castrado.errors\">*</span>\r\n              <ion-select formControlName=\"castrado\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"true\">Sim</ion-select-option>\r\n                <ion-select-option value=\"false\">Não</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Vacinas: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.vacina.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"vacina\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Doenças: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.doenca.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"doenca\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\" class=\"ajuste-display\">\r\n              <div>\r\n                <ion-label style=\"--color: black; margin-right: 8px\">Detalhes do bixinho: </ion-label>\r\n                <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.descricao.errors\">*</span>\r\n              </div>\r\n              <ion-textarea style=\"border: 1px solid black\" formControlName=\"descricao\" rows=\"5\" placeholder=\"Escreva sobre o bixinho\"></ion-textarea>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Rua: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.rua.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"rua\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Bairro: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.bairro.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"bairro\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row>\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Cidade: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.cidade.errors\">*</span>\r\n              <ion-input type=\"text\" formControlName=\"cidade\"></ion-input>\r\n            </ion-col>\r\n          </ion-row>\r\n          <ion-row class=\"juste-margin\">\r\n            <ion-col class=\"item-form\" size=\"12\">\r\n              <ion-label style=\"--color: black; margin-right: 8px\">Status do bixinho: </ion-label>\r\n              <span class=\"mensagem-erro\" *ngIf=\"cadastroForm.controls.ativo.errors\">*</span>\r\n              <ion-select formControlName=\"ativo\" class=\"listaTipo\" placeholder=\"Selecione...\">\r\n                <ion-select-option value=\"true\">Bixinho para adoção</ion-select-option>\r\n                <ion-select-option value=\"false\">Bixinho foi doado</ion-select-option>\r\n              </ion-select>\r\n            </ion-col>\r\n          </ion-row>\r\n\r\n          <ion-row class=\"juste-margin\">\r\n            <ion-col class=\"item-form-center\" size=\"6\">\r\n              <button (click)=\"cancelar()\" class=\"botaoCancelar\" expand=\"block\">Cancelar</button>\r\n            </ion-col>\r\n            <ion-col class=\"item-form-center\" size=\"6\">\r\n              <button (click)=\"salvarAnimal()\" class=\"botaoConfirmar\" [disabled]=\"!cadastroForm.valid\" expand=\"block\">Salvar</button>\r\n            </ion-col>\r\n          </ion-row>\r\n        </form>\r\n      </ion-grid>\r\n    </div>\r\n  </div>\r\n\r\n</ion-content>\r\n\r\n");
 
 /***/ })
 

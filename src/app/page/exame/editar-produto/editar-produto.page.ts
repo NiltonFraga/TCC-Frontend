@@ -193,7 +193,7 @@ export class EditarProdutoPage implements OnInit {
       quality: 90,
       allowEditing: false,
       direction: CameraDirection.Rear,
-      source: CameraSource.Camera,
+source: CameraSource.Photos,
       resultType: CameraResultType.DataUrl
     });
 

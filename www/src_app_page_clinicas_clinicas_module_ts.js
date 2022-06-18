@@ -142,11 +142,9 @@ let ClinicasPage = class ClinicasPage {
     }
     getAllPost(filtro) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
-            console.log(filtro);
             (yield this.clinicasService.getAllPost(filtro))
                 .subscribe((resp) => {
                 this.posts = resp;
-                console.log(this.posts);
                 if (this.posts.length === 0) {
                     this.mensagem = 'Não há nenhum post';
                 }

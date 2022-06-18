@@ -156,7 +156,6 @@ let EditarPostPage = class EditarPostPage {
             .then(() => (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__awaiter)(this, void 0, void 0, function* () {
             (yield this.exameService.getPostById(this.idPost))
                 .subscribe(res => {
-                console.log(res);
                 this.post = res;
                 this.cadastroForm.get('topico').setValue(this.post.topico);
                 this.cadastroForm.get('conteudo').setValue(this.post.conteudo);

@@ -147,7 +147,6 @@ let PerfilPage = class PerfilPage {
                 (yield this.medicamentoService.getUsuario(this.user.id))
                     .subscribe((resp) => {
                     this.usuario = resp;
-                    console.log(this.usuario);
                 }, error => {
                     if (error.status === 401 || error.status === 403) {
                         this.storage.remove('user');
