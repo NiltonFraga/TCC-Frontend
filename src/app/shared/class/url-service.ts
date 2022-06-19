@@ -6,8 +6,8 @@ import { StorageService } from './storage.service';
 @Injectable()
 export class UrlService {
 
-  static BACKEND_URL = 'http://localhost:53273/api';
-  //static BACKEND_URL = 'http://34.82.46.175:5000/api';
+  //static BACKEND_URL = 'http://localhost:53273/api';
+  static BACKEND_URL = 'http://34.82.46.175:5000/api';
 
   static GMKey = 'AIzaSyA80PyFxRJVIlrTgA_beY_r_YOZtAFK-6w';
 
