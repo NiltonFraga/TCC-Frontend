@@ -19,4 +19,8 @@ export class HomeService {
   async favoritarAnimal(request: any): Promise<any>{
     return  await this.urlService.sendRequestPost('/AnimalFavorito/UpdateAnimalFavorito', JSON.stringify(request));
   }
+
+  async postChat(request: any): Promise<any>{
+    return  await this.urlService.sendRequestPost('/Chat/PostChat', JSON.stringify(request));
+  }
 }

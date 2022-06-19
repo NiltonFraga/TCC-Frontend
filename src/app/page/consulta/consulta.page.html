@@ -1,36 +1,14 @@
 <ion-content>
   <div class="content">
     <ion-grid style="width: 100%">
-      <ion-row class="bloco-conversa" (click)="falarCom()">
+      <ion-row class="bloco-conversa" (click)="falarCom(con.idDestinatario)" *ngFor="let con of conversas">
         <ion-col size="12">
           <div class="bloco">
             <div class="bloco-left">
               <div class="circulo">NF</div>
-              <div>Nilton Fraga</div>
+              <div>{{con.destinatario.split(' ').slice(0, 2).join(' ')}}</div>
             </div>
-            <div class="data">12/06/2022</div>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row class="bloco-conversa" (click)="falarCom()">
-        <ion-col size="12">
-          <div class="bloco">
-            <div class="bloco-left">
-              <div class="circulo">KM</div>
-              <div>Karine Moraes</div>
-            </div>
-            <div class="data">11/06/2022</div>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row class="bloco-conversa" (click)="falarCom()">
-        <ion-col size="12">
-          <div class="bloco">
-            <div class="bloco-left">
-              <div class="circulo">MA</div>
-              <div>Marco Antonio</div>
-            </div>
-            <div class="data">10/06/2022</div>
+            <div class="data">{{con.dataCriacao | date:'dd/MM/yyyy HH:mm'}}</div>
           </div>
         </ion-col>
       </ion-row>

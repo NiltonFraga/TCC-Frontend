@@ -55,6 +55,17 @@ export class AdotarPage implements OnInit {
   ngOnInit() {
   }
 
+  async falarComDoador(id: number){
+    const request = {
+      idUsuario: this.user.id,
+      idDestinatario: id
+    };
+
+    (await this.homeService.postChat(request)).subscribe(() => {
+      this.router.navigateByUrl('page/chat');
+    });
+  }
+
   async favoritarAnimal(id){
     const request = {
       idAnimal: id,

@@ -2,28 +2,16 @@
   <div class="content">
     <ion-grid style="width: 100%;">
       <div class="header">
-        Nilton Fraga
+        {{destinatario}}
       </div>
       <div class="mensagem">
         <ul>
-          <li class="msgRight"><p>Oi</p></li>
-          <li class="msgLeft"><p>Ola tudo bem ?</p></li>
-          <li class="msgRight"><p>Tudo sim e vc ?</p></li>
-          <li class="msgLeft"><p>Tambem estou.</p></li>
-          <li class="msgRight"><p>Eu estou intereçada em um dos seus bixinhos</p></li>
-          <li class="msgRight"><p>A Maya</p></li>
-          <li class="msgRight"><p>Gostatia de marcar uma visita em um local para poder ve-la</p></li>
-          <li class="msgLeft"><p>Claro, podemos sim</p></li>
-          <li class="msgLeft"><p>O meu endereço se encontra nos datalhes do pet</p></li>
-          <li class="msgLeft"><p>O numero é 27</p></li>
-          <li class="msgRight"><p>Podemos marcar amanha as 13:30 ?</p></li>
-          <li class="msgLeft"><p>Podemos sim, combinado, te aguardo amanha</p></li>
-          <li class="msgRight"><p>Ta bom, muito obrigado</p></li>
+          <li *ngFor="let mObj of conversas" [ngClass]="mObj.usuarioOrigem === this.user.id ? 'msgRight' : 'msgLeft'"><p>{{mObj.menssagem}}</p></li>
         </ul>
       </div>
       <div class="bloco-input">
-        <input tipe="text"/>
-        <ion-icon name="arrow-forward-circle-outline" class="iconi-enviar"></ion-icon>
+        <input tipe="text" [(ngModel)]="menssagem"/>
+        <ion-icon name="arrow-forward-circle-outline" class="iconi-enviar"  (click)="postConversa()"></ion-icon>
       </div>
     </ion-grid>
   </div>
