@@ -6,6 +6,7 @@ import { LoadingPage } from 'src/app/loading/loading.page';
 import { StorageService } from 'src/app/shared/class/storage.service';
 import { UrlService } from 'src/app/shared/class/url-service';
 import { ExameService } from '../exame.service';
+import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-criar-exame',
@@ -33,6 +34,8 @@ export class CriarExamePage implements OnInit {
   public sobreLoja: string;
   public sobreDesconto: string;
   public cadastroForm: FormGroup;
+  public img: any;
+  public statusFoto: string;
 
   constructor(
     private exameService: ExameService,
@@ -52,9 +55,10 @@ export class CriarExamePage implements OnInit {
       cidade: this.fb.control('', [Validators.required]),
       tipoDesconto: this.fb.control('', [Validators.required]),
       sobreLoja: this.fb.control('', [Validators.required]),
-      sobreDesconto: this.fb.control('', [Validators.required]),
-      file: this.fb.control('', [Validators.required])
+      sobreDesconto: this.fb.control('', [Validators.required])
     });
+
+    this.statusFoto = 'Insira a Imagem';
 
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd && this.router.url === '/page/criar-servicos') {
@@ -99,6 +103,16 @@ export class CriarExamePage implements OnInit {
   }
 
   salvarServico(){
+    if(!this.arquivo){
+      this.toastController.create({
+        message: 'A Imagem é obrigatôria',
+        duration: 3000
+      }).then(toast => {
+        toast.present();
+      });
+      return;
+    };
+
     const request = {
       nome: this.cadastroForm.get('nome').value,
       telefone1: this.cadastroForm.get('telefone1').value.toString(),
@@ -112,7 +126,7 @@ export class CriarExamePage implements OnInit {
       donoServico: this.user.id,
       idImagem: '',
       imagem: this.arquivo === undefined ? null : {
-        nome: this.arquivo.name,
+        nome: this.cadastroForm.get('nome').value,
         tipo: this.arquivo.type,
         dados: this.arquivo.binary
       }
@@ -172,6 +186,36 @@ export class CriarExamePage implements OnInit {
         loader.dismiss();
       }
     });
+  }
+
+  async mudarFoto(){
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      direction: CameraDirection.Rear,
+source: CameraSource.Photos,
+      resultType: CameraResultType.DataUrl
+    });
+
+    const photoObj = image.dataUrl;
+
+    this.arquivo = {
+      type: this.getTypePhoto(photoObj),
+      binary: this.getBinaryPhoto(photoObj)
+    };
+
+    if(this.arquivo){
+      this.statusFoto = 'Alterar Imagem';
+      this.img = `data:${this.arquivo.typo};base64,${this.arquivo.binary}`;
+    };
+  }
+
+  getTypePhoto(photo: any): string{
+    return photo.split(';')[0].split(':')[1];
+  }
+
+  getBinaryPhoto(photo: any): any{
+    return photo.split(';')[1].split(',')[1];
   }
 
 }

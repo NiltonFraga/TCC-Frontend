@@ -126,7 +126,7 @@ let CriarConsultaPage = class CriarConsultaPage {
         this.router = router;
         this.storage = storage;
         this.router.events.subscribe((evt) => {
-            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_6__.NavigationEnd && this.router.url == "/page/criar-consulta") {
+            if (evt instanceof _angular_router__WEBPACK_IMPORTED_MODULE_6__.NavigationEnd && this.router.url === '/page/mensagem') {
                 this.pageEnter();
             }
         });
@@ -136,75 +136,9 @@ let CriarConsultaPage = class CriarConsultaPage {
     }
     pageEnter() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
-            this.getTiposExames();
-            this.user = yield this.storage.get("user");
-            let token = yield this.storage.get("token");
+            this.user = yield this.storage.get('user');
+            const token = yield this.storage.get('token');
             yield this.urlService.validateToken(token);
-        });
-    }
-    getTiposExames() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
-            this.showLoadingScreen()
-                .then(() => (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
-                (yield this.consultaService.consultarListaTiposConsultas())
-                    .subscribe((resp) => {
-                    this.tiposConsultas = resp;
-                }, error => {
-                    if (error.status == 401 || error.status == 403) {
-                        this.storage.remove("user");
-                        this.router.navigateByUrl("");
-                    }
-                    else {
-                        this.toastController.create({
-                            message: error.error,
-                            duration: 5000
-                        }).then(toast => {
-                            toast.present();
-                        });
-                    }
-                }, () => {
-                    this.closeLoadingScreen();
-                });
-            }));
-        });
-    }
-    salvarConsulta() {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
-            this.showLoadingScreen()
-                .then(() => (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__awaiter)(this, void 0, void 0, function* () {
-                let request = {
-                    idPaciente: this.user.id,
-                    idTipoConsulta: this.tipoConsulta,
-                    diaRealizacao: this.dataConsulta.split("T")[0],
-                    publico: this.publico,
-                    resumo: this.resumo,
-                    observacoes: this.observacoes
-                };
-                this.dataConsulta = undefined;
-                this.tipoConsulta = undefined;
-                this.publico = false;
-                this.resumo = undefined;
-                this.observacoes = undefined;
-                (yield this.consultaService.salvarConsulta(request))
-                    .subscribe(() => {
-                    this.router.navigateByUrl("/page/consultas");
-                }, error => {
-                    if (error.status == 401 || error.status == 403) {
-                        this.storage.remove("user");
-                        this.router.navigateByUrl("");
-                    }
-                    else {
-                        this.toastController.create({
-                            message: error.error,
-                            duration: 5000
-                        }).then(toast => {
-                            toast.present();
-                        });
-                    }
-                }, () => {
-                    this.closeLoadingScreen();
-                });
-            }));
         });
     }
     showLoadingScreen() {
@@ -256,7 +190,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (".content {\n  margin-top: 13vh;\n  width: 100%;\n  height: 77vh;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.listaTipo {\n  --placeholder-opacity: 0.5;\n}\n\n.item-form {\n  display: flex;\n  justify-content: flex-start;\n  align-items: center;\n}\n\n.item-form-center {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNyaWFyLWNvbnN1bHRhLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFFQTtFQUNFLGdCQUFBO0VBQ0EsV0FBQTtFQUNBLFlBQUE7RUFDQSxhQUFBO0VBQ0Esc0JBQUE7RUFDQSxtQkFBQTtFQUNBLHVCQUFBO0FBREY7O0FBSUE7RUFDRSwwQkFBQTtBQURGOztBQUlBO0VBQ0UsYUFBQTtFQUNBLDJCQUFBO0VBQ0EsbUJBQUE7QUFERjs7QUFJQTtFQUNFLGFBQUE7RUFDQSx1QkFBQTtFQUNBLG1CQUFBO0FBREYiLCJmaWxlIjoiY3JpYXItY29uc3VsdGEucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiXHJcblxyXG4uY29udGVudHtcclxuICBtYXJnaW4tdG9wOiAxM3ZoO1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGhlaWdodDogNzd2aDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxufVxyXG5cclxuLmxpc3RhVGlwb3tcclxuICAtLXBsYWNlaG9sZGVyLW9wYWNpdHk6IDAuNTtcclxufVxyXG5cclxuLml0ZW0tZm9ybXtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcblxyXG4uaXRlbS1mb3JtLWNlbnRlcntcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbn1cclxuIl19 */");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("* {\n  margin: 0;\n  padding: 0;\n}\n\n.content {\n  margin-top: 8vh;\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.header {\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  height: 40px;\n  padding: 4px 8px;\n  font-size: 20px;\n  color: aliceblue;\n  border-top: 1px solid #196B10;\n  background-color: #196B10;\n}\n\n.mensagem {\n  background-color: rgba(179, 179, 179, 0.448);\n  width: 100%;\n  height: 70vh;\n  overflow-y: scroll;\n  padding-top: 10px;\n}\n\n.caixa-mensagem {\n  display: flex;\n  flex-direction: column;\n}\n\np {\n  border: 1px solid black;\n  border-radius: 10px;\n  padding: 4px 10px;\n  margin-bottom: 10px;\n  margin-left: 10px;\n  margin-right: 10px;\n  max-width: 200px;\n}\n\nli {\n  display: flex;\n  align-items: center;\n}\n\n.msgRight {\n  justify-content: flex-end;\n  text-align: left;\n}\n\n.msgRight p {\n  background-color: #79ff6a;\n}\n\n.msgLeft {\n  justify-content: flex-start;\n  text-align: left;\n}\n\n.msgLeft p {\n  background-color: #d8d8d8;\n}\n\n.bloco-input {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  height: 8vh;\n}\n\n.iconi-enviar {\n  width: 40px;\n  height: 40px;\n  color: #196B10;\n}\n\n.border {\n  border: 1px solid black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNyaWFyLWNvbnN1bHRhLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFNBQUE7RUFDQSxVQUFBO0FBQ0Y7O0FBRUE7RUFDRSxlQUFBO0VBQ0EsV0FBQTtFQUNBLGFBQUE7RUFDQSxzQkFBQTtFQUNBLG1CQUFBO0VBQ0EsdUJBQUE7QUFDRjs7QUFFQTtFQUNFLGFBQUE7RUFDQSxtQkFBQTtFQUNBLDJCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0VBQ0EsZUFBQTtFQUNBLGdCQUFBO0VBQ0EsNkJBQUE7RUFDQSx5QkFBQTtBQUNGOztBQUVBO0VBQ0UsNENBQUE7RUFDQSxXQUFBO0VBQ0EsWUFBQTtFQUNBLGtCQUFBO0VBQ0EsaUJBQUE7QUFDRjs7QUFFQTtFQUNFLGFBQUE7RUFDQSxzQkFBQTtBQUNGOztBQUVBO0VBQ0UsdUJBQUE7RUFDQSxtQkFBQTtFQUNBLGlCQUFBO0VBQ0EsbUJBQUE7RUFDQSxpQkFBQTtFQUNBLGtCQUFBO0VBQ0EsZ0JBQUE7QUFDRjs7QUFFQTtFQUNFLGFBQUE7RUFDQSxtQkFBQTtBQUNGOztBQUVBO0VBQ0UseUJBQUE7RUFDQSxnQkFBQTtBQUNGOztBQUNFO0VBQ0UseUJBQUE7QUFDSjs7QUFHQTtFQUNFLDJCQUFBO0VBQ0EsZ0JBQUE7QUFBRjs7QUFDRTtFQUNFLHlCQUFBO0FBQ0o7O0FBR0E7RUFDRSxhQUFBO0VBQ0EsbUJBQUE7RUFDQSw4QkFBQTtFQUNBLFdBQUE7QUFBRjs7QUFHQTtFQUNFLFdBQUE7RUFDQSxZQUFBO0VBQ0EsY0FBQTtBQUFGOztBQUlBO0VBQ0UsdUJBQUE7QUFERiIsImZpbGUiOiJjcmlhci1jb25zdWx0YS5wYWdlLnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIqe1xyXG4gIG1hcmdpbjogMDtcclxuICBwYWRkaW5nOiAwO1xyXG59XHJcblxyXG4uY29udGVudHtcclxuICBtYXJnaW4tdG9wOiA4dmg7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbn1cclxuXHJcbi5oZWFkZXJ7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgcGFkZGluZzogNHB4IDhweDtcclxuICBmb250LXNpemU6IDIwcHg7XHJcbiAgY29sb3I6IGFsaWNlYmx1ZTtcclxuICBib3JkZXItdG9wOiAxcHggc29saWQgIzE5NkIxMDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjMTk2QjEwO1xyXG59XHJcblxyXG4ubWVuc2FnZW17XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgxNzksIDE3OSwgMTc5LCAwLjQ0OCk7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiA3MHZoO1xyXG4gIG92ZXJmbG93LXk6IHNjcm9sbDtcclxuICBwYWRkaW5nLXRvcDogMTBweDtcclxufVxyXG5cclxuLmNhaXhhLW1lbnNhZ2Vte1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxufVxyXG5cclxucHtcclxuICBib3JkZXI6IDFweCBzb2xpZCBibGFjaztcclxuICBib3JkZXItcmFkaXVzOiAxMHB4O1xyXG4gIHBhZGRpbmc6IDRweCAxMHB4O1xyXG4gIG1hcmdpbi1ib3R0b206IDEwcHg7XHJcbiAgbWFyZ2luLWxlZnQ6IDEwcHg7XHJcbiAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xyXG4gIG1heC13aWR0aDogMjAwcHg7XHJcbn1cclxuXHJcbmxpe1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG5cclxuLm1zZ1JpZ2h0e1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XHJcbiAgdGV4dC1hbGlnbjogbGVmdDtcclxuXHJcbiAgcHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICM3OWZmNmE7XHJcbiAgfVxyXG59XHJcblxyXG4ubXNnTGVmdHtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7XHJcbiAgdGV4dC1hbGlnbjogbGVmdDtcclxuICBwe1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2Q4ZDhkODtcclxuICB9XHJcbn1cclxuXHJcbi5ibG9jby1pbnB1dHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG4gIGhlaWdodDogOHZoO1xyXG59XHJcblxyXG4uaWNvbmktZW52aWFye1xyXG4gIHdpZHRoOiA0MHB4O1xyXG4gIGhlaWdodDogNDBweDtcclxuICBjb2xvcjogIzE5NkIxMDtcclxufVxyXG5cclxuXHJcbi5ib3JkZXJ7XHJcbiAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7XHJcbn1cclxuIl19 */");
 
 /***/ }),
 
@@ -271,7 +205,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-content>\n  <div class=\"content\">\n    <ion-grid style=\"width: 90%;\">\n      <ion-row>\n        <ion-col class=\"item-form\" size=\"12\">\n          <ion-label color=\"primary\">Especialidade: </ion-label>\n          <ion-select *ngIf=\"tiposConsultas && tiposConsultas.length > 0\" [(ngModel)]=\"tipoConsulta\" class=\"listaTipo\" placeholder=\"Selecione...\">\n            <ion-select-option *ngFor=\"let tipo of tiposConsultas\" [value]=\"tipo.id\">{{tipo.nome}}</ion-select-option>\n          </ion-select>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col class=\"item-form\" size=\"12\">\n          <ion-label color=\"primary\">Data da Consulta: </ion-label>\n          <ion-datetime displayFormat=\"DD / MMM / YYYY\" [(ngModel)]=\"dataConsulta\" placeholder=\"Selecione...\"></ion-datetime>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col class=\"item-form\" size=\"12\">\n          <ion-label color=\"primary\">Publico:</ion-label>\n          <ion-toggle [(ngModel)]=\"publico\"></ion-toggle>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col class=\"item-form\" size=\"12\">\n          <ion-textarea [(ngModel)]=\"resumo\" rows=\"4\" style=\"--padding-start: 0; --padding-end: 0\" placeholder=\"Resumo da consulta...\"></ion-textarea>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col class=\"item-form\" size=\"12\">\n          <ion-textarea [(ngModel)]=\"observacoes\" rows=\"4\" style=\"--padding-start: 0; --padding-end: 0\" placeholder=\"Escreva as suas observações...\"></ion-textarea>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col class=\"item-form-center\" size=\"12\">\n          <ion-button (click)=\"salvarConsulta()\" color=\"primary\" expand=\"block\">Salvar Consulta</ion-button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n</ion-content>\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-content>\r\n  <div class=\"content\">\r\n    <ion-grid style=\"width: 100%;\">\r\n      <div class=\"header\">\r\n        Nilton Fraga\r\n      </div>\r\n      <div class=\"mensagem\">\r\n        <ul>\r\n          <li class=\"msgRight\"><p>Oi</p></li>\r\n          <li class=\"msgLeft\"><p>Ola tudo bem ?</p></li>\r\n          <li class=\"msgRight\"><p>Tudo sim e vc ?</p></li>\r\n          <li class=\"msgLeft\"><p>Tambem estou.</p></li>\r\n          <li class=\"msgRight\"><p>Eu estou intereçada em um dos seus bixinhos</p></li>\r\n          <li class=\"msgRight\"><p>A Maya</p></li>\r\n          <li class=\"msgRight\"><p>Gostatia de marcar uma visita em um local para poder ve-la</p></li>\r\n          <li class=\"msgLeft\"><p>Claro, podemos sim</p></li>\r\n          <li class=\"msgLeft\"><p>O meu endereço se encontra nos datalhes do pet</p></li>\r\n          <li class=\"msgLeft\"><p>O numero é 27</p></li>\r\n          <li class=\"msgRight\"><p>Podemos marcar amanha as 13:30 ?</p></li>\r\n          <li class=\"msgLeft\"><p>Podemos sim, combinado, te aguardo amanha</p></li>\r\n          <li class=\"msgRight\"><p>Ta bom, muito obrigado</p></li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"bloco-input\">\r\n        <input tipe=\"text\"/>\r\n        <ion-icon name=\"arrow-forward-circle-outline\" class=\"iconi-enviar\"></ion-icon>\r\n      </div>\r\n    </ion-grid>\r\n  </div>\r\n</ion-content>\r\n");
 
 /***/ })
 

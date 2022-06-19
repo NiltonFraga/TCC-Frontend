@@ -11,9 +11,10 @@ import { ConsultaService } from './consulta.service';
 })
 export class ConsultaPage implements OnInit {
 
-  //loading: boolean = false;
+  loading: boolean;
   mensagem: string;
   user: any;
+  conversas: any;
 
   constructor(
     private router: Router,
@@ -21,9 +22,10 @@ export class ConsultaPage implements OnInit {
     private urlService: UrlService,
     private consultaService: ConsultaService)
   {
+    this.loading = false;
     this.router.events.subscribe((evt) => {
       if (evt instanceof NavigationEnd && this.router.url === '/page/chat') {
-        //this.loading = true;
+        this.loading = true;
         this.pageEnter();
       }
     });
@@ -36,9 +38,21 @@ export class ConsultaPage implements OnInit {
     this.user = await this.storage.get('user');
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
+    this.getChatById();
   }
 
-  falarCom(){
+  async getChatById(){
+    (await this.consultaService.getChatById(this.user.id)).subscribe((res: any) => {
+      this.conversas = res;
+
+      console.log(res);
+      this.loading = false;
+    });
+  }
+
+  falarCom(destinatario: string){
+    this.storage.set('destinatario', destinatario);
+    console.log(destinatario);
     this.router.navigateByUrl('page/mensagem');
   }
 }

@@ -8,15 +8,23 @@ export class ConsultaService {
 
   constructor(private urlService: UrlService) { }
 
-  async consultarListaConsultas(id: string){
-    return await this.urlService.sendRequestPost("/Consulta/ListaConsulta?idPaciente="+id);
+  async getChatById(id: number){
+    return await this.urlService.sendRequestPost('/Chat/GetChatById?id='+id);
   }
 
-  async consultarListaTiposConsultas(){
-    return await this.urlService.sendRequestPost("/Consulta/ListaTiposConsultas");
+  async deleteChat(id: number){
+    return await this.urlService.sendRequestPost('/Chat/DeleteChat?id='+id);
   }
 
-  async salvarConsulta(request: any){
-    return await this.urlService.sendRequestPost("/Consulta/CadastroConsulta", JSON.stringify(request));
+  async getAllConversas(request: any){
+    return await this.urlService.sendRequestPost('/Conversa/GetAllConversas', JSON.stringify(request));
+  }
+
+  async getByDestino(request: any){
+    return await this.urlService.sendRequestPost('/Conversa/GetByDestino', JSON.stringify(request));
+  }
+
+  async postConversa(request: any){
+    return await this.urlService.sendRequestPost('/Conversa/PostConversa', JSON.stringify(request));
   }
 }

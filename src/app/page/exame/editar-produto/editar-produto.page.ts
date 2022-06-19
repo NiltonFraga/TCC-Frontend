@@ -6,6 +6,7 @@ import { LoadingPage } from 'src/app/loading/loading.page';
 import { StorageService } from 'src/app/shared/class/storage.service';
 import { UrlService } from 'src/app/shared/class/url-service';
 import { ExameService } from '../exame.service';
+import { Camera, CameraDirection, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-editar-produto',
@@ -16,6 +17,7 @@ export class EditarProdutoPage implements OnInit {
 
   produto: any;
   user: any;
+  statusFoto: string;
 
   dataExame: any;
   tipoExame: any;
@@ -42,6 +44,7 @@ export class EditarProdutoPage implements OnInit {
     private storage: StorageService,
     private fb: FormBuilder)
   {
+    this.statusFoto = 'Alterar Imagem';
     this.cadastroForm = this.fb.group({
       nome: this.fb.control('', [Validators.required]),
       valorReal: this.fb.control('', [Validators.required]),
@@ -183,6 +186,36 @@ export class EditarProdutoPage implements OnInit {
         loader.dismiss();
       }
     });
+  }
+
+  async mudarFoto(){
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      direction: CameraDirection.Rear,
+source: CameraSource.Photos,
+      resultType: CameraResultType.DataUrl
+    });
+
+    const photoObj = image.dataUrl;
+
+    this.arquivo = {
+      type: this.getTypePhoto(photoObj),
+      binary: this.getBinaryPhoto(photoObj)
+    };
+
+    if(this.arquivo){
+      this.statusFoto = 'Alterar Imagem';
+      this.img = `data:${this.arquivo.typo};base64,${this.arquivo.binary}`;
+    };
+  }
+
+  getTypePhoto(photo: any): string{
+    return photo.split(';')[0].split(':')[1];
+  }
+
+  getBinaryPhoto(photo: any): any{
+    return photo.split(';')[1].split(',')[1];
   }
 
   setNull(){

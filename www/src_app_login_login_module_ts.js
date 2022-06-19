@@ -143,10 +143,11 @@ let LoginPage = class LoginPage {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
             this.showLoadingScreen()
                 .then(() => {
-                this.storage.existKey("user")
+                this.storage.existKey('user')
                     .then(ok => {
-                    if (ok)
-                        this.router.navigateByUrl("page");
+                    if (ok) {
+                        this.router.navigateByUrl('page');
+                    }
                     this.closeLoadingScreen();
                 });
             });
@@ -156,13 +157,13 @@ let LoginPage = class LoginPage {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
             this.showLoadingScreen()
                 .then(() => (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
-                (yield this.loginService.entrar(this.loginForm.get("login").value, this.loginForm.get("senha").value))
+                (yield this.loginService.entrar(this.loginForm.get('login').value, this.loginForm.get('senha').value))
                     .subscribe((resp) => (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__awaiter)(this, void 0, void 0, function* () {
                     this.closeLoadingScreen();
-                    yield this.storage.set("token", resp.token);
-                    yield this.storage.set("user", resp.paciente);
-                    this.loginForm.get("login").setValue("");
-                    this.loginForm.get("senha").setValue("");
+                    yield this.storage.set('token', resp.token);
+                    yield this.storage.set('user', resp);
+                    this.loginForm.get('login').setValue('');
+                    this.loginForm.get('senha').setValue('');
                     this.router.navigateByUrl('page');
                 }), error => {
                     this.closeLoadingScreen();
@@ -235,9 +236,9 @@ let LoginService = class LoginService {
     constructor(urlService) {
         this.urlService = urlService;
     }
-    entrar(emailCpf, senha) {
+    entrar(email, senha) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function* () {
-            return yield this.urlService.sendRequestPost('/Paciente/AcessarSistema?usuario=' + emailCpf + '&senha=' + senha);
+            return yield this.urlService.sendRequestPost('/Login/Login?usuario=' + email + '&senha=' + senha);
         });
     }
 };
@@ -265,7 +266,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (".content {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.button-area {\n  margin-top: 40px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvZ2luLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtBQUNGOztBQUVBO0VBQ0UsZ0JBQUE7RUFDQSxhQUFBO0VBQ0EsOEJBQUE7RUFDQSxtQkFBQTtBQUNGIiwiZmlsZSI6ImxvZ2luLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jb250ZW50e1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGhlaWdodDogMTAwJTtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxufVxyXG5cclxuLmJ1dHRvbi1hcmVhe1xyXG4gIG1hcmdpbi10b3A6IDQwcHg7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxufVxyXG4iXX0= */");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (".content {\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.button-area {\n  margin-top: 40px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n\nion-header {\n  --ion-background-color: #15AD2E;\n}\n\nion-header ion-title {\n  font-weight: bold;\n  color: aliceblue;\n}\n\n.botaoCancelar {\n  background-color: #a7a7a7;\n  width: 120px;\n  height: 40px;\n  color: aliceblue;\n}\n\n.botaoConfirmar {\n  background-color: #60E677;\n  width: 120px;\n  height: 40px;\n  color: aliceblue;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImxvZ2luLnBhZ2Uuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQUE7RUFDQSxZQUFBO0VBQ0EsYUFBQTtFQUNBLHNCQUFBO0VBQ0EsbUJBQUE7RUFDQSx1QkFBQTtBQUNGOztBQUVBO0VBQ0UsZ0JBQUE7RUFDQSxhQUFBO0VBQ0EsOEJBQUE7RUFDQSxtQkFBQTtBQUNGOztBQUVBO0VBQ0UsK0JBQUE7QUFDRjs7QUFDRTtFQUNFLGlCQUFBO0VBQ0EsZ0JBQUE7QUFDSjs7QUFHQTtFQUNFLHlCQUFBO0VBQ0EsWUFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtBQUFGOztBQUdBO0VBQ0UseUJBQUE7RUFDQSxZQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0FBQUYiLCJmaWxlIjoibG9naW4ucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvbnRlbnR7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG59XHJcblxyXG4uYnV0dG9uLWFyZWF7XHJcbiAgbWFyZ2luLXRvcDogNDBweDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcblxyXG5pb24taGVhZGVye1xyXG4gIC0taW9uLWJhY2tncm91bmQtY29sb3I6ICMxNUFEMkU7XHJcblxyXG4gIGlvbi10aXRsZXtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgY29sb3I6IGFsaWNlYmx1ZTtcclxuICB9XHJcbn1cclxuXHJcbi5ib3Rhb0NhbmNlbGFye1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNhN2E3YTc7XHJcbiAgd2lkdGg6IDEyMHB4O1xyXG4gIGhlaWdodDogNDBweDtcclxuICBjb2xvcjogYWxpY2VibHVlO1xyXG59XHJcblxyXG4uYm90YW9Db25maXJtYXJ7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogIzYwRTY3NztcclxuICB3aWR0aDogMTIwcHg7XHJcbiAgaGVpZ2h0OiA0MHB4O1xyXG4gIGNvbG9yOiBhbGljZWJsdWU7XHJcbn1cclxuIl19 */");
 
 /***/ }),
 
@@ -280,7 +281,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>Acessar Sistema</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n  <div class=\"content\">\n\n    <form [formGroup]=\"loginForm\">\n      <div class=\"input-field\">\n        <i class=\"material-icons prefix\">account_circle</i>\n        <input id=\"icon_prefix\" formControlName=\"login\" type=\"text\" class=\"validate\">\n        <label for=\"icon_prefix\">Email ou CPF</label>\n      </div>\n      <div class=\"input-field\">\n        <i class=\"material-icons prefix\">lock</i>\n        <input id=\"icon_telephone\" formControlName=\"senha\" type=\"password\" class=\"validate\">\n        <label for=\"icon_telephone\">Senha</label>\n      </div>\n    </form>\n    <div class=\"row button-area\">\n      <div class=\"col s6\">\n        <ion-button routerLink=\"/cadastro\" expand=\"block\" color=\"secondary\">Criar conta</ion-button>\n      </div>\n      <div class=\"col s6\">\n        <ion-button (click)=\"entrar()\" expand=\"block\">Entrar</ion-button>\n      </div>\n    </div>\n\n  </div>\n\n</ion-content>\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>Login</ion-title>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <div class=\"content\">\r\n    <form [formGroup]=\"loginForm\">\r\n      <div class=\"input-field\">\r\n        <i class=\"material-icons prefix\">account_circle</i>\r\n        <input id=\"icon_prefix\" formControlName=\"login\" type=\"email\" class=\"validate\">\r\n        <label for=\"icon_prefix\">Email</label>\r\n      </div>\r\n      <div class=\"input-field\">\r\n        <i class=\"material-icons prefix\">lock</i>\r\n        <input id=\"icon_telephone\" formControlName=\"senha\" type=\"password\" class=\"validate\">\r\n        <label for=\"icon_telephone\">Senha</label>\r\n      </div>\r\n    </form>\r\n    <div class=\"row button-area\">\r\n      <div class=\"col s6\">\r\n        <button routerLink=\"/cadastro\" expand=\"block\" class=\"botaoCancelar\" color=\"secondary\">Criar conta</button>\r\n      </div>\r\n      <div class=\"col s6\">\r\n        <button (click)=\"entrar()\" class=\"botaoConfirmar\" expand=\"block\">Entrar</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</ion-content>\r\n");
 
 /***/ })
 

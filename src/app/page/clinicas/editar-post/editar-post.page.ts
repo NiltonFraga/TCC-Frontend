@@ -57,7 +57,6 @@ export class EditarPostPage implements OnInit {
       .then(async () => {
         (await this.exameService.getPostById(this.idPost))
           .subscribe(res => {
-            console.log(res);
             this.post = res;
             this.cadastroForm.get('topico').setValue(this.post.topico);
             this.cadastroForm.get('conteudo').setValue(this.post.conteudo);
