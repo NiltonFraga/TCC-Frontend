@@ -30,7 +30,6 @@
 }
 
 .botaoConfirmar{
-  background-color: #60E677;
   width: 140px;
   height: 40px;
   color: aliceblue;
@@ -44,4 +43,12 @@
 .mensagem-erro{
   font-size: 14px;
   color: red;
+}
+
+.btn-ativado{
+  background-color: #28943a;
+}
+
+.btn-desativado{
+  background-color: #60E677;
 }

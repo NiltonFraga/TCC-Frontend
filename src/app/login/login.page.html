@@ -23,7 +23,10 @@
         <button routerLink="/cadastro" expand="block" class="botaoCancelar" color="secondary">Criar conta</button>
       </div>
       <div class="col s6">
-        <button (click)="entrar()" class="botaoConfirmar" expand="block">Entrar</button>
+        <button
+          (click)="entrar()"
+          class="botaoConfirmar"
+          [ngClass]="{'btn-ativado': loginForm.valid, 'btn-desativado': !loginForm.valid}" expand="block">Entrar</button>
       </div>
     </div>
   </div>

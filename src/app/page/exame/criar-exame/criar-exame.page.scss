@@ -42,7 +42,6 @@
 }
 
 .botaoConfirmar{
-  background-color: #60E677;
   width: 140px;
   height: 40px;
   color: aliceblue;
@@ -52,4 +51,12 @@
   padding: 6px 10px;
   background-color: #8fc30b;
   color: black;
+}
+
+.btn-ativado{
+  background-color: #28943a;
+}
+
+.btn-desativado{
+  background-color: #60E677;
 }

@@ -1,11 +1,14 @@
 <ion-content>
   <div class="content">
     <ion-grid style="width: 100%">
-      <ion-row class="bloco-conversa" (click)="falarCom(con.idDestinatario)" *ngFor="let con of conversas">
+      <ion-row class="bloco-conversa" *ngFor="let con of conversas">
         <ion-col size="12">
-          <div class="bloco">
+          <span class="excluir" (click)="excluirConversa(con.guid)">
+            <ion-icon name="close-outline"></ion-icon>
+          </span>
+          <div class="bloco" (click)="falarCom(con.idDestinatario, con.destinatario)">
             <div class="bloco-left">
-              <div class="circulo">NF</div>
+              <div class="circulo"><ion-icon name="person-outline" class="icone-pessoa"></ion-icon></div>
               <div>{{con.destinatario.split(' ').slice(0, 2).join(' ')}}</div>
             </div>
             <div class="data">{{con.dataCriacao | date:'dd/MM/yyyy HH:mm'}}</div>

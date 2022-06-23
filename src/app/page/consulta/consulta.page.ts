@@ -50,9 +50,16 @@ export class ConsultaPage implements OnInit {
     });
   }
 
-  falarCom(destinatario: string){
+  async excluirConversa(guid){
+    (await this.consultaService.deleteChat(guid)).subscribe(() => {
+      this.getChatById();
+      this.loading = false;
+    });
+  }
+
+  falarCom(destinatarioId: string, destinatario: string){
+    this.storage.set('destinatarioId', destinatarioId);
     this.storage.set('destinatario', destinatario);
-    console.log(destinatario);
     this.router.navigateByUrl('page/mensagem');
   }
 }

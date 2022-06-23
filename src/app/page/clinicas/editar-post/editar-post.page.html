@@ -29,7 +29,7 @@
             <button (click)="cancelar()" class="botaoCancelar" expand="block">Cancelar</button>
           </ion-col>
           <ion-col class="item-form-center" size="6">
-            <button (click)="updatePost()" class="botaoConfirmar" [disabled]="!cadastroForm.valid" expand="block">Salvar</button>
+            <button (click)="updatePost()" class="botaoConfirmar" [disabled]="!cadastroForm.valid" [ngClass]="{'btn-ativado': cadastroForm.valid, 'btn-desativado': !cadastroForm.valid}" expand="block">Salvar</button>
           </ion-col>
         </ion-row>
       </form>

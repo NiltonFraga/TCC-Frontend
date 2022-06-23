@@ -102,7 +102,9 @@ export class CriarPostPage implements OnInit {
   }
 
   setNull(){
-    this.conteudo = null;
-    this.topico = null;
+    this.cadastroForm = this.fb.group({
+      topico: this.fb.control('', [Validators.required]),
+      conteudo: this.fb.control('', [Validators.required])
+    });
   }
 }

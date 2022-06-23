@@ -31,8 +31,16 @@ ion-header{
 }
 
 .botaoConfirmar{
-  background-color: #60E677;
   width: 120px;
   height: 40px;
   color: aliceblue;
 }
+
+.btn-ativado{
+  background-color: #28943a;
+}
+
+.btn-desativado{
+  background-color: #60E677;
+}
+

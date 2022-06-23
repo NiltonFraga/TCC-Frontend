@@ -15,6 +15,7 @@ import { ConsultaService } from '../consulta.service';
 export class CriarConsultaPage implements OnInit {
 
   user: any;
+  destinatarioId: any;
   destinatario: any;
   conversas: any[];
   menssagem: string;
@@ -47,6 +48,7 @@ export class CriarConsultaPage implements OnInit {
   async pageEnter(){
     this.user = await this.storage.get('user');
     this.destinatario = await this.storage.get('destinatario');
+    this.destinatarioId = await this.storage.get('destinatarioId');
     const token = await this.storage.get('token');
     await this.urlService.validateToken(token);
     this.getAllConversas();
@@ -55,7 +57,7 @@ export class CriarConsultaPage implements OnInit {
   async getAllConversas(){
     const request = {
       usuarioOrigem: this.user.id,
-      usuarioDestino: this.destinatario,
+      usuarioDestino: this.destinatarioId,
       menssagem: ''
     };
 
@@ -71,7 +73,7 @@ export class CriarConsultaPage implements OnInit {
   async getByDestino(){
     const request = {
       usuarioOrigem: this.user.id,
-      usuarioDestino: this.destinatario,
+      usuarioDestino: this.destinatarioId,
       menssagem: ''
     };
 
@@ -86,13 +88,13 @@ export class CriarConsultaPage implements OnInit {
     if(this.menssagem !== ''){
       const request = {
         usuarioOrigem: this.user.id,
-        usuarioDestino: this.destinatario,
+        usuarioDestino: this.destinatarioId,
         menssagem: this.menssagem
       };
 
       this.conversas.push({
         usuarioOrigem: this.user.id,
-        usuarioDestino: this.destinatario,
+        usuarioDestino: this.destinatarioId,
         menssagem: this.menssagem,
         dataCriacao: new Date(),
         leitura: true,
